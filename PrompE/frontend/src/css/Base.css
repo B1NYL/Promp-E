@@ -1,0 +1,370 @@
+.base-page-container {
+  height: 100vh;
+  overflow: hidden;
+}
+
+.dashboard-layout {
+  display: grid;
+  grid-template-columns: 2fr 8fr; /* 2:8 비율 */
+  height: 100%;
+  background: #f5f5f5;
+}
+
+@media (prefers-color-scheme: dark) {
+  .dashboard-layout {
+    background: #1a1a1a;
+  }
+}
+
+/* 왼쪽 사이드바 */
+.sidebar {
+  background: white;
+  padding: 30px;
+  border-right: 1px solid #e0e0e0;
+  display: flex;
+  flex-direction: column;
+}
+
+@media (prefers-color-scheme: dark) {
+  .sidebar {
+    background: #2a2a2a;
+    border-right: 1px solid #3a3a3a;
+  }
+}
+
+.sidebar-logo {
+  margin-bottom: 50px;
+}
+
+.logo {
+  font-size: 32px;
+  font-weight: 800;
+  color: #00C8B3;
+  margin: 0;
+}
+
+.logo-sub {
+  font-size: 18px;
+  color: #666;
+  font-weight: 500;
+}
+
+@media (prefers-color-scheme: dark) {
+  .logo-sub {
+    color: #a0a0a0;
+  }
+}
+
+.sidebar-nav ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.nav-button {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  padding: 15px 20px;
+  border-radius: 12px;
+  border: none;
+  background: transparent;
+  cursor: pointer;
+  font-size: 16px;
+  font-weight: 600;
+  text-align: left;
+  transition: all 0.3s ease;
+  color: #666;
+}
+
+@media (prefers-color-scheme: dark) {
+  .nav-button {
+    color: #a0a0a0;
+  }
+}
+
+.nav-button:hover {
+  background: #f0fffe;
+  color: #00C8B3;
+}
+
+@media (prefers-color-scheme: dark) {
+  .nav-button:hover {
+    background: #1f3f3b;
+  }
+}
+
+.nav-button.active {
+  background: #00C8B3;
+  color: white;
+  box-shadow: 0 4px 15px rgba(0, 200, 179, 0.3);
+}
+
+.nav-icon {
+  font-size: 24px;
+}
+
+/* 중앙 메인 콘텐츠 */
+.main-content-dashboard {
+  padding: 40px;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Base 페이지 내부 헤더 */
+.base-content-header {
+  display: flex;
+  justify-content: flex-end; /* 버튼을 오른쪽 끝으로 */
+  align-items: center;
+  margin-bottom: 30px;
+}
+
+.activity-toggle-btn {
+  background: transparent;
+  border: 2px solid #00C8B3;
+  width: 40px;
+  height: 40px;
+  border-radius: 10px;
+  font-size: 24px;
+  font-weight: 700;
+  color: #00C8B3;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.3s ease;
+}
+
+.activity-toggle-btn:hover {
+  background: #00C8B3;
+  color: white;
+}
+
+/* ... (welcome-section, stages-grid 등 나머지 스타일) ... */
+.welcome-section {
+  margin-bottom: 40px;
+}
+
+.welcome-title {
+  font-size: 36px;
+  font-weight: 800;
+  color: #2b2b2b;
+  margin-bottom: 10px;
+}
+
+@media (prefers-color-scheme: dark) {
+  .welcome-title {
+    color: #e0e0e0;
+  }
+}
+
+.welcome-text {
+  font-size: 18px;
+  color: #666;
+}
+
+@media (prefers-color-scheme: dark) {
+  .welcome-text {
+    color: #a0a0a0;
+  }
+}
+
+.stages-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  gap: 30px;
+}
+
+/* 오른쪽 최근 활동 사이드바 (토글) */
+.activity-sidebar {
+  position: fixed;
+  top: 0;
+  right: -380px; /* 초기에는 숨김 */
+  width: 380px;
+  height: 100%;
+  background: white;
+  padding: 30px;
+  border-left: 1px solid #e0e0e0;
+  display: flex;
+  flex-direction: column;
+  transition: right 0.4s ease-in-out;
+  z-index: 10001;
+}
+
+.activity-sidebar.open {
+  right: 0;
+  box-shadow: -10px 0 30px rgba(0, 0, 0, 0.1);
+}
+
+@media (prefers-color-scheme: dark) {
+  .activity-sidebar {
+    background: #2a2a2a;
+    border-left: 1px solid #3a3a3a;
+  }
+}
+
+.activity-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 30px;
+}
+
+.close-btn {
+  background: transparent;
+  border: none;
+  font-size: 32px;
+  font-weight: 300;
+  color: #999;
+  cursor: pointer;
+  padding: 0 10px;
+}
+
+.section-title {
+  font-size: 22px;
+  font-weight: 800;
+  color: #2b2b2b;
+  margin: 0;
+}
+
+@media (prefers-color-scheme: dark) {
+  .section-title {
+    color: #e0e0e0;
+  }
+}
+
+.activity-list {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  overflow-y: auto;
+  flex: 1;
+}
+
+.activity-item {
+  background: #f8f9fa;
+  padding: 20px;
+  border-radius: 15px;
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  transition: all 0.3s ease;
+}
+
+@media (prefers-color-scheme: dark) {
+  .activity-item {
+    background: #1a1a1a;
+  }
+}
+
+.activity-item:hover {
+  transform: translateX(-5px);
+  box-shadow: 0 4px 15px rgba(0, 200, 179, 0.2);
+}
+
+.activity-icon {
+  font-size: 28px;
+}
+
+.activity-content {
+  flex: 1;
+}
+
+.activity-title {
+  font-size: 15px;
+  font-weight: 600;
+  color: #2b2b2b;
+  margin: 0 0 5px 0;
+}
+
+@media (prefers-color-scheme: dark) {
+  .activity-title {
+    color: #e0e0e0;
+  }
+}
+
+.activity-time {
+  font-size: 13px;
+  color: #999;
+}
+
+/* 사이드바 오버레이 */
+.sidebar-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.4);
+  z-index: 10000;
+  animation: fadeIn 0.4s ease-in-out;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+/* 반응형 */
+@media (max-width: 968px) {
+  .dashboard-layout {
+    grid-template-columns: 80px 1fr;
+  }
+
+  .nav-text {
+    display: none;
+  }
+
+  .nav-button {
+    justify-content: center;
+  }
+}
+
+@media (max-width: 768px) {
+  .dashboard-layout {
+    grid-template-columns: 1fr;
+    grid-template-rows: auto 1fr;
+    height: auto;
+  }
+
+  .sidebar {
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-around;
+    padding: 10px;
+    border-right: none;
+    border-bottom: 1px solid #e0e0e0;
+  }
+
+  @media (prefers-color-scheme: dark) {
+    .sidebar {
+      border-bottom-color: #3a3a3a;
+    }
+  }
+
+  .sidebar-logo {
+    display: none;
+  }
+
+  .sidebar-nav ul {
+    flex-direction: row;
+  }
+
+  .nav-button {
+    padding: 10px;
+  }
+
+  .main-content-dashboard {
+    padding: 20px;
+  }
+
+  .activity-sidebar {
+    width: 80%;
+    right: -100%;
+  }
+}

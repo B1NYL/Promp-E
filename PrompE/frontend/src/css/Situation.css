@@ -1,0 +1,201 @@
+/* Cognition.css 기반으로 하고 Situation 전용 스타일 추가 */
+@import './Cognition.css';
+
+.situation-page {
+  min-height: 100vh;
+  background: #f8f9fa;
+  display: flex;
+  flex-direction: column;
+}
+
+@media (prefers-color-scheme: dark) {
+  .situation-page {
+    background: #1a1a1a;
+  }
+}
+
+/* Situation 전용 배지 색상 */
+.situation-badge {
+  background: #4a90e2 !important;
+}
+
+/* 이전 그림 표시 */
+.canvas-preview-header h3 {
+  font-size: 20px;
+  font-weight: 700;
+  color: #2b2b2b;
+  margin: 0;
+  padding: 0 15px 15px;
+}
+
+@media (prefers-color-scheme: dark) {
+  .canvas-preview-header h3 {
+    color: #e0e0e0;
+  }
+}
+
+.drawing-canvas.readonly {
+  cursor: default;
+}
+
+/* 이전 묘사 요약 */
+.description-summary {
+  font-size: 16px;
+  color: #2b2b2b;
+  font-weight: 600;
+  background: #f8f9fa;
+  padding: 15px;
+  border-radius: 8px;
+  line-height: 1.6;
+}
+
+@media (prefers-color-scheme: dark) {
+  .description-summary {
+    background: #1a1a1a;
+    color: #e0e0e0;
+  }
+}
+
+/* 상황 입력 Textarea */
+.situation-textarea {
+  width: 100%;
+  min-height: 100px;
+  padding: 14px 16px;
+  border: 2px solid #e0e0e0;
+  border-radius: 10px;
+  font-size: 16px;
+  line-height: 1.6;
+  resize: vertical;
+  transition: all 0.3s ease;
+}
+
+@media (prefers-color-scheme: dark) {
+  .situation-textarea {
+    background: #1a1a1a;
+    border-color: #3a3a3a;
+    color: #e0e0e0;
+  }
+}
+
+.situation-textarea:focus {
+  outline: none;
+  border-color: #4a90e2;
+  box-shadow: 0 0 0 3px rgba(74, 144, 226, 0.1);
+}
+
+.situation-textarea:disabled {
+  background: #f5f5f5;
+  cursor: not-allowed;
+}
+
+/* 팁 박스 */
+.tip-box {
+  background: #e7f3ff;
+  border: 2px solid #a8cfff;
+  border-left: 5px solid #4a90e2;
+  padding: 20px;
+  border-radius: 12px;
+  font-size: 15px;
+  line-height: 1.7;
+  color: white;
+}
+
+@media (prefers-color-scheme: dark) {
+  .tip-box {
+    background: #1c2b3e;
+    border-color: #3e5a7e;
+  }
+}
+
+.tip-box strong {
+  color: #4a90e2;
+  font-weight: 700;
+}
+
+.tip-box p {
+  color: #333;
+  margin: 0;
+}
+
+@media (prefers-color-scheme: dark) {
+  .tip-box p {
+    color: #c0c0c0;
+  }
+}
+
+/* 제출 패널 */
+.submit-panel {
+  padding-top: 10px;
+  padding-bottom: 10px;
+}
+
+/* 최종 프롬프트 요약 */
+.prompt-summary-box {
+  background: #f8f9fa;
+  padding: 15px;
+  border-radius: 10px;
+  border: 2px dashed #4a90e2;
+}
+
+@media (prefers-color-scheme: dark) {
+  .prompt-summary-box {
+    background: #1f1f1f;
+  }
+}
+
+.prompt-summary-box h4 {
+  font-size: 14px;
+  color: #666;
+  margin: 0 0 8px 0;
+}
+
+@media (prefers-color-scheme: dark) {
+  .prompt-summary-box h4 {
+    color: #a0a0a0;
+  }
+}
+
+.prompt-summary-box p {
+  font-size: 16px;
+  color: #2b2b2b;
+  margin: 0;
+  line-height: 1.6;
+}
+
+@media (prefers-color-scheme: dark) {
+  .prompt-summary-box p {
+    color: #e0e0e0;
+  }
+}
+
+.prompt-summary-box strong {
+  color: #4a90e2;
+}
+
+/* Situation 결과 섹션 색상 오버라이드 */
+.situation-page .success-badge {
+  background: linear-gradient(135deg, #e7f3ff 0%, #dbe9f7 100%);
+  border-left-color: #4a90e2;
+}
+
+@media (prefers-color-scheme: dark) {
+  .situation-page .success-badge {
+    background: linear-gradient(135deg, #1c2b3e 0%, #172433 100%);
+  }
+}
+
+.situation-page .success-badge h3 {
+  color: #4a90e2;
+}
+
+.situation-page .learning-box h4 {
+  color: #4a90e2;
+}
+
+.situation-page .result-image-large {
+  box-shadow: 0 10px 40px rgba(74, 144, 226, 0.3);
+}
+
+.situation-page .result-section-full {
+  border-top-color: #4a90e2;
+}

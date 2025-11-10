@@ -1,0 +1,15 @@
+.App {
+  width: 100%;
+  min-height: 100vh;
+}
+
+/* App.css */
+.main-layout {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+.content-area {
+  flex: 1;
+}

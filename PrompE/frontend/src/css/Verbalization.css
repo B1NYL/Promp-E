@@ -1,0 +1,191 @@
+/* Cognition.css 기반으로 하고 Verbalization 전용 스타일 추가 */
+@import './Cognition.css';
+
+.verbalization-page {
+  min-height: 100vh;
+  background: #f8f9fa;
+  display: flex;
+  flex-direction: column;
+}
+
+@media (prefers-color-scheme: dark) {
+  .verbalization-page {
+    background: #1a1a1a;
+  }
+}
+
+/* 왼쪽 워크스페이스 */
+.verbalization-workspace {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+/* 미션 카드 */
+.mission-card-final {
+  background: linear-gradient(135deg, #00C8B3 0%, #00a393 100%);
+  border-radius: 15px;
+  color: white;
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  padding: 25px;
+  box-shadow: 0 4px 20px rgba(0, 200, 179, 0.2);
+}
+
+.card-icon {
+  font-size: 50px;
+  animation: bounce 2s infinite;
+}
+
+.card-content h3 {
+  font-size: 20px;
+  font-weight: 800;
+  margin: 0 0 8px 0;
+}
+
+.card-content p {
+  font-size: 15px;
+  line-height: 1.6;
+  margin: 0;
+  opacity: 0.9;
+}
+
+/* 프롬프트 입력 영역 */
+.prompt-input-area {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.prompt-label {
+  font-size: 18px;
+  font-weight: 700;
+  color: #2b2b2b;
+  margin-bottom: 15px;
+}
+
+@media (prefers-color-scheme: dark) {
+  .prompt-label {
+    color: #e0e0e0;
+  }
+}
+
+.prompt-textarea-main {
+  flex: 1;
+  width: 100%;
+  padding: 20px;
+  border: 3px solid #e0e0e0;
+  border-radius: 15px;
+  font-size: 17px;
+  line-height: 1.7;
+  resize: none;
+  transition: all 0.3s ease;
+  background: white;
+}
+
+@media (prefers-color-scheme: dark) {
+  .prompt-textarea-main {
+    background: #2a2a2a;
+    border-color: #3a3a3a;
+    color: #e0e0e0;
+  }
+}
+
+.prompt-textarea-main:focus {
+  outline: none;
+  border-color: #FFB703;
+  box-shadow: 0 0 0 4px rgba(255, 183, 3, 0.1);
+}
+
+/* 힌트 카드 */
+.hint-categories {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.hint-category-title {
+  font-size: 14px;
+  font-weight: 700;
+  padding-bottom: 8px;
+  border-bottom: 2px solid;
+  margin-bottom: 12px;
+}
+
+.hint-category-title.blue { color: #3b82f6; border-color: #93c5fd; }
+.hint-category-title.green { color: #16a34a; border-color: #86efac; }
+.hint-category-title.purple { color: #9333ea; border-color: #d8b4fe; }
+
+.hint-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.hint-chip {
+  background: #f3f4f6;
+  border: none;
+  color: #4b5563;
+  padding: 8px 16px;
+  border-radius: 8px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+@media (prefers-color-scheme: dark) {
+  .hint-chip {
+    background: #374151;
+    color: #d1d5db;
+  }
+}
+
+.hint-chip.blue:hover { background: #dbeafe; color: #1d4ed8; }
+.hint-chip.green:hover { background: #dcfce7; color: #15803d; }
+.hint-chip.purple:hover { background: #f3e8ff; color: #7e22ce; }
+
+@media (prefers-color-scheme: dark) {
+  .hint-chip.blue:hover { background: #1e3a8a; color: #dbeafe; }
+  .hint-chip.green:hover { background: #14532d; color: #dcfce7; }
+  .hint-chip.purple:hover { background: #581c87; color: #f3e8ff; }
+}
+
+/* 제출 패널 */
+.submit-panel {
+  padding-top: 10px;
+  padding-bottom: 10px;
+}
+
+/* Verbalization 결과 섹션 색상 오버라이드 */
+.verbalization-page .success-badge {
+  background: linear-gradient(135deg, #fffbeb 0%, #fff7e1 100%);
+  border-left-color: #FFB703;
+}
+
+@media (prefers-color-scheme: dark) {
+  .verbalization-page .success-badge {
+    background: linear-gradient(135deg, #422900 0%, #3b2500 100%);
+  }
+}
+
+.verbalization-page .success-badge h3 {
+  color: #FFB703;
+}
+
+.verbalization-page .learning-box h4 {
+  color: #FFB703;
+}
+
+.verbalization-page .result-image-large {
+  box-shadow: 0 10px 40px rgba(255, 183, 3, 0.3);
+}
+
+.verbalization-page .result-section-full {
+  border-top-color: #FFB703;
+}
+
+.verbalization-page .prompt-summary-box {
+  border-color: #FFB703;
+}

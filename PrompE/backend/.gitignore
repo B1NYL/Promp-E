@@ -1,0 +1,37 @@
+# Python 가상환경 (절대 올리면 안 됨)
+/venv/
+/env/
+/.venv/
+
+# 민감한 환경 변수 파일 (중요)
+.env
+.env.*
+!.env.example
+
+# Python 캐시 및 컴파일 파일
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.Python
+
+# 데이터베이스 파일
+*.db
+*.sqlite
+*.sqlite3
+
+# 로그 파일
+*.log
+
+# 운영체제 생성 파일
+.DS_Store
+Thumbs.db
+
+# 에디터 및 IDE 설정
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# 테스트 커버리지
+.coverage
