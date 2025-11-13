@@ -1,72 +1,32 @@
-/* Cognition.css 기반으로 하고 Description 전용 스타일 추가 */
-@import './Cognition.css';
+/* Cognition.css의 공통 스타일을 사용한다고 가정합니다. */
+@import './Cognition.css';  
 
 .description-page {
-  min-height: 100vh;
-  background: #f8f9fa;
-  display: flex;
-  flex-direction: column;
-}
-
-@media (prefers-color-scheme: dark) {
-  .description-page {
-    background: #1a1a1a;
-  }
+  background: var(--background);
 }
 
 /* Description 전용 배지 색상 */
 .description-badge {
-  background: #FF6B6B !important;
+  background: var(--accent-red) !important;
 }
 
 /* 1단계 정보 */
 .previous-info {
   background: linear-gradient(135deg, #e3f9f6 0%, #d4f5f0 100%);
-  border-left: 4px solid #00C8B3;
+  border-left: 4px solid var(--primary);
 }
-
-@media (prefers-color-scheme: dark) {
-  .previous-info {
-    background: linear-gradient(135deg, #1f3f3b 0%, #1a3532 100%);
-  }
-}
-
-.info-content {
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-  margin-bottom: 12px;
+.dark .previous-info {
+  background: linear-gradient(135deg, #1f3f3b 0%, #1a3532 100%);
 }
 
 .info-label {
-  font-size: 13px;
-  color: #666;
-  font-weight: 600;
+  color: var(--text-muted);
 }
-
-@media (prefers-color-scheme: dark) {
-  .info-label {
-    color: #a0a0a0;
-  }
-}
-
 .info-value {
-  font-size: 18px;
-  color: #00C8B3;
+  color: var(--primary);
 }
-
 .info-hint {
-  font-size: 13px;
-  color: #666;
-  margin: 0;
-  font-style: italic;
-  line-height: 1.5;
-}
-
-@media (prefers-color-scheme: dark) {
-  .info-hint {
-    color: #a0a0a0;
-  }
+  color: var(--text-muted);
 }
 
 /* 조언 배너 */
@@ -90,7 +50,7 @@
 .advice-banner p {
   font-size: 14px;
   font-weight: 600;
-  color: #2b2b2b;
+  color: #2b2b2b; /* 밝은 배경에는 어두운 글씨 */
   margin: 0;
   line-height: 1.6;
 }
@@ -103,9 +63,9 @@
 }
 
 .adjective-chip {
-  background: white;
-  border: 2px solid #FF6B6B;
-  color: #FF6B6B;
+  background: var(--card-background);
+  border: 2px solid #eee;
+  color: var(--text);
   padding: 10px 12px;
   border-radius: 10px;
   font-size: 14px;
@@ -117,29 +77,45 @@
   justify-content: center;
   gap: 6px;
 }
-
-@media (prefers-color-scheme: dark) {
-  .adjective-chip {
-    background: #1a1a1a;
-  }
+.dark .adjective-chip {
+  background: var(--input-background);
 }
-
 .adjective-chip:hover {
-  background: #FF6B6B;
+  background: var(--primary);
   color: white;
   transform: translateY(-2px);
   box-shadow: 0 4px 12px rgba(255, 107, 107, 0.3);
 }
 
-.adjective-chip:active {
-  transform: translateY(0);
-}
-
 /* 입력 팁 */
 .input-tip {
   font-size: 12px;
-  color: #999;
+  color: var(--text-muted);
   margin: 8px 0 12px 0;
+}
+
+/* Description 결과 섹션 색상 오버라이드 */
+.description-page .success-badge {
+  background: linear-gradient(135deg, #fff0f0 0%, #ffe6e6 100%);
+  border-left-color: var(--accent-red);
+}
+.dark .description-page .success-badge {
+  background: linear-gradient(135deg, #3f1f1f 0%, #351a1a 100%);
+}
+.description-page .success-badge h3 {
+  color: var(--text);
+}
+.description-page .result-text strong {
+  color: var(--accent-red);
+}
+.description-page .learning-box h4 {
+  color: var(--text);
+}
+.description-page .result-image-large {
+  box-shadow: 0 10px 40px rgba(255, 107, 107, 0.3);
+}
+.description-page .result-section-full {
+  border-top-color: var(--accent-red);
 }
 
 /* 애니메이션 */
@@ -152,36 +128,4 @@
     opacity: 1;
     transform: translateY(0);
   }
-}
-
-/* Description 결과 섹션 색상 오버라이드 */
-.description-page .success-badge {
-  background: linear-gradient(135deg, #fff0f0 0%, #ffe6e6 100%);
-  border-left-color: #FF6B6B;
-}
-
-@media (prefers-color-scheme: dark) {
-  .description-page .success-badge {
-    background: linear-gradient(135deg, #3f1f1f 0%, #351a1a 100%);
-  }
-}
-
-.description-page .success-badge h3 {
-  color: #FF6B6B;
-}
-
-.description-page .result-text strong {
-  color: #FF6B6B;
-}
-
-.description-page .learning-box h4 {
-  color: #FF6B6B;
-}
-
-.description-page .result-image-large {
-  box-shadow: 0 10px 40px rgba(255, 107, 107, 0.3);
-}
-
-.description-page .result-section-full {
-  border-top-color: #FF6B6B;
 }

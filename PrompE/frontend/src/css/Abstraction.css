@@ -1,45 +1,23 @@
-/* Cognition.css 기반으로 하고 Abstraction 전용 스타일 추가 */
-@import './Cognition.css';
+@import './Cognition.css'; /* 이 줄은 삭제하는 것이 좋습니다. Cognition.css와 겹치는 스타일은 별도의 공통 CSS 파일로 옮기는 것을 추천합니다. */
 
 .abstraction-page {
-  min-height: 100vh;
-  background: #f8f9fa;
-  display: flex;
-  flex-direction: column;
-}
-
-@media (prefers-color-scheme: dark) {
-  .abstraction-page {
-    background: #1a1a1a;
-  }
+  background: var(--background);
 }
 
 /* Abstraction 전용 배지 색상 */
 .abstraction-badge {
-  background: #A855F7 !important; /* 보라색 */
-}
-
-/* 읽기 전용 캔버스 */
-.drawing-canvas.readonly {
-  cursor: default;
+  background: var(--accent-purple) !important;
 }
 
 /* 이전 묘사 요약 */
 .description-summary {
   font-size: 16px;
-  color: #2b2b2b;
+  color: var(--foreground);
   font-weight: 600;
-  background: #f8f9fa;
+  background: var(--background);
   padding: 15px;
   border-radius: 8px;
   line-height: 1.6;
-}
-
-@media (prefers-color-scheme: dark) {
-  .description-summary {
-    background: #1a1a1a;
-    color: #e0e0e0;
-  }
 }
 
 /* 감정/스타일 입력 Textarea */
@@ -47,30 +25,22 @@
   width: 100%;
   min-height: 80px;
   padding: 14px 16px;
-  border: 2px solid #e0e0e0;
+  border: 2px solid var(--border);
   border-radius: 10px;
   font-size: 16px;
   line-height: 1.6;
   resize: vertical;
   transition: all 0.3s ease;
+  background: var(--input-background);
+  color: var(--foreground);
 }
-
-@media (prefers-color-scheme: dark) {
-  .emotion-textarea {
-    background: #1a1a1a;
-    border-color: #3a3a3a;
-    color: #e0e0e0;
-  }
-}
-
 .emotion-textarea:focus {
   outline: none;
-  border-color: #A855F7;
+  border-color: var(--accent-purple);
   box-shadow: 0 0 0 3px rgba(168, 85, 247, 0.1);
 }
-
 .emotion-textarea:disabled {
-  background: #f5f5f5;
+  background: var(--background);
   cursor: not-allowed;
 }
 
@@ -80,11 +50,10 @@
   flex-wrap: wrap;
   gap: 8px;
 }
-
 .emotion-chip {
-  background: white;
-  border: 2px solid #A855F7;
-  color: #A855F7;
+  background: var(--card-background);
+  border: 2px solid var(--border);
+  color: var(--text);
   padding: 8px 14px;
   border-radius: 20px;
   font-size: 14px;
@@ -95,93 +64,55 @@
   align-items: center;
   gap: 6px;
 }
-
-@media (prefers-color-scheme: dark) {
-  .emotion-chip {
-    background: #1a1a1a;
-  }
+.dark .emotion-chip {
+    background: var(--input-background);
 }
-
 .emotion-chip:hover {
-  background: #A855F7;
+  background: var(--primary);
   color: white;
   transform: translateY(-2px);
   box-shadow: 0 4px 12px rgba(168, 85, 247, 0.3);
 }
 
-/* 제출 패널 */
-.submit-panel {
-  padding-top: 10px;
-  padding-bottom: 10px;
-}
-
 /* 최종 프롬프트 요약 */
 .prompt-summary-box {
-  background: #f8f9fa;
+  background: var(--background);
   padding: 15px;
   border-radius: 10px;
-  border: 2px dashed #A855F7;
+  border: 2px dashed var(--accent-purple);
 }
-
-@media (prefers-color-scheme: dark) {
-  .prompt-summary-box {
-    background: #1f1f1f;
-  }
-}
-
 .prompt-summary-box h4 {
   font-size: 14px;
-  color: #666;
+  color: var(--text-muted);
   margin: 0 0 8px 0;
 }
-
-@media (prefers-color-scheme: dark) {
-  .prompt-summary-box h4 {
-    color: #a0a0a0;
-  }
-}
-
 .prompt-summary-box p {
   font-size: 16px;
-  color: #2b2b2b;
+  color: var(--foreground);
   margin: 0;
   line-height: 1.6;
 }
-
-@media (prefers-color-scheme: dark) {
-  .prompt-summary-box p {
-    color: #e0e0e0;
-  }
-}
-
 .prompt-summary-box strong {
-  color: #A855F7;
+  color: var(--accent-purple);
 }
 
 /* Abstraction 결과 섹션 색상 오버라이드 */
 .abstraction-page .success-badge {
   background: linear-gradient(135deg, #f3e8ff 0%, #ede1f7 100%);
-  border-left-color: #A855F7;
+  border-left-color: var(--accent-purple);
 }
-
-@media (prefers-color-scheme: dark) {
-  .abstraction-page .success-badge {
-    background: linear-gradient(135deg, #2d1c3e 0%, #281733 100%);
-  }
+.dark .abstraction-page .success-badge {
+  background: linear-gradient(135deg, #2d1c3e 0%, #281733 100%);
 }
-
 .abstraction-page .success-badge h3 {
-  color: #A855F7;
+  color: var(--accent-purple);
 }
-
 .abstraction-page .learning-box h4 {
-  color: #A855F7;
+  color: var(--accent-purple);
 }
-
 .abstraction-page .result-image-large {
   box-shadow: 0 10px 40px rgba(168, 85, 247, 0.3);
 }
-
 .abstraction-page .result-section-full {
-  border-top-color: #A855F7;
+  border-top-color: var(--accent-purple);
 }

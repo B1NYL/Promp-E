@@ -17,11 +17,11 @@ function ProgressTracker({ currentStep }) {
   // 각 단계의 정보(번호, 이름, 경로)를 담고 있는 배열입니다.
   // 나중에 새로운 단계를 추가하거나 수정할 때 이 배열만 변경하면 됩니다.
   const steps = [
-    { step: 1, name: '인지', path: '/stage2/cognition' },
-    { step: 2, name: '묘사', path: '/stage2/description' },
-    { step: 3, name: '상황 부여', path: '/stage2/situation' },
-    { step: 4, name: '추상화', path: '/stage2/abstraction' },
-    { step: 5, name: '언어화', path: '/stage2/verbalization' },
+    { step: 1, name: '인지', path: '/stage3/cognition' },
+    { step: 2, name: '묘사', path: '/stage3/description' },
+    { step: 3, name: '상황 부여', path: '/stage3/situation' },
+    { step: 4, name: '추상화', path: '/stage3/abstraction' },
+    { step: 5, name: '언어화', path: '/stage3/verbalization' },
   ]
 
   /**

@@ -17,3 +17,33 @@ body {
   width: 100%;
   min-height: 100vh;
 }
+
+/* src/css/index.css */
+
+/* 라이트 모드 기본 색상 */
+:root {
+  --background: #f5f5f5;
+  --foreground: #2b2b2b;
+  --card-background: white;
+  --card-foreground: #2b2b2b;
+  --border: #e0e0e0;
+  --primary: #00C8B3;
+  --primary-foreground: white;
+  --text-muted: #666;
+  --text: black;
+  --border: #eee;
+}
+
+/* 다크 모드 색상 */
+.dark {
+  --background: #1a1a1a;
+  --foreground: #e0e0e0;
+  --card-background: #2a2a2a;
+  --card-foreground: #e0e0e0;
+  --border: #3a3a3a;
+  --primary: #00C8B3;
+  --primary-foreground: white;
+  --text-muted: #a0a0a0;
+  --text: white;
+  --border: #eee;
+}

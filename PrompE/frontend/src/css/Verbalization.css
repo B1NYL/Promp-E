@@ -1,17 +1,20 @@
-/* Cognition.css 기반으로 하고 Verbalization 전용 스타일 추가 */
-@import './Cognition.css';
-
 .verbalization-page {
   min-height: 100vh;
-  background: #f8f9fa;
+  background: var(--background);
   display: flex;
   flex-direction: column;
 }
 
-@media (prefers-color-scheme: dark) {
-  .verbalization-page {
-    background: #1a1a1a;
-  }
+.verbalization-main {
+  flex: 1;
+  display: grid;
+  grid-template-columns: 1fr 420px;
+  gap: 30px;
+  padding: 30px;
+  max-width: 1600px;
+  margin: 0 auto;
+  width: 100%;
+  overflow: hidden;
 }
 
 /* 왼쪽 워크스페이스 */
@@ -23,27 +26,24 @@
 
 /* 미션 카드 */
 .mission-card-final {
-  background: linear-gradient(135deg, #00C8B3 0%, #00a393 100%);
+  background: linear-gradient(135deg, var(--primary) 0%, #00a393 100%);
   border-radius: 15px;
-  color: white;
+  color: var(--primary-foreground);
   display: flex;
   align-items: center;
   gap: 20px;
   padding: 25px;
   box-shadow: 0 4px 20px rgba(0, 200, 179, 0.2);
 }
-
 .card-icon {
   font-size: 50px;
   animation: bounce 2s infinite;
 }
-
 .card-content h3 {
   font-size: 20px;
   font-weight: 800;
   margin: 0 0 8px 0;
 }
-
 .card-content p {
   font-size: 15px;
   line-height: 1.6;
@@ -56,46 +56,36 @@
   flex: 1;
   display: flex;
   flex-direction: column;
+  background: var(--card-background);
+  padding: 24px;
+  border-radius: 15px;
+  border: 1px solid var(--border);
 }
-
 .prompt-label {
   font-size: 18px;
   font-weight: 700;
-  color: #2b2b2b;
+  color: var(--foreground);
   margin-bottom: 15px;
 }
-
-@media (prefers-color-scheme: dark) {
-  .prompt-label {
-    color: #e0e0e0;
-  }
-}
-
 .prompt-textarea-main {
   flex: 1;
   width: 100%;
   padding: 20px;
-  border: 3px solid #e0e0e0;
-  border-radius: 15px;
+  border: 2px solid var(--border);
+  border-radius: 10px;
   font-size: 17px;
   line-height: 1.7;
   resize: none;
   transition: all 0.3s ease;
-  background: white;
+  background: var(--background);
+  color: var(--text);
+  max-height: 500px; /* 최대 높이 설정 */
+  overflow-y: auto;   /* 넘치면 스크롤바 표시 */
 }
-
-@media (prefers-color-scheme: dark) {
-  .prompt-textarea-main {
-    background: #2a2a2a;
-    border-color: #3a3a3a;
-    color: #e0e0e0;
-  }
-}
-
 .prompt-textarea-main:focus {
   outline: none;
-  border-color: #FFB703;
-  box-shadow: 0 0 0 4px rgba(255, 183, 3, 0.1);
+  border-color: var(--accent-yellow);
+  box-shadow: 0 0 0 3px rgba(255, 183, 3, 0.1);
 }
 
 /* 힌트 카드 */
@@ -104,7 +94,6 @@
   flex-direction: column;
   gap: 20px;
 }
-
 .hint-category-title {
   font-size: 14px;
   font-weight: 700;
@@ -112,7 +101,6 @@
   border-bottom: 2px solid;
   margin-bottom: 12px;
 }
-
 .hint-category-title.blue { color: #3b82f6; border-color: #93c5fd; }
 .hint-category-title.green { color: #16a34a; border-color: #86efac; }
 .hint-category-title.purple { color: #9333ea; border-color: #d8b4fe; }
@@ -122,11 +110,10 @@
   flex-wrap: wrap;
   gap: 10px;
 }
-
 .hint-chip {
-  background: #f3f4f6;
+  background: var(--background);
   border: none;
-  color: #4b5563;
+  color: var(--text-muted);
   padding: 8px 16px;
   border-radius: 8px;
   font-size: 14px;
@@ -134,23 +121,17 @@
   cursor: pointer;
   transition: all 0.2s ease;
 }
-
-@media (prefers-color-scheme: dark) {
-  .hint-chip {
-    background: #374151;
-    color: #d1d5db;
-  }
+.dark .hint-chip {
+  background: #374151;
+  color: #d1d5db;
 }
-
+.hint-chip:hover { transform: translateY(-2px); }
 .hint-chip.blue:hover { background: #dbeafe; color: #1d4ed8; }
 .hint-chip.green:hover { background: #dcfce7; color: #15803d; }
 .hint-chip.purple:hover { background: #f3e8ff; color: #7e22ce; }
-
-@media (prefers-color-scheme: dark) {
-  .hint-chip.blue:hover { background: #1e3a8a; color: #dbeafe; }
-  .hint-chip.green:hover { background: #14532d; color: #dcfce7; }
-  .hint-chip.purple:hover { background: #581c87; color: #f3e8ff; }
-}
+.dark .hint-chip.blue:hover { background: #1e3a8a; color: #dbeafe; }
+.dark .hint-chip.green:hover { background: #14532d; color: #dcfce7; }
+.dark .hint-chip.purple:hover { background: #581c87; color: #f3e8ff; }
 
 /* 제출 패널 */
 .submit-panel {
@@ -158,34 +139,34 @@
   padding-bottom: 10px;
 }
 
+/* 힌트 로딩 */
+.hint-loading {
+  font-size: 14px;
+  color: var(--text-muted);
+  text-align: center;
+  padding: 20px;
+}
+
 /* Verbalization 결과 섹션 색상 오버라이드 */
 .verbalization-page .success-badge {
   background: linear-gradient(135deg, #fffbeb 0%, #fff7e1 100%);
-  border-left-color: #FFB703;
+  border-left-color: var(--accent-yellow);
 }
+.dark .verbalization-page .success-badge {
+  background: linear-gradient(135deg, #422900 0%, #3b2500 100%);
+}
+.verbalization-page .success-badge h3 { color: var(--accent-yellow); }
+.verbalization-page .learning-box h4 { color: var(--accent-yellow); }
+.verbalization-page .result-image-large { box-shadow: 0 10px 40px rgba(255, 183, 3, 0.3); }
+.verbalization-page .result-section-full { border-top-color: var(--accent-yellow); }
+.verbalization-page .prompt-summary-box { border-color: var(--accent-yellow); }
 
-@media (prefers-color-scheme: dark) {
-  .verbalization-page .success-badge {
-    background: linear-gradient(135deg, #422900 0%, #3b2500 100%);
-  }
-}
-
-.verbalization-page .success-badge h3 {
-  color: #FFB703;
-}
-
-.verbalization-page .learning-box h4 {
-  color: #FFB703;
-}
-
-.verbalization-page .result-image-large {
-  box-shadow: 0 10px 40px rgba(255, 183, 3, 0.3);
-}
-
-.verbalization-page .result-section-full {
-  border-top-color: #FFB703;
-}
-
-.verbalization-page .prompt-summary-box {
-  border-color: #FFB703;
-}
+/* Cognition.css에서 가져온 공통 스타일 */
+.control-panel { display: flex; flex-direction: column; gap: 20px; overflow-y: auto; max-height: calc(100vh - 150px); }
+.panel-section { background: var(--card-background); padding: 20px; border-radius: 15px; box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05); }
+.section-title { font-size: 16px; font-weight: 700; color: var(--foreground); margin: 0 0 15px 0; }
+.submit-button { width: 100%; padding: 14px; background: linear-gradient(135deg, var(--primary) 0%, #00a393 100%); color: var(--primary-foreground); border: none; border-radius: 10px; font-size: 16px; font-weight: 700; cursor: pointer; transition: all 0.3s ease; display: flex; align-items: center; justify-content: center; gap: 10px;}
+.submit-button:hover:not(:disabled) { transform: translateY(-2px); box-shadow: 0 6px 20px rgba(0, 200, 179, 0.4); }
+.submit-button:disabled { opacity: 0.5; cursor: not-allowed; }
+.result-section-full { background: var(--card-background); border-top: 3px solid var(--primary); padding: 40px 30px; animation: slideUp 0.5s ease-out; }
+/* ... (나머지 result, badge, learning-box 등 공통 스타일) */

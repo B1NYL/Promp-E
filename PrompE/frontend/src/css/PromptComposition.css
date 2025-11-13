@@ -1,0 +1,291 @@
+.prompt-composition-page {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  background: var(--background);
+}
+
+/* 헤더 */
+.lesson-header {
+  background: var(--card-background);
+  padding: 20px 40px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid var(--border);
+}
+.page-title {
+  font-size: 24px;
+  font-weight: 800;
+  color: var(--foreground);
+}
+.header-placeholder {
+  width: 120px; /* back-button 너비와 맞춤 */
+}
+
+/* 메인 레이아웃 */
+.composition-main {
+  display: grid;
+  grid-template-columns: 1fr 420px;
+  flex: 1;
+  overflow: hidden;
+}
+
+/* 캔버스 영역 */
+.canvas-main-area {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 30px;
+  position: relative;
+  overflow: hidden;
+}
+.canvas-stack {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  max-width: 800px;
+  aspect-ratio: 4 / 3;
+  box-shadow: 0 5px 25px rgba(0,0,0,0.1);
+  border: 1px solid var(--border);
+  border-radius: 20px;
+  overflow: hidden;
+  background: white; /* 캔버스 기본 배경 */
+}
+.composition-canvas {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: transparent;
+  transition: box-shadow 0.3s ease;
+}
+.composition-canvas.active {
+  pointer-events: auto;
+  box-shadow: inset 0 0 0 4px var(--layer-color, var(--primary));
+  z-index: 100 !important;
+}
+.composition-canvas:not(.active) {
+  pointer-events: none;
+}
+
+/* 컨트롤 패널 */
+.control-panel-composition {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  padding: 20px;
+  background: var(--card-background);
+  border-left: 1px solid var(--border);
+  overflow-y: auto;
+}
+.panel-section {
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 20px;
+}
+.section-title {
+  font-size: 18px;
+  font-weight: 700;
+  color: var(--foreground);
+  margin: 0 0 15px 0;
+}
+
+/* 레이어 선택 */
+.layer-selector {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+}
+.layer-btn {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px;
+  border-radius: 8px;
+  border: 2px solid transparent;
+  cursor: pointer;
+  background: var(--background);
+  color: var(--text);
+  font-weight: 600;
+  transition: all 0.2s ease;
+}
+.layer-btn:hover {
+  border-color: var(--layer-color);
+}
+.layer-btn.active {
+  border-color: var(--layer-color);
+  background: var(--card-background);
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+  color: var(--layer-color);
+}
+.layer-color-dot {
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+/* 도구 */
+.tools {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 10px;
+}
+.tool-btn {
+  padding: 8px;
+  border-radius: 8px;
+  border: 2px solid var(--border);
+  background: transparent;
+  cursor: pointer;
+  color: var(--text-muted);
+}
+.tool-btn.active {
+  background: var(--primary);
+  color: white;
+  border-color: var(--primary);
+}
+.tools input[type="range"] { flex: 1; }
+.clear-layer-btn {
+  margin-left: auto;
+  background: var(--accent-red);
+  color: white;
+  border: none;
+  padding: 8px 12px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 12px;
+  font-weight: 600;
+}
+
+/* 입력 방식 */
+.input-type-toggle {
+  display: flex;
+  gap: 5px;
+  background: var(--background);
+  padding: 5px;
+  border-radius: 8px;
+  margin-bottom: 15px;
+}
+.input-type-toggle button {
+  flex: 1;
+  padding: 8px;
+  border: none;
+  border-radius: 6px;
+  background: transparent;
+  font-weight: 600;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  color: var(--text-muted);
+}
+.input-type-toggle button.active {
+  background: var(--card-background);
+  color: var(--primary);
+  box-shadow: 0 1px 4px rgba(0,0,0,0.1);
+}
+.layer-textarea {
+  width: 100%;
+  min-height: 80px;
+  padding: 10px;
+  border-radius: 8px;
+  border: 1px solid var(--border);
+  background: var(--background);
+  resize: vertical;
+  color: var(--text);
+}
+
+/* 프롬프트 생성/결과 */
+.action-panel {
+  background: var(--background);
+}
+.compose-btn {
+  width: 100%;
+  padding: 14px;
+  background: var(--primary);
+  color: white;
+  border: none;
+  border-radius: 10px;
+  font-size: 16px;
+  font-weight: 700;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+}
+.composed-prompt-result {
+  background: var(--card-background);
+  padding: 15px;
+  border-radius: 8px;
+  margin-top: 15px;
+  border: 1px solid var(--border);
+}
+.composed-prompt-result h4 {
+  font-size: 14px;
+  color: var(--text-muted);
+  margin: 0 0 8px 0;
+}
+.composed-prompt-result p {
+  font-size: 15px;
+  font-weight: 500;
+  color: var(--text);
+  line-height: 1.6;
+}
+.generate-media-btns {
+  display: flex;
+  gap: 10px;
+  margin-top: 15px;
+}
+.generate-media-btns button {
+  flex: 1;
+  padding: 10px;
+  border-radius: 8px;
+  font-weight: 600;
+  background: var(--primary);
+  color: white;
+  border: none;
+  cursor: pointer;
+}
+.generate-media-btns button:disabled {
+  background: var(--border);
+  cursor: not-allowed;
+}
+
+.final-result-panel {
+  margin-top: 15px;
+}
+.final-result-panel img {
+  width: 100%;
+  border-radius: 8px;
+  margin-bottom: 10px;
+}
+.result-actions {
+  display: flex;
+  gap: 10px;
+}
+.result-actions button {
+  flex: 1;
+  padding: 10px;
+  border-radius: 8px;
+  background: var(--background);
+  border: 1px solid var(--border);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
+
+.drawing-canvas {
+  display: block;
+  width: 100%;
+  height: 100%; /* auto에서 100%로 변경 */
+  cursor: crosshair;
+  touch-action: none; /* ★★★ 이 줄을 추가하세요! ★★★ */
+}

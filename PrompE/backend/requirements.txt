@@ -5,3 +5,4 @@ python-multipart  # 파일 업로드에 필요
 Pillow            # 이미지 처리에 필요
 python-dotenv
 openai
+httpx
