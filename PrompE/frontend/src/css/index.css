@@ -47,3 +47,37 @@ body {
   --text: white;
   --border: #eee;
 }
+
+::-webkit-scrollbar {
+  width: 10px; /* 스크롤바의 너비 */
+  height: 10px; /* 가로 스크롤바의 높이 */
+}
+
+::-webkit-scrollbar-track {
+  background: var(--background); /* 스크롤바의 배경색 */
+}
+
+::-webkit-scrollbar-thumb {
+  background: #c0c0c0; /* 스크롤바 막대의 색상 */
+  border-radius: 10px;
+  border: 2px solid var(--background); /* 막대 주변의 여백 효과 */
+}
+
+.dark ::-webkit-scrollbar-thumb {
+  background: #4a4a4a; /* 다크 모드일 때 막대 색상 */
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--primary); /* 마우스를 올렸을 때 색상 */
+}
+
+
+/* Firefox */
+* {
+  scrollbar-width: thin; /* 스크롤바를 얇게 */
+  scrollbar-color: #c0c0c0 var(--background); /* (막대 색상) (배경 색상) */
+}
+
+.dark * {
+  scrollbar-color: #4a4a4a var(--background); /* 다크 모드일 때 */
+}

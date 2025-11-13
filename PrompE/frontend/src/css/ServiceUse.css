@@ -40,7 +40,7 @@
 .lesson-badge {
   display: flex;
   align-items: center;
-  margin-right: 120px;
+  left: 100px;
   gap: 8px;
   background: var(--primary);
   padding: 8px 16px;
