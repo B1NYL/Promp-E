@@ -78,7 +78,7 @@ class ComposePromptResponse(BaseModel):
 
 # --- 4. FastAPI 앱 및 미들웨어 설정 ---
 app = FastAPI()
-origins = ["http://localhost:5173", "http://localhost:5174", "http://localhost:5175"]
+origins = ["http://localhost:5173", "http://localhost:5174", "http://localhost:5175","https://promp-e.vercel.app"]
 app.add_middleware(CORSMiddleware, allow_origins=origins, allow_credentials=True, allow_methods=["*"], allow_headers=["*"])
 os.makedirs("uploads", exist_ok=True)
 app.mount("/uploads", StaticFiles(directory="uploads"), name="uploads")
