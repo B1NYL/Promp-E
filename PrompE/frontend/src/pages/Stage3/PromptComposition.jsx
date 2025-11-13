@@ -1,12 +1,12 @@
 import React, { useState, useRef, useEffect, useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { api } from '../../services/api';
-import { useGallery } from '../../services/GalleryContext';
+import { GalleryProvider, useGallery } from '../../services/GalleryContext';
 import { useUser } from '../../services/UserContext';
 import { useCompletion } from '../../services/CompletionContext';
 import { useActivity } from '../../services/ActivityContext';
 import '../../css/PromptComposition.css';
-import { Eraser, Pencil, Type, Download, Bot, Loader2, LogOut } from 'lucide-react';
+import { Eraser, Pencil, Type, Download, Bot, Loader2 } from 'lucide-react';
 
 const layerConfig = [
   { id: 'subject', name: '주체', color: '#FF6B6B' },
@@ -21,11 +21,11 @@ const layerConfig = [
   { id: 'role', name: '제작자(역할)', color: '#A855F7' },
 ];
 
-function PromptComposition() {
+function PromptCompositionPage() {
   const canvasRefs = useRef({});
   const navigate = useNavigate();
   const { addCreation } = useGallery();
-  const { gainExp, incrementCompletionCounts } = useUser();
+  const { gainExp } = useUser();
   const { completeLesson, isCompleted } = useCompletion();
   const { addActivity } = useActivity();
   
@@ -79,6 +79,7 @@ function PromptComposition() {
       ctx.lineWidth = brushSize;
       activeCanvas.isDrawing = true;
     };
+
     const handleDrawMove = (e) => {
       if (!activeCanvas.isDrawing) return;
       e.preventDefault(); 
@@ -86,7 +87,10 @@ function PromptComposition() {
       const ctx = activeCanvas.getContext('2d');
       ctx.lineTo(x, y); ctx.stroke();
     };
-    const handleDrawEnd = () => { activeCanvas.isDrawing = false; };
+
+    const handleDrawEnd = () => {
+      activeCanvas.isDrawing = false;
+    };
 
     activeCanvas.addEventListener('mousedown', handleDrawStart);
     activeCanvas.addEventListener('mousemove', handleDrawMove);
@@ -158,8 +162,14 @@ function PromptComposition() {
         const result = await api.generateImage(composedPrompt, null);
         setFinalImage(result.image_url);
         
-        // 작품집에 추가
-        addCreation({ prompt: composedPromptKr, imageUrl: result.image_url });
+        const lessonId = 's1-composition';
+        const wasAlreadyCompleted = isCompleted(lessonId);
+        gainExp(150, wasAlreadyCompleted);
+        if (!wasAlreadyCompleted) {
+          addCreation({ prompt: composedPromptKr, imageUrl: result.image_url });
+          addActivity({ icon: '🪄', title: `[조합] "${composedPromptKr.substring(0, 15)}..." 완성`, time: '방금 전' });
+          completeLesson(lessonId);
+        }
       } else {
         alert('비디오 생성 기능은 준비 중입니다.');
         setIsGeneratingMedia(false);
@@ -170,25 +180,15 @@ function PromptComposition() {
     }
   };
 
-  const handleFinishAndExit = () => {
-    const lessonId = 's3-composition'; // Stage 3에 맞는 ID로 변경
-    const wasAlreadyCompleted = isCompleted(lessonId);
-
-    gainExp(150, wasAlreadyCompleted);
-
-    if (!wasAlreadyCompleted) {
-      addActivity({ icon: '🪄', title: `[조합] "${composedPromptKr.substring(0, 15)}..." 완성`, time: '방금 전' });
-      completeLesson(lessonId);
-      incrementCompletionCounts();
-    }
-    
-    navigate('/stage3'); // Stage 3 메인 페이지로 이동
+  const closeResult = () => {
+    setFinalImage(null);
+    setIsGeneratingMedia(false);
   };
 
   return (
     <div className="prompt-composition-page">
       <header className="lesson-header">
-        <button className="back-button" onClick={() => navigate('/stage3')}>← 돌아가기</button>
+        <button className="back-button" onClick={() => navigate('/stage1')}>← 돌아가기</button>
         <h1 className="page-title">프롬프트 조합하기</h1>
         <div className="header-placeholder"></div>
       </header>
@@ -251,10 +251,7 @@ function PromptComposition() {
           {finalImage && (
             <div className="panel-section final-result-panel">
               <img src={finalImage} alt="최종 결과물" />
-              <div className="result-actions">
-                <button><Download size={16}/> 저장</button>
-                <button onClick={handleFinishAndExit}><LogOut size={16}/> 목록으로</button>
-              </div>
+              <div className="result-actions"><button><Download size={16}/> 저장</button><button onClick={closeResult}>닫기</button></div>
             </div>
           )}
         </aside>
@@ -263,5 +260,10 @@ function PromptComposition() {
   );
 }
 
-// App.jsx에서 모든 Provider를 관리하므로, GalleryProvider 래퍼를 제거합니다.
-export default PromptCompositionPage;
+export default function PromptComposition() {
+  return (
+    <GalleryProvider>
+      <PromptCompositionPage />
+    </GalleryProvider>
+  );
+}
