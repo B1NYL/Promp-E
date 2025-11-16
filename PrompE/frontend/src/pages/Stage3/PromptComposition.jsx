@@ -188,7 +188,7 @@ function PromptCompositionPage() {
   return (
     <div className="prompt-composition-page">
       <header className="lesson-header">
-        <button className="back-button" onClick={() => navigate('/stage1')}>← 돌아가기</button>
+        <button className="back-button" onClick={() => navigate('/stage3')}>← 돌아가기</button>
         <h1 className="page-title">프롬프트 조합하기</h1>
         <div className="header-placeholder"></div>
       </header>

@@ -97,7 +97,7 @@ function Abstraction() {
 
   return (
     <div className="abstraction-page">
-      <header className="lesson-header"><button className="back-button" onClick={() => navigate('/stage2')}>← 돌아가기</button><ProgressTracker currentStep={4} /><div className="header-placeholder"></div></header>
+      <header className="lesson-header"><button className="back-button" onClick={() => navigate('/stage3')}>← 돌아가기</button><ProgressTracker currentStep={4} /><div className="header-placeholder"></div></header>
       <main className="lesson-main">
         <div className="canvas-section"><div className="canvas-preview-header"><h3>🎨 감정이나 분위기를 그림에 표현해보세요</h3></div><div className="canvas-wrapper"><canvas ref={canvasRef} width={800} height={600} className="drawing-canvas" onMouseDown={startDrawing} onMouseMove={draw} onMouseUp={stopDrawing} onMouseLeave={stopDrawing} onTouchStart={startDrawing} onTouchMove={draw} onTouchEnd={stopDrawing}/></div></div>
         <div className="control-panel">
