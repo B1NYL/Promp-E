@@ -6,7 +6,7 @@ import { useGallery } from '../services/GalleryContext';
 import { useCompletion } from '../services/CompletionContext';
 import { useUser } from '../services/UserContext';
 import { useMissions } from '../services/MissionContext';
-import { api } from '../services/api';
+import { api, BACKEND_URL } from '../services/api'; // BACKEND_URL import 추가
 import '../css/Base.css';
 
 function Base() {
@@ -23,42 +23,27 @@ function Base() {
   const [socialCreations, setSocialCreations] = useState([]);
   const [isLoadingSocial, setIsLoadingSocial] = useState(false);
 
-  // 모든 Context에서 필요한 상태와 함수를 가져옵니다.
   const { gainExp, checkAndSetDailyLogin, todayCompletedCount, weekCompletedCount, level } = useUser();
   const { missions, completeMission, isMissionCompleted } = useMissions();
 
-  // 미션 완료를 체크하는 useEffect
   useEffect(() => {
-    // 중복 코드를 줄이기 위한 헬퍼 함수
-    const checkAndCompleteMission = (id, condition, reward) => {
+    const checkMission = (id, condition, reward) => {
       if (condition && !isMissionCompleted(id)) {
         console.log(`미션 "${id}" 완료!`);
         completeMission(id);
-        gainExp(reward, false); // 미션 보상은 첫 완료 시에만 지급
+        gainExp(reward, false);
       }
     };
-
-    // 각 미션의 완료 조건을 체크합니다.
-    checkAndCompleteMission('daily_login', checkAndSetDailyLogin(), 10);
-    checkAndCompleteMission('complete_one_lesson', todayCompletedCount >= 1, 20);
-    checkAndCompleteMission('complete_five_lessons', weekCompletedCount >= 5, 100);
-    checkAndCompleteMission('achieve_level_5', level >= 5, 200);
-
-  }, [
-    // 이 배열의 값들이 변경될 때마다 미션 완료 여부를 다시 체크합니다.
-    todayCompletedCount, 
-    weekCompletedCount, 
-    level, 
-    checkAndSetDailyLogin, 
-    completeMission, 
-    gainExp, 
-    isMissionCompleted
-  ]);
+    checkMission('daily_login', checkAndSetDailyLogin(), 10);
+    checkMission('complete_one_lesson', todayCompletedCount >= 1, 20);
+    checkMission('complete_five_lessons', weekCompletedCount >= 5, 100);
+    checkMission('achieve_level_5', level >= 5, 200);
+  }, [todayCompletedCount, weekCompletedCount, level, checkAndSetDailyLogin, completeMission, gainExp, isMissionCompleted]);
 
   const stages = [
-    { id: 'stage1', stage: 1, title: '친해지기', description: 'AI의 기본 원리와 프롬프트의 중요성을 배웁니다.', icon: '🎯' },
-    { id: 'stage2', stage: 2, title: '생각 구체화하기', description: 'AI와 생각을 공유합니다.', icon: '🎨' },
-    { id: 'stage3', stage: 3, title: 'AI와 함께하기', description: '그림과 텍스트로 AI와 소통합니다', icon: '🚀' },
+    { id: 'stage1', stage: 1, title: 'AI와 프롬프트란?', description: 'AI의 기본 원리와 프롬프트의 중요성을 배웁니다.', icon: '🎯' },
+    { id: 'stage2', stage: 2, title: '프롬프트 마스터링', description: '그림과 텍스트로 AI와 소통하는 5가지 기술을 익힙니다.', icon: '🎨' },
+    { id: 'stage3', stage: 3, title: '리얼 AI 마스터링', description: '실전 프롬프트 엔지니어링 기법을 학습합니다.', icon: '🚀', locked: true },
   ];
 
   const menuItems = [
@@ -93,7 +78,6 @@ function Base() {
       await api.sharePost(creation.prompt, creation.imageUrl);
       setSharingStates(prev => ({ ...prev, [creation.id]: 'shared' }));
       
-      // 첫 작품 공유 업적 미션 체크
       const shareMissionId = 'share_first_creation';
       if (!isMissionCompleted(shareMissionId)) {
         console.log("첫 작품 공유 업적 완료!");
@@ -136,7 +120,9 @@ function Base() {
               {myCreations.length > 0 ? (
                 myCreations.map(creation => {
                   const status = sharingStates[creation.id];
-                  return (<div key={creation.id} className="creation-card"><img src={creation.imageUrl} alt={creation.prompt} className="creation-image" /><div className="creation-overlay"><p className="creation-prompt">{creation.prompt}</p><button className={`share-btn ${status ? status : ''}`} onClick={() => handleShare(creation)} disabled={!!status}>{status === 'sharing' ? '공유 중...' : status === 'shared' ? '공유 완료 ✓' : '소셜에 공유하기'}</button></div></div>)
+                  // '나의 작품집'에서는 생성된 임시 URL 또는 저장된 영구 URL을 모두 보여줄 수 있음
+                  const imageUrl = creation.imageUrl.startsWith('http') ? creation.imageUrl : `${BACKEND_URL}${creation.imageUrl}`;
+                  return (<div key={creation.id} className="creation-card"><img src={imageUrl} alt={creation.prompt} className="creation-image" /><div className="creation-overlay"><p className="creation-prompt">{creation.prompt}</p><button className={`share-btn ${status ? status : ''}`} onClick={() => handleShare(creation)} disabled={!!status}>{status === 'sharing' ? '공유 중...' : status === 'shared' ? '공유 완료 ✓' : '소셜에 공유하기'}</button></div></div>)
                 })
               ) : (<div className="empty-gallery"><p>아직 완성된 작품이 없어요.</p><p>학습을 통해 멋진 작품을 만들어보세요!</p></div>)}
             </div>
@@ -149,7 +135,13 @@ function Base() {
             {isLoadingSocial ? (<div className="loading-gallery">작품을 불러오는 중...</div>) : (
               <div className="creations-grid">
                 {socialCreations.length > 0 ? (
-                  socialCreations.map(creation => (<div key={creation.id} className="creation-card"><img src={`http://localhost:8000${creation.image_url}`} alt={creation.prompt} className="creation-image" /><div className="creation-overlay"><p className="creation-prompt">{creation.prompt}</p></div></div>))
+                  socialCreations.map(creation => (
+                    <div key={creation.id} className="creation-card">
+                      {/* ★★★ 이미지 src 경로 수정 ★★★ */}
+                      <img src={`${BACKEND_URL}${creation.image_url}`} alt={creation.prompt} className="creation-image" />
+                      <div className="creation-overlay"><p className="creation-prompt">{creation.prompt}</p></div>
+                    </div>
+                  ))
                 ) : (<div className="empty-gallery"><p>아직 공유된 작품이 없어요.</p><p>'나의 작품집'에서 첫 번째로 작품을 공유해보세요!</p></div>)}
               </div>
             )}
@@ -162,18 +154,9 @@ function Base() {
         return (
           <div className="mission-content">
             <h2 className="welcome-title">미션 보드 🚩</h2><p className="welcome-text">다양한 미션을 완료하고 보상을 획득하세요!</p>
-            <div className="mission-section">
-              <h3>일일 미션</h3>
-              {dailyMissions.map(mission => (<div key={mission.id} className={`mission-card ${isMissionCompleted(mission.id) ? 'completed' : ''}`}><span className="mission-icon">{mission.icon}</span><div className="mission-info"><h4>{mission.title}</h4><p>{mission.description}</p></div><div className="mission-reward"><span>+{mission.reward} EXP</span>{isMissionCompleted(mission.id) ? (<button className="claim-btn completed" disabled>완료</button>) : (<button className="claim-btn">진행중</button>)}</div></div>))}
-            </div>
-             <div className="mission-section">
-              <h3>주간 미션</h3>
-              {weeklyMissions.map(mission => (<div key={mission.id} className={`mission-card ${isMissionCompleted(mission.id) ? 'completed' : ''}`}><span className="mission-icon">{mission.icon}</span><div className="mission-info"><h4>{mission.title}</h4><p>{mission.description}</p></div><div className="mission-reward"><span>+{mission.reward} EXP</span>{isMissionCompleted(mission.id) ? (<button className="claim-btn completed" disabled>완료</button>) : (<button className="claim-btn">진행중</button>)}</div></div>))}
-            </div>
-            <div className="mission-section">
-              <h3>업적</h3>
-              {achievements.map(mission => (<div key={mission.id} className={`mission-card ${isMissionCompleted(mission.id) ? 'completed' : ''}`}><span className="mission-icon">{mission.icon}</span><div className="mission-info"><h4>{mission.title}</h4><p>{mission.description}</p></div><div className="mission-reward"><span>+{mission.reward} EXP</span>{isMissionCompleted(mission.id) ? (<button className="claim-btn completed" disabled>완료</button>) : (<button className="claim-btn">진행중</button>)}</div></div>))}
-            </div>
+            <div className="mission-section"><h3>일일 미션</h3>{dailyMissions.map(mission => (<div key={mission.id} className={`mission-card ${isMissionCompleted(mission.id) ? 'completed' : ''}`}><span className="mission-icon">{mission.icon}</span><div className="mission-info"><h4>{mission.title}</h4><p>{mission.description}</p></div><div className="mission-reward"><span>+{mission.reward} EXP</span>{isMissionCompleted(mission.id) ? (<button className="claim-btn completed" disabled>완료</button>) : (<button className="claim-btn">진행중</button>)}</div></div>))}</div>
+            <div className="mission-section"><h3>주간 미션</h3>{weeklyMissions.map(mission => (<div key={mission.id} className={`mission-card ${isMissionCompleted(mission.id) ? 'completed' : ''}`}><span className="mission-icon">{mission.icon}</span><div className="mission-info"><h4>{mission.title}</h4><p>{mission.description}</p></div><div className="mission-reward"><span>+{mission.reward} EXP</span>{isMissionCompleted(mission.id) ? (<button className="claim-btn completed" disabled>완료</button>) : (<button className="claim-btn">진행중</button>)}</div></div>))}</div>
+            <div className="mission-section"><h3>업적</h3>{achievements.map(mission => (<div key={mission.id} className={`mission-card ${isMissionCompleted(mission.id) ? 'completed' : ''}`}><span className="mission-icon">{mission.icon}</span><div className="mission-info"><h4>{mission.title}</h4><p>{mission.description}</p></div><div className="mission-reward"><span>+{mission.reward} EXP</span>{isMissionCompleted(mission.id) ? (<button className="claim-btn completed" disabled>완료</button>) : (<button className="claim-btn">진행중</button>)}</div></div>))}</div>
           </div>
         );
       case 'settings':
