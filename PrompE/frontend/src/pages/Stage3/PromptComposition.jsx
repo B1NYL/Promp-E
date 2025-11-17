@@ -181,8 +181,12 @@ function PromptCompositionPage() {
   };
 
   const closeResult = () => {
-    setFinalImage(null);
+    addCreation({
+        prompt: composedPromptKr,
+        imageUrl: result.image_url,
+    });
     setIsGeneratingMedia(false);
+    setFinalImage(null);
   };
 
   return (
