@@ -1,3 +1,7 @@
+/* ================================== */
+/*          Verbalization 페이지        */
+/* ================================== */
+
 .verbalization-page {
   min-height: 100vh;
   background: var(--background);
@@ -79,8 +83,8 @@
   transition: all 0.3s ease;
   background: var(--background);
   color: var(--text);
-  max-height: 500px; /* 최대 높이 설정 */
-  overflow-y: auto;   /* 넘치면 스크롤바 표시 */
+  max-height: 500px;
+  overflow-y: auto;
 }
 .prompt-textarea-main:focus {
   outline: none;
@@ -139,7 +143,6 @@
   padding-bottom: 10px;
 }
 
-/* 힌트 로딩 */
 .hint-loading {
   font-size: 14px;
   color: var(--text-muted);
@@ -161,7 +164,9 @@
 .verbalization-page .result-section-full { border-top-color: var(--accent-yellow); }
 .verbalization-page .prompt-summary-box { border-color: var(--accent-yellow); }
 
-/* Cognition.css에서 가져온 공통 스타일 */
+/* ================================== */
+/*        공통 스타일 (Cognition.css 등)  */
+/* ================================== */
 .control-panel { display: flex; flex-direction: column; gap: 20px; overflow-y: auto; max-height: calc(100vh - 150px); }
 .panel-section { background: var(--card-background); padding: 20px; border-radius: 15px; box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05); }
 .section-title { font-size: 16px; font-weight: 700; color: var(--foreground); margin: 0 0 15px 0; }
@@ -169,4 +174,29 @@
 .submit-button:hover:not(:disabled) { transform: translateY(-2px); box-shadow: 0 6px 20px rgba(0, 200, 179, 0.4); }
 .submit-button:disabled { opacity: 0.5; cursor: not-allowed; }
 .result-section-full { background: var(--card-background); border-top: 3px solid var(--primary); padding: 40px 30px; animation: slideUp 0.5s ease-out; }
-/* ... (나머지 result, badge, learning-box 등 공통 스타일) */
+.result-container { max-width: 1200px; margin: 0 auto; }
+.result-title { font-size: 28px; font-weight: 800; color: var(--foreground); margin-bottom: 30px; text-align: center; }
+.result-content { display: grid; grid-template-columns: 1fr 1fr; gap: 40px; align-items: center; }
+.result-image-wrapper { display: flex; justify-content: center; align-items: center; }
+.result-image-large { width: 100%; max-width: 500px; height: auto; border-radius: 20px; }
+.result-info { display: flex; flex-direction: column; gap: 25px; }
+.success-badge { display: flex; align-items: center; gap: 15px; padding: 20px; border-radius: 15px; border-left: 5px solid var(--primary); }
+.badge-emoji { font-size: 48px; animation: bounce 1s ease-in-out infinite; }
+.success-badge h3 { font-size: 24px; margin: 0; }
+.prompt-summary-box { background: var(--background); padding: 15px; border-radius: 10px; border: 2px dashed; }
+.prompt-summary-box h4 { font-size: 14px; color: var(--text-muted); margin: 0 0 8px 0; }
+.prompt-summary-box p { font-size: 16px; color: var(--foreground); margin: 0; line-height: 1.6; }
+.prompt-summary-box strong { font-weight: 700; }
+.learning-box { background: var(--background); padding: 20px; border-radius: 12px; }
+.learning-box h4 { font-size: 16px; margin: 0 0 12px 0; }
+.learning-box p { font-size: 16px; color: var(--foreground); margin: 0 0 8px 0; font-weight: 600; }
+.learning-desc { font-size: 14px !important; color: var(--text-muted) !important; font-weight: 400 !important; }
+.result-actions { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; }
+.result-btn { padding: 16px; border: none; border-radius: 12px; font-size: 16px; font-weight: 700; cursor: pointer; transition: all 0.3s ease; }
+.result-btn.retry { background: var(--card-background); color: var(--primary); border: 2px solid var(--primary); }
+.result-btn.retry:hover { background: rgba(0, 200, 179, 0.05); transform: translateY(-2px); }
+.dark .result-btn.retry:hover { background: var(--input-background); }
+.result-btn.next { background: linear-gradient(135deg, var(--primary) 0%, #00a393 100%); color: var(--primary-foreground); }
+.result-btn.next:hover { transform: translateY(-2px); box-shadow: 0 8px 24px rgba(0, 200, 179, 0.4); }
+
+@keyframes bounce { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-8px); } }

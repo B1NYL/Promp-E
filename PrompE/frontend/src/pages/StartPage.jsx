@@ -32,8 +32,8 @@ function StartPage() {
         </div>
 
         <h2 className="main-title">
-          AI와 함께하는<br />
-          즐거운 학습 여행
+          학생들의 첫 프롬프팅,<br />
+          프롬피
         </h2>
 
         <button 

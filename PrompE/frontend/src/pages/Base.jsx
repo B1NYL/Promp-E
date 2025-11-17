@@ -43,7 +43,7 @@ function Base() {
   const stages = [
     { id: 'stage1', stage: 1, title: 'AI와 프롬프트란?', description: 'AI의 기본 원리와 프롬프트의 중요성을 배웁니다.', icon: '🎯' },
     { id: 'stage2', stage: 2, title: '프롬프트 마스터링', description: '그림과 텍스트로 AI와 소통하는 5가지 기술을 익힙니다.', icon: '🎨' },
-    { id: 'stage3', stage: 3, title: '리얼 AI 마스터링', description: '실전 프롬프트 엔지니어링 기법을 학습합니다.', icon: '🚀', locked: true },
+    { id: 'stage3', stage: 3, title: '리얼 AI 마스터링', description: '실전 프롬프트 엔지니어링 기법을 학습합니다.', icon: '🚀'},
   ];
 
   const menuItems = [
