@@ -1,3 +1,5 @@
+# main.py (수정 완료된 전체 코드)
+
 from fastapi import FastAPI, Depends, HTTPException, UploadFile, File, Form, Request
 from fastapi.staticfiles import StaticFiles
 from fastapi.middleware.cors import CORSMiddleware
@@ -72,9 +74,12 @@ class LayerData(BaseModel):
 class ComposePromptRequest(BaseModel):
     layers: List[LayerData]
 
+# ▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼ 수정된 부분 1 ▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼
+# Pydantic 모델의 필드명을 OpenAI가 생성하는 JSON 키와 일치시켰습니다.
 class ComposePromptResponse(BaseModel):
-    composed_prompt: str
-    composed_prompt_kr: str
+    dalle_prompt: str
+    korean_description: str
+# ▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲ 수정 완료 1 ▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲
 
 # --- 4. FastAPI 앱 및 미들웨어 설정 ---
 app = FastAPI()
@@ -218,12 +223,12 @@ async def compose_prompt_from_layers(request: ComposePromptRequest):
             max_tokens=400
         )
         response_data = json.loads(gpt_response.choices[0].message.content)
+        # ▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼ 수정된 부분 2 ▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼
+        # return 시 Pydantic 모델의 수정된 필드명과 일치하는 키를 사용합니다.
         return ComposePromptResponse(
-            composed_prompt=response_data.get("dalle_prompt", "Error."),
-            composed_prompt_kr=response_data.get("korean_description", "Error.")
+            dalle_prompt=response_data.get("dalle_prompt", "Error: Failed to generate DALL-E prompt."),
+            korean_description=response_data.get("korean_description", "오류: 한글 설명을 생성하지 못했습니다.")
         )
+        # ▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲ 수정 완료 2 ▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲
     except Exception as e:
         raise HTTPException(status_code=500, detail=f"프롬프트 조합 오류: {e}")
-    
-
-#update!
