@@ -143,8 +143,8 @@ function PromptCompositionPage() {
 
     try {
       const result = await api.composePrompt(layerData);
-      setComposedPrompt(result.composed_prompt);
-      setComposedPromptKr(result.composed_prompt_kr);
+      setComposedPrompt(result.dalle_prompt); 
+      setComposedPromptKr(result.korean_description);
     } catch (error) {
       alert("프롬프트 조합에 실패했습니다.");
     } finally {

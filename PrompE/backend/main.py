@@ -71,10 +71,17 @@ class LayerData(BaseModel):
 class ComposePromptRequest(BaseModel):
     layers: List[LayerData]
 
-# [수정됨] Pydantic 모델의 필드명을 OpenAI가 생성하는 JSON 키와 일치시킴
 class ComposePromptResponse(BaseModel):
     dalle_prompt: str
     korean_description: str
+
+# [추가됨] /api/save-image/ 엔드포인트를 위한 Pydantic 모델
+class SaveImageRequest(BaseModel):
+    temp_url: str
+
+class SaveImageResponse(BaseModel):
+    saved_url: str
+
 
 # --- 4. FastAPI 앱 및 미들웨어 설정 ---
 app = FastAPI()
@@ -120,6 +127,38 @@ async def create_post(request: ShareRequest, db: Session = Depends(get_db)):
 @app.get("/api/posts/", response_model=List[PostRead])
 async def read_posts(skip: int = 0, limit: int = 100, db: Session = Depends(get_db)):
     return db.query(Post).offset(skip).limit(limit).all()
+
+# [추가됨] 404 에러 해결을 위해 누락된 /api/save-image/ 엔드포인트 구현
+@app.post("/api/save-image/", response_model=SaveImageResponse)
+async def save_image_from_temp_url(request: SaveImageRequest):
+    """
+    DALL-E 등에서 생성된 임시 URL로부터 이미지를 다운로드하여 서버에 영구 저장하고,
+    저장된 파일에 접근할 수 있는 새로운 URL을 반환합니다.
+    """
+    image_url_to_download = request.temp_url
+    try:
+        # httpx를 사용하여 비동기적으로 이미지를 다운로드합니다.
+        async with httpx.AsyncClient() as client:
+            response = await client.get(image_url_to_download)
+            response.raise_for_status()  # 2xx 상태 코드가 아니면 에러 발생
+            image_data = response.content
+    except httpx.RequestError as e:
+        raise HTTPException(status_code=500, detail=f"임시 URL에서 이미지를 다운로드할 수 없습니다: {e}")
+    
+    # 충돌을 피하기 위해 UUID로 고유한 파일 이름을 생성합니다.
+    unique_filename = f"{uuid.uuid4()}.png"
+    file_location = f"uploads/{unique_filename}"
+    
+    # 다운로드한 이미지 데이터를 바이너리 쓰기 모드로 파일에 저장합니다.
+    with open(file_location, "wb") as buffer:
+        buffer.write(image_data)
+        
+    # 프론트엔드에서 사용할 수 있는 상대 경로를 생성합니다.
+    # 예: /uploads/xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx.png
+    saved_url = f"/{file_location}"
+    
+    return SaveImageResponse(saved_url=saved_url)
+
 
 @app.post("/api/chat/", response_model=ChatResponse)
 async def chat_with_ai(request: ChatRequest):
@@ -209,7 +248,6 @@ async def compose_prompt_from_layers(request: ComposePromptRequest):
         )
         response_data = json.loads(gpt_response.choices[0].message.content)
         
-        # [수정됨] return 시 Pydantic 모델의 수정된 필드명과 일치하는 키를 사용
         return ComposePromptResponse(
             dalle_prompt=response_data.get("dalle_prompt", "Error: Failed to generate DALL-E prompt."),
             korean_description=response_data.get("korean_description", "오류: 한글 설명을 생성하지 못했습니다.")
