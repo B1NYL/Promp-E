@@ -145,4 +145,27 @@ export const api = {
       throw error;
     }
   },
+
+  // [추가됨] 404 에러 해결을 위해 누락된 함수 추가
+  /**
+   * 여러 레이어(이미지, 텍스트)를 조합하여 프롬프트를 생성하는 API
+   * @param {Array<object>} layers - 사용자가 추가한 레이어 데이터 배열
+   */
+  async composePrompt(layers) {
+    try {
+      const response = await fetch(`${API_FULL_URL}/compose-prompt/`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ layers: layers }),
+      });
+      if (!response.ok) {
+        const errorData = await response.json().catch(() => ({ detail: response.statusText }));
+        throw new Error(errorData.detail || `Server error: ${response.status}`);
+      }
+      return response.json();
+    } catch (error) {
+      console.error("API Error (composePrompt):", error);
+      throw error;
+    }
+  },
 };

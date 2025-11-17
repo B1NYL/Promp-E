@@ -1,10 +1,9 @@
-from fastapi import FastAPI, Depends, HTTPException, UploadFile, File, Form, Request
+from fastapi import FastAPI, Depends, HTTPException
 from fastapi.staticfiles import StaticFiles
 from fastapi.middleware.cors import CORSMiddleware
 from sqlalchemy import create_engine, Column, Integer, String
 from sqlalchemy.orm import sessionmaker, Session, declarative_base
 from pydantic import BaseModel
-import shutil
 import os
 from typing import List, Dict
 import openai
@@ -72,13 +71,14 @@ class LayerData(BaseModel):
 class ComposePromptRequest(BaseModel):
     layers: List[LayerData]
 
+# [수정됨] Pydantic 모델의 필드명을 OpenAI가 생성하는 JSON 키와 일치시킴
 class ComposePromptResponse(BaseModel):
-    composed_prompt: str
-    composed_prompt_kr: str
+    dalle_prompt: str
+    korean_description: str
 
 # --- 4. FastAPI 앱 및 미들웨어 설정 ---
 app = FastAPI()
-origins = ["http://localhost:5173", "http://localhost:5174", "http://localhost:5175","https://promp-e.vercel.app"]
+origins = ["http://localhost:5173", "http://localhost:5174", "http://localhost:5175", "https://promp-e.vercel.app"]
 app.add_middleware(CORSMiddleware, allow_origins=origins, allow_credentials=True, allow_methods=["*"], allow_headers=["*"])
 os.makedirs("uploads", exist_ok=True)
 app.mount("/uploads", StaticFiles(directory="uploads"), name="uploads")
@@ -167,24 +167,14 @@ async def generate_hints_from_prompt(request: HintRequest):
     if not openai.api_key: raise HTTPException(status_code=500, detail="OpenAI API 키가 설정되지 않았습니다.")
     try:
         system_prompt = f"""
-        You are an AI assistant that helps a child learn prompt engineering.
-        The user will provide a sentence they have created: "{request.prompt}"
-
-        Your task is to analyze this sentence and suggest alternative or additional keywords to inspire creativity.
-
+        You are an AI assistant that helps a child learn prompt engineering. The user will provide a sentence they have created: "{request.prompt}". Your task is to analyze this sentence and suggest alternative or additional keywords to inspire creativity.
         **CRITICAL INSTRUCTIONS:**
         1.  You **MUST** generate **exactly 5 keywords** for each category: "adjectives", "verbs" (actions), and "styles" or "moods".
         2.  The keywords must be in Korean.
         3.  The keywords should be creative and related to the user's prompt, but do not need to be strictly derived from it. Expand on the theme.
         4.  Your response format **MUST** be a valid JSON object with three keys: "adjectives", "verbs", "styles". Each key's value must be a list containing exactly 5 strings.
-
         Example User Prompt: "숲속에서 잠자는 커다란 빨간 용"
-        Your JSON Response (MUST contain 5 items per list):
-        {{
-            "adjectives": ["신비로운", "고대의", "반짝이는", "거대한", "평화로운"],
-            "verbs": ["꿈을 꾸는", "숨 쉬는", "둥지를 튼", "조용히 기다리는", "빛을 내는"],
-            "styles": ["수채화 스타일", "애니메이션 느낌", "밤 배경", "아침 햇살 아래", "판타지 아트"]
-        }}
+        Your JSON Response (MUST contain 5 items per list): {{ "adjectives": ["신비로운", "고대의", "반짝이는", "거대한", "평화로운"], "verbs": ["꿈을 꾸는", "숨 쉬는", "둥지를 튼", "조용히 기다리는", "빛을 내는"], "styles": ["수채화 스타일", "애니메이션 느낌", "밤 배경", "아침 햇살 아래", "판타지 아트"] }}
         """
         completion = openai.chat.completions.create(model="gpt-4o", messages=[{"role": "system", "content": system_prompt}, {"role": "user", "content": request.prompt}], response_format={"type": "json_object"})
         hint_data = json.loads(completion.choices[0].message.content)
@@ -218,9 +208,11 @@ async def compose_prompt_from_layers(request: ComposePromptRequest):
             max_tokens=400
         )
         response_data = json.loads(gpt_response.choices[0].message.content)
+        
+        # [수정됨] return 시 Pydantic 모델의 수정된 필드명과 일치하는 키를 사용
         return ComposePromptResponse(
-            composed_prompt=response_data.get("dalle_prompt", "Error."),
-            composed_prompt_kr=response_data.get("korean_description", "Error.")
+            dalle_prompt=response_data.get("dalle_prompt", "Error: Failed to generate DALL-E prompt."),
+            korean_description=response_data.get("korean_description", "오류: 한글 설명을 생성하지 못했습니다.")
         )
     except Exception as e:
         raise HTTPException(status_code=500, detail=f"프롬프트 조합 오류: {e}")
