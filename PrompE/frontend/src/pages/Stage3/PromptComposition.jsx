@@ -1,3 +1,5 @@
+// 기존 코드를 삭제하고 아래 코드로 전체를 교체하세요.
+
 import React, { useState, useRef, useEffect, useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { api } from '../../services/api';
@@ -152,6 +154,7 @@ function PromptCompositionPage() {
     }
   };
 
+  // --- ▼▼▼ 수정된 부분 1 ▼▼▼ ---
   const handleGenerateMedia = async (type) => {
     if (!composedPrompt) return;
     setIsGeneratingMedia(true);
@@ -160,13 +163,16 @@ function PromptCompositionPage() {
     try {
       if (type === 'image') {
         const result = await api.generateImage(composedPrompt, null);
+        // 생성된 이미지 URL을 상태에 저장합니다. 저장은 closeResult에서 합니다.
         setFinalImage(result.image_url);
         
         const lessonId = 's1-composition';
         const wasAlreadyCompleted = isCompleted(lessonId);
         gainExp(150, wasAlreadyCompleted);
+        
+        // 레슨 첫 완료 시에만 활동 기록 및 완료 처리를 합니다.
+        // addCreation은 여기서 제거합니다.
         if (!wasAlreadyCompleted) {
-          addCreation({ prompt: composedPromptKr, imageUrl: result.image_url });
           addActivity({ icon: '🪄', title: `[조합] "${composedPromptKr.substring(0, 15)}..." 완성`, time: '방금 전' });
           completeLesson(lessonId);
         }
@@ -180,13 +186,19 @@ function PromptCompositionPage() {
     }
   };
 
+  // --- ▼▼▼ 수정된 부분 2 ▼▼▼ ---
   const closeResult = () => {
-    addCreation({
-        prompt: composedPromptKr,
-        imageUrl: result.image_url,
-    });
-    setIsGeneratingMedia(false);
+    // 상태에 저장된 finalImage와 composedPromptKr을 사용하여 작품집에 추가합니다.
+    if (finalImage && composedPromptKr) {
+        addCreation({
+            prompt: composedPromptKr,
+            imageUrl: finalImage, // 'result.image_url' 대신 상태 값 'finalImage' 사용
+        });
+    }
+    
+    // 상태를 초기화하여 결과 패널을 닫습니다.
     setFinalImage(null);
+    setIsGeneratingMedia(false);
   };
 
   return (
