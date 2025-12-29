@@ -1,18 +1,14 @@
 .main-header {
-  background: var(--glass-bg);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
-  padding: 1rem 2.5rem;
+  background: var(--background);
+  padding: 10px 40px;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  box-shadow: var(--glass-shadow);
   position: sticky;
   top: 0;
   z-index: 100;
   width: 100%;
-  border-bottom: 1px solid var(--glass-border);
-  transition: all 0.3s ease;
+  border-bottom: 2px solid var(--border);
 }
 
 /* 로고 & 텍스트 */
@@ -21,28 +17,26 @@
   align-items: center;
   gap: 12px;
   cursor: pointer;
-  transition: transform 0.2s ease;
+  transition: transform 0.1s ease;
 }
 
-.logo-text:hover {
-  transform: translateY(-1px);
+.logo-text:active {
+  transform: scale(0.95);
 }
 
 .logo {
+  font-family: 'Nunito', sans-serif;
   font-size: 1.8rem;
   font-weight: 800;
-  background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
-  background-clip: text;
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
+  color: var(--primary);
   margin: 0;
-  letter-spacing: -0.03em;
+  letter-spacing: -0.5px;
 }
 
 .logo-sub {
   font-size: 1rem;
   color: var(--text-muted);
-  font-weight: 500;
+  font-weight: 700;
   text-transform: uppercase;
   letter-spacing: 0.1em;
 }
@@ -59,86 +53,80 @@
   display: flex;
   align-items: center;
   gap: 12px;
-  background: rgba(255, 255, 255, 0.5);
-  /* Semi-transparent */
-  padding: 6px 16px 6px 6px;
-  border-radius: 9999px;
-  border: 1px solid var(--border);
-  backdrop-filter: blur(4px);
-  transition: all 0.3s ease;
-}
-
-.dark .user-exp-bar {
-  background: rgba(0, 0, 0, 0.2);
+  padding: 6px 12px;
+  border-radius: 12px;
+  transition: all 0.2s ease;
 }
 
 .user-exp-bar:hover {
-  border-color: var(--primary);
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+  background: rgba(0, 0, 0, 0.05);
 }
 
 .level-badge {
-  background: linear-gradient(135deg, var(--primary), var(--secondary));
+  background: var(--accent);
   color: #fff;
-  font-weight: 700;
-  font-size: 0.8rem;
+  font-weight: 800;
+  font-size: 0.9rem;
   padding: 4px 10px;
-  border-radius: 9999px;
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  border-radius: 8px;
+  box-shadow: 0 2px 0 var(--accent-shadow);
 }
 
 .exp-bar-wrapper {
-  width: 120px;
-  height: 8px;
+  width: 100px;
+  height: 10px;
   background-color: var(--border);
-  border-radius: 9999px;
+  border-radius: 99px;
   overflow: hidden;
 }
 
 .exp-bar-fill {
   height: 100%;
-  background: linear-gradient(90deg, var(--primary), var(--secondary));
-  border-radius: 9999px;
-  transition: width 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+  background: var(--accent);
+  border-radius: 99px;
+  transition: width 0.5s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .exp-text {
-  font-size: 0.8rem;
-  font-weight: 600;
-  color: var(--text-muted);
+  font-size: 0.9rem;
+  font-weight: 700;
+  color: var(--accent);
   min-width: 60px;
   text-align: right;
 }
 
 /* 프로필 버튼 */
 .profile-button {
-  width: 42px;
-  height: 42px;
-  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  border-radius: 12px;
   border: 2px solid var(--border);
-  background: var(--card-background);
+  background: var(--card-bg);
   font-size: 1.2rem;
   cursor: pointer;
-  transition: all 0.3s ease;
+  transition: all 0.1s ease;
   display: flex;
   align-items: center;
   justify-content: center;
   color: var(--text-muted);
+  box-shadow: 0 4px 0 var(--border);
+}
+
+.profile-button:active {
+  transform: translateY(4px);
+  box-shadow: none;
 }
 
 .profile-button:hover {
-  border-color: var(--primary);
-  color: var(--primary);
-  transform: translateY(-2px);
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  background: #f7f7f7;
 }
 
 /* 햄버거 메뉴 버튼 (Base 페이지용) */
 .activity-toggle-btn {
   background: transparent;
-  border: 1px solid var(--border);
-  width: 42px;
-  height: 42px;
+  border: 2px solid var(--border);
+  width: 40px;
+  height: 40px;
   border-radius: 12px;
   font-size: 1.2rem;
   color: var(--text-muted);
@@ -146,22 +134,24 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  transition: all 0.3s ease;
+  transition: all 0.1s ease;
+  box-shadow: 0 4px 0 var(--border);
+}
+
+.activity-toggle-btn:active {
+  transform: translateY(4px);
+  box-shadow: none;
 }
 
 .activity-toggle-btn:hover {
-  background: var(--primary);
-  border-color: var(--primary);
-  color: #fff;
-  transform: translateY(-2px);
-  box-shadow: 0 4px 12px rgba(99, 102, 241, 0.3);
+  background: #f7f7f7;
 }
 
 
 /* 반응형 */
 @media (max-width: 768px) {
   .main-header {
-    padding: 1rem 1.5rem;
+    padding: 10px 20px;
   }
 
   .logo {

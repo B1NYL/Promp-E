@@ -1,5 +1,4 @@
-/* Fonts */
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@400;500;600;700;800&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Nunito:wght@400;500;600;700;800;900&display=swap');
 
 * {
   margin: 0;
@@ -9,81 +8,150 @@
 
 body {
   margin: 0;
-  font-family: 'Inter', sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+  font-family: 'Nunito', sans-serif;
   background-color: var(--background);
   color: var(--foreground);
-  transition: background-color 0.3s ease, color 0.3s ease;
+  transition: background-color 0.3s ease;
+  overflow-x: hidden;
 }
 
-h1, h2, h3, h4, h5, h6 {
-  font-family: 'Outfit', sans-serif;
-}
-
-#root {
-  width: 100%;
-  min-height: 100vh;
-}
-
+/* Palette - Duolingo Inspired (Vibrant & Playful) */
 :root {
-  /* Light Mode - Sophisticated & Clean */
-  --background: #ffffff;
-  --foreground: #1e293b; /* Slate 800 */
-  --card-background: rgba(255, 255, 255, 0.8);
-  --card-foreground: #1e293b;
-  --border: #e2e8f0; /* Slate 200 */
-  
-  /* Primary - Vibrant Gradient capable */
-  --primary: #6366f1; /* Indigo 500 */
-  --primary-hover: #4f46e5;
-  --primary-foreground: #ffffff;
-  
-  --secondary: #ec4899; /* Pink 500 */
-  
-  --text-muted: #64748b; /* Slate 500 */
-  --text-light: #94a3b8;
-  
-  --glass-border: rgba(255, 255, 255, 0.5);
-  --glass-bg: rgba(255, 255, 255, 0.7);
-  --glass-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+  /* Primary Actions (Green) */
+  --primary: #58CC02;
+  --primary-shadow: #58a700;
+  --primary-light: #89e219;
+  --primary-text: #fff;
+
+  /* Secondary Actions (Blue) */
+  --secondary: #1CB0F6;
+  --secondary-shadow: #1899D6;
+  --secondary-text: #fff;
+
+  /* Accent (Yellow/Gold) */
+  --accent: #FFC800;
+  --accent-shadow: #E5B300;
+
+  /* Danger (Red) */
+  --danger: #FF4B4B;
+  --danger-shadow: #d42c2c;
+
+  /* Neutral */
+  --background: #FFFFFF;
+  --foreground: #3c3c3c;
+  --text-muted: #777;
+
+  --border: #e5e5e5;
+  --card-bg: #fff;
+
+  /* 3D Depth Constants */
+  --btn-depth: 4px;
+  --card-depth: 0px;
+  /* Cards typically flat but outlined */
 }
 
 .dark {
-  /* Dark Mode - Deep Space */
-  --background: #0f172a; /* Slate 900 */
-  --foreground: #f8fafc; /* Slate 50 */
-  --card-background: rgba(30, 41, 59, 0.7);
-  --card-foreground: #f8fafc;
-  --border: #334155; /* Slate 700 */
-  
-  --primary: #818cf8; /* Indigo 400 */
-  --primary-hover: #6366f1;
-  --primary-foreground: #ffffff;
-  
-  --secondary: #f472b6; /* Pink 400 */
-  
-  --text-muted: #94a3b8; /* Slate 400 */
-  --text-light: #cbd5e1;
-  
-  --glass-border: rgba(255, 255, 255, 0.1);
-  --glass-bg: rgba(15, 23, 42, 0.6);
-  --glass-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.5);
+  --background: #131F24;
+  --foreground: #Fff;
+  --card-bg: #202F36;
+  --border: #37464F;
+  --text-muted: #AFAFAF;
 }
 
-/* Glassmorphism Utilities */
-.glass-panel {
-  background: var(--glass-bg);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
-  border: 1px solid var(--glass-border);
-  box-shadow: var(--glass-shadow);
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-weight: 800;
+  letter-spacing: 0.5px;
+}
+
+/* 3D Button Utility */
+.btn-3d {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 12px 24px;
+  font-size: 1rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.8px;
+  border: 2px solid transparent;
+  /* Keeps sizing consistent */
+  border-radius: 16px;
+  cursor: pointer;
+  transition: all 0.1s;
+  position: relative;
+  /* Top-layer color handled by specific classes */
+}
+
+.btn-3d:active {
+  transform: translateY(var(--btn-depth));
+  box-shadow: none !important;
+  margin-bottom: 0 !important;
+  /* Prevents layout shift if relying on margin */
+}
+
+/* Primary Button (Green) */
+.btn-primary {
+  background-color: var(--primary);
+  color: var(--primary-text);
+  box-shadow: 0 var(--btn-depth) 0 var(--primary-shadow);
+  margin-bottom: var(--btn-depth);
+  /* Reserve space for shadow */
+}
+
+.btn-primary:active {
+  box-shadow: 0 0 0 var(--primary-shadow);
+  transform: translateY(var(--btn-depth));
+}
+
+/* Secondary Button (Blue) */
+.btn-secondary {
+  background-color: var(--secondary);
+  color: var(--secondary-text);
+  box-shadow: 0 var(--btn-depth) 0 var(--secondary-shadow);
+  margin-bottom: var(--btn-depth);
+}
+
+.btn-secondary:active {
+  box-shadow: 0 0 0 var(--secondary-shadow);
+  transform: translateY(var(--btn-depth));
+}
+
+/* Outline Button (Gray/White) */
+.btn-outline {
+  background-color: transparent;
+  border: 2px solid var(--border);
+  color: var(--text-muted);
+  box-shadow: 0 var(--btn-depth) 0 var(--border);
+  margin-bottom: var(--btn-depth);
+}
+
+.btn-outline:hover {
+  background-color: #f7f7f7;
+  border-color: #d7d7d7;
+}
+
+.btn-outline:active {
+  box-shadow: 0 0 0 transparent;
+  transform: translateY(var(--btn-depth));
+  background-color: #eaeaea;
+}
+
+/* Cards */
+.card-panel {
+  background: var(--card-bg);
+  border: 2px solid var(--border);
+  border-radius: 16px;
+  padding: 20px;
 }
 
 /* Scrollbar */
 ::-webkit-scrollbar {
-  width: 8px;
-  height: 8px;
+  width: 10px;
 }
 
 ::-webkit-scrollbar-track {
@@ -91,17 +159,12 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 ::-webkit-scrollbar-thumb {
-  background: var(--text-muted);
-  border-radius: 4px;
+  background: #ccc;
+  border-radius: 99px;
+  border: 3px solid transparent;
+  background-clip: content-box;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: var(--primary);
+  background-color: #aaa;
 }
-
-/* Firefox */
-* {
-  scrollbar-width: thin;
-  scrollbar-color: var(--text-muted) transparent;
-}
-

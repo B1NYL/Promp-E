@@ -1,142 +1,56 @@
 .start-page {
   min-height: 100vh;
   width: 100%;
-  position: relative;
-  overflow: hidden;
-  background: var(--background);
-  color: var(--foreground);
+  background-color: var(--background);
+  background-image: radial-gradient(#e5e5e5 1px, transparent 1px);
+  background-size: 20px 20px;
+  /* Dot pattern */
   display: flex;
   flex-direction: column;
-}
-
-/* Background Effects */
-.start-page::before {
-  content: '';
-  position: absolute;
-  top: -20%;
-  left: -10%;
-  width: 70vw;
-  height: 70vw;
-  background: radial-gradient(circle, rgba(99, 102, 241, 0.15) 0%, rgba(0, 0, 0, 0) 70%);
-  border-radius: 50%;
-  z-index: 0;
-  pointer-events: none;
-  filter: blur(60px);
-  animation: blob-float 20s infinite alternate;
-}
-
-.start-page::after {
-  content: '';
-  position: absolute;
-  bottom: -20%;
-  right: -10%;
-  width: 60vw;
-  height: 60vw;
-  background: radial-gradient(circle, rgba(236, 72, 153, 0.1) 0%, rgba(0, 0, 0, 0) 70%);
-  border-radius: 50%;
-  z-index: 0;
-  pointer-events: none;
-  filter: blur(60px);
-  animation: blob-float 15s infinite alternate-reverse;
-}
-
-@keyframes blob-float {
-  0% {
-    transform: translate(0, 0) scale(1);
-  }
-
-  100% {
-    transform: translate(30px, 50px) scale(1.1);
-  }
-}
-
-/* Header */
-.header {
-  display: flex;
-  justify-content: space-between;
   align-items: center;
-  padding: 1.5rem 3rem;
-  z-index: 10;
+  justify-content: center;
+  text-align: center;
+  padding: 20px;
+}
+
+/* Header (Simple Logo) */
+.start-header {
   position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
+  top: 40px;
+  left: 40px;
 }
 
-.logo-text {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-}
-
-.logo {
-  font-size: 2rem;
+.start-logo {
+  font-family: 'Nunito', sans-serif;
+  font-size: 2.5rem;
   font-weight: 800;
-  background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
-  background-clip: text;
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  margin: 0;
-  letter-spacing: -0.03em;
-}
-
-.logo-sub {
-  font-size: 1rem;
-  font-weight: 500;
-  color: var(--text-muted);
-  text-transform: uppercase;
-  letter-spacing: 0.1em;
-}
-
-/* Buttons */
-.login-button {
-  padding: 0.75rem 1.5rem;
-  font-size: 0.95rem;
-  font-weight: 600;
-  color: var(--foreground);
-  background: transparent;
-  border: 1px solid var(--border);
-  border-radius: 9999px;
-  /* full rounded */
-  cursor: pointer;
-  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-}
-
-.login-button:hover {
-  background: var(--foreground);
-  color: var(--background);
-  transform: translateY(-2px);
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  color: var(--primary);
+  letter-spacing: -0.5px;
 }
 
 /* Main Content */
-.main-content {
+.start-content {
+  max-width: 800px;
+  display: flex;
+  flex-direction: row;
+  /* Side by side on desktop */
+  align-items: center;
+  gap: 60px;
+}
+
+.hero-visual {
   flex: 1;
   display: flex;
-  flex-direction: column;
   justify-content: center;
-  align-items: center;
-  z-index: 1;
-  padding: 0 20px;
-  text-align: center;
-  margin-top: 60px;
-  /* offset for header */
 }
 
-.hero-image {
-  margin-bottom: 2rem;
-  position: relative;
+.hero-img {
+  width: 300px;
+  filter: drop-shadow(0 10px 0 rgba(0, 0, 0, 0.1));
+  animation: bounce 3s infinite ease-in-out;
 }
 
-.logo-img {
-  width: 180px;
-  height: 180px;
-  object-fit: contain;
-  filter: drop-shadow(0 20px 40px rgba(99, 102, 241, 0.25));
-  animation: float 6s ease-in-out infinite;
-}
-
-@keyframes float {
+@keyframes bounce {
 
   0%,
   100% {
@@ -144,106 +58,65 @@
   }
 
   50% {
-    transform: translateY(-20px);
+    transform: translateY(-15px);
+  }
+
+  70% {
+    transform: translateY(-5px);
   }
 }
 
+.hero-text {
+  flex: 1;
+  text-align: left;
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
+}
+
 .main-title {
-  font-size: 4rem;
-  line-height: 1.1;
-  font-weight: 800;
-  margin-bottom: 3rem;
-  background: linear-gradient(180deg, var(--foreground) 0%, var(--text-muted) 100%);
-  background-clip: text;
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  letter-spacing: -0.04em;
+  font-size: 3rem;
+  line-height: 1.2;
+  color: var(--foreground);
+  margin: 0;
 }
 
-.main-title br {
-  display: block;
-}
-
-/* Start Button */
-.start-button {
-  position: relative;
-  padding: 1.25rem 3.5rem;
-  font-size: 1.25rem;
-  font-weight: 600;
-  color: #fff;
-  background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
-  border: none;
-  border-radius: 9999px;
-  cursor: pointer;
-  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-  box-shadow: 0 10px 30px -10px rgba(99, 102, 241, 0.4);
-  overflow: hidden;
-}
-
-.start-button::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: -100%;
-  width: 100%;
-  height: 100%;
-  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
-  transition: 0.5s;
-}
-
-.start-button:hover {
-  transform: translateY(-4px) scale(1.02);
-  box-shadow: 0 20px 40px -10px rgba(99, 102, 241, 0.5);
-}
-
-.start-button:hover::before {
-  left: 100%;
-}
-
-.start-button:active {
-  transform: translateY(-1px) scale(0.98);
-}
-
-/* Features / Footer area if needed */
-.features {
-  position: absolute;
-  bottom: 2rem;
-  width: 100%;
+/* Buttons */
+.start-buttons {
   display: flex;
-  justify-content: center;
-  gap: 3rem;
-  opacity: 0.7;
+  flex-direction: column;
+  gap: 15px;
+  width: 100%;
+  max-width: 300px;
 }
 
-.feature-item {
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-  font-size: 0.9rem;
-  color: var(--text-muted);
+.btn-start {
+  width: 100%;
+  text-align: center;
 }
 
 /* Responsive */
 @media (max-width: 768px) {
-  .header {
-    padding: 1rem 1.5rem;
+  .start-header {
+    top: 20px;
+    left: 20px;
   }
 
-  .logo {
-    font-size: 1.5rem;
+  .start-content {
+    flex-direction: column;
+    gap: 30px;
+  }
+
+  .hero-img {
+    width: 220px;
+  }
+
+  .hero-text {
+    text-align: center;
+    align-items: center;
   }
 
   .main-title {
-    font-size: 2.5rem;
-  }
-
-  .start-button {
-    padding: 1rem 2.5rem;
-    font-size: 1.1rem;
-  }
-
-  .logo-img {
-    width: 140px;
-    height: 140px;
+    font-size: 2rem;
   }
 }
