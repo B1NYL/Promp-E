@@ -1,9 +1,8 @@
-import React, { useState } from 'react'
+import React from 'react'
 import { useNavigate } from 'react-router-dom'
 import '../css/StartPage.css'
 
 function StartPage() {
-  const [isHovered, setIsHovered] = useState(false)
   const navigate = useNavigate()
 
   const handleStart = () => {
@@ -11,42 +10,51 @@ function StartPage() {
   }
 
   const handleLogin = () => {
-    console.log('로그인 페이지로 이동')
+    console.log('Login clicked')
   }
 
   return (
     <div className="start-page">
-      <header className="header">
+      <header className="header glass-panel">
         <div className="logo-text">
           <h1 className="logo">PrompE</h1>
-          <span className="logo-sub">프롬피</span>
+          <span className="logo-sub">AI Prompt Class</span>
         </div>
         <button className="login-button" onClick={handleLogin}>
-          로그인
+          Sign In
         </button>
       </header>
 
       <div className="main-content">
         <div className="hero-image">
-          <img src="/logo.png" alt="PrompE 로고" className="logo-img" />
+          {/* Ensure logo.png is a high-quality asset or replaced with a 3D element */}
+          <img src="/logo.png" alt="PrompE Logo" className="logo-img" />
         </div>
 
         <h2 className="main-title">
-          학생들의 첫 프롬프팅,<br />
-          프롬피
+          Master the Art of <br />
+          Prompt Engineering
         </h2>
 
         <button 
-          className={`start-button ${isHovered ? 'hovered' : ''}`}
-          onMouseEnter={() => setIsHovered(true)}
-          onMouseLeave={() => setIsHovered(false)}
+          className="start-button"
           onClick={handleStart}
         >
-          시작하기
+          Get Started
         </button>
       </div>
 
-
+      <div className="features">
+        <div className="feature-item">
+          <span>✨</span> Interactive Learning
+        </div>
+        <div className="feature-item">
+          <span>🚀</span> AI Powered
+        </div>
+        <div className="feature-item">
+          <span>💡</span> Creative Thinking
+        </div>
+      </div>
     </div>
   )
 }

@@ -1,3 +1,6 @@
+/* Fonts */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@400;500;600;700;800&display=swap');
+
 * {
   margin: 0;
   padding: 0;
@@ -6,11 +9,16 @@
 
 body {
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Noto Sans KR', 
-    'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
+  font-family: 'Inter', sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  background-color: var(--background);
+  color: var(--foreground);
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: 'Outfit', sans-serif;
 }
 
 #root {
@@ -18,66 +26,82 @@ body {
   min-height: 100vh;
 }
 
-/* src/css/index.css */
-
-/* 라이트 모드 기본 색상 */
 :root {
-  --background: #f5f5f5;
-  --foreground: #2b2b2b;
-  --card-background: white;
-  --card-foreground: #2b2b2b;
-  --border: #e0e0e0;
-  --primary: #00C8B3;
-  --primary-foreground: white;
-  --text-muted: #666;
-  --text: black;
-  --border: #eee;
+  /* Light Mode - Sophisticated & Clean */
+  --background: #ffffff;
+  --foreground: #1e293b; /* Slate 800 */
+  --card-background: rgba(255, 255, 255, 0.8);
+  --card-foreground: #1e293b;
+  --border: #e2e8f0; /* Slate 200 */
+  
+  /* Primary - Vibrant Gradient capable */
+  --primary: #6366f1; /* Indigo 500 */
+  --primary-hover: #4f46e5;
+  --primary-foreground: #ffffff;
+  
+  --secondary: #ec4899; /* Pink 500 */
+  
+  --text-muted: #64748b; /* Slate 500 */
+  --text-light: #94a3b8;
+  
+  --glass-border: rgba(255, 255, 255, 0.5);
+  --glass-bg: rgba(255, 255, 255, 0.7);
+  --glass-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
 }
 
-/* 다크 모드 색상 */
 .dark {
-  --background: #1a1a1a;
-  --foreground: #e0e0e0;
-  --card-background: #2a2a2a;
-  --card-foreground: #e0e0e0;
-  --border: #3a3a3a;
-  --primary: #00C8B3;
-  --primary-foreground: white;
-  --text-muted: #a0a0a0;
-  --text: white;
-  --border: #eee;
+  /* Dark Mode - Deep Space */
+  --background: #0f172a; /* Slate 900 */
+  --foreground: #f8fafc; /* Slate 50 */
+  --card-background: rgba(30, 41, 59, 0.7);
+  --card-foreground: #f8fafc;
+  --border: #334155; /* Slate 700 */
+  
+  --primary: #818cf8; /* Indigo 400 */
+  --primary-hover: #6366f1;
+  --primary-foreground: #ffffff;
+  
+  --secondary: #f472b6; /* Pink 400 */
+  
+  --text-muted: #94a3b8; /* Slate 400 */
+  --text-light: #cbd5e1;
+  
+  --glass-border: rgba(255, 255, 255, 0.1);
+  --glass-bg: rgba(15, 23, 42, 0.6);
+  --glass-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.5);
 }
 
+/* Glassmorphism Utilities */
+.glass-panel {
+  background: var(--glass-bg);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid var(--glass-border);
+  box-shadow: var(--glass-shadow);
+}
+
+/* Scrollbar */
 ::-webkit-scrollbar {
-  width: 10px; /* 스크롤바의 너비 */
-  height: 10px; /* 가로 스크롤바의 높이 */
+  width: 8px;
+  height: 8px;
 }
 
 ::-webkit-scrollbar-track {
-  background: var(--background); /* 스크롤바의 배경색 */
+  background: transparent;
 }
 
 ::-webkit-scrollbar-thumb {
-  background: #c0c0c0; /* 스크롤바 막대의 색상 */
-  border-radius: 10px;
-  border: 2px solid var(--background); /* 막대 주변의 여백 효과 */
-}
-
-.dark ::-webkit-scrollbar-thumb {
-  background: #4a4a4a; /* 다크 모드일 때 막대 색상 */
+  background: var(--text-muted);
+  border-radius: 4px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: var(--primary); /* 마우스를 올렸을 때 색상 */
+  background: var(--primary);
 }
-
 
 /* Firefox */
 * {
-  scrollbar-width: thin; /* 스크롤바를 얇게 */
-  scrollbar-color: #c0c0c0 var(--background); /* (막대 색상) (배경 색상) */
+  scrollbar-width: thin;
+  scrollbar-color: var(--text-muted) transparent;
 }
 
-.dark * {
-  scrollbar-color: #4a4a4a var(--background); /* 다크 모드일 때 */
-}
