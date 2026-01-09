@@ -1,5 +1,5 @@
 /* Cognition.css의 공통 스타일을 사용한다고 가정합니다. */
-@import './Cognition.css';  
+@import './Cognition.css';
 
 .description-page {
   background: var(--background);
@@ -12,26 +12,29 @@
 
 /* 1단계 정보 */
 .previous-info {
-  background: linear-gradient(135deg, #e3f9f6 0%, #d4f5f0 100%);
+  background: #e3f9f6;
   border-left: 4px solid var(--primary);
 }
+
 .dark .previous-info {
-  background: linear-gradient(135deg, #1f3f3b 0%, #1a3532 100%);
+  background: #1f3f3b;
 }
 
 .info-label {
   color: var(--text-muted);
 }
+
 .info-value {
   color: var(--primary);
 }
+
 .info-hint {
   color: var(--text-muted);
 }
 
 /* 조언 배너 */
 .advice-banner {
-  background: linear-gradient(135deg, #FFE66D 0%, #FDCB6E 100%);
+  background: #FFE66D;
   padding: 15px;
   border-radius: 12px;
   display: flex;
@@ -50,7 +53,8 @@
 .advice-banner p {
   font-size: 14px;
   font-weight: 600;
-  color: #2b2b2b; /* 밝은 배경에는 어두운 글씨 */
+  color: #2b2b2b;
+  /* 밝은 배경에는 어두운 글씨 */
   margin: 0;
   line-height: 1.6;
 }
@@ -77,9 +81,11 @@
   justify-content: center;
   gap: 6px;
 }
+
 .dark .adjective-chip {
   background: var(--input-background);
 }
+
 .adjective-chip:hover {
   background: var(--primary);
   color: white;
@@ -96,24 +102,30 @@
 
 /* Description 결과 섹션 색상 오버라이드 */
 .description-page .success-badge {
-  background: linear-gradient(135deg, #fff0f0 0%, #ffe6e6 100%);
+  background: #fff0f0;
   border-left-color: var(--accent-red);
 }
+
 .dark .description-page .success-badge {
-  background: linear-gradient(135deg, #3f1f1f 0%, #351a1a 100%);
+  background: #3f1f1f;
 }
+
 .description-page .success-badge h3 {
   color: var(--text);
 }
+
 .description-page .result-text strong {
   color: var(--accent-red);
 }
+
 .description-page .learning-box h4 {
   color: var(--text);
 }
+
 .description-page .result-image-large {
   box-shadow: 0 10px 40px rgba(255, 107, 107, 0.3);
 }
+
 .description-page .result-section-full {
   border-top-color: var(--accent-red);
 }
@@ -124,6 +136,7 @@
     opacity: 0;
     transform: translateY(-10px);
   }
+
   to {
     opacity: 1;
     transform: translateY(0);

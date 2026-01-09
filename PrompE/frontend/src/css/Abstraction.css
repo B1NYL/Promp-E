@@ -1,4 +1,5 @@
-@import './Cognition.css'; /* 이 줄은 삭제하는 것이 좋습니다. Cognition.css와 겹치는 스타일은 별도의 공통 CSS 파일로 옮기는 것을 추천합니다. */
+@import './Cognition.css';
+/* 이 줄은 삭제하는 것이 좋습니다. Cognition.css와 겹치는 스타일은 별도의 공통 CSS 파일로 옮기는 것을 추천합니다. */
 
 .abstraction-page {
   background: var(--background);
@@ -34,11 +35,13 @@
   background: var(--input-background);
   color: var(--foreground);
 }
+
 .emotion-textarea:focus {
   outline: none;
   border-color: var(--accent-purple);
   box-shadow: 0 0 0 3px rgba(168, 85, 247, 0.1);
 }
+
 .emotion-textarea:disabled {
   background: var(--background);
   cursor: not-allowed;
@@ -50,6 +53,7 @@
   flex-wrap: wrap;
   gap: 8px;
 }
+
 .emotion-chip {
   background: var(--card-background);
   border: 2px solid var(--border);
@@ -64,9 +68,11 @@
   align-items: center;
   gap: 6px;
 }
+
 .dark .emotion-chip {
-    background: var(--input-background);
+  background: var(--input-background);
 }
+
 .emotion-chip:hover {
   background: var(--primary);
   color: white;
@@ -81,38 +87,46 @@
   border-radius: 10px;
   border: 2px dashed var(--accent-purple);
 }
+
 .prompt-summary-box h4 {
   font-size: 14px;
   color: var(--text-muted);
   margin: 0 0 8px 0;
 }
+
 .prompt-summary-box p {
   font-size: 16px;
   color: var(--foreground);
   margin: 0;
   line-height: 1.6;
 }
+
 .prompt-summary-box strong {
   color: var(--accent-purple);
 }
 
 /* Abstraction 결과 섹션 색상 오버라이드 */
 .abstraction-page .success-badge {
-  background: linear-gradient(135deg, #f3e8ff 0%, #ede1f7 100%);
+  background: #f3e8ff;
   border-left-color: var(--accent-purple);
 }
+
 .dark .abstraction-page .success-badge {
-  background: linear-gradient(135deg, #2d1c3e 0%, #281733 100%);
+  background: #2d1c3e;
 }
+
 .abstraction-page .success-badge h3 {
   color: var(--accent-purple);
 }
+
 .abstraction-page .learning-box h4 {
   color: var(--accent-purple);
 }
+
 .abstraction-page .result-image-large {
   box-shadow: 0 10px 40px rgba(168, 85, 247, 0.3);
 }
+
 .abstraction-page .result-section-full {
   border-top-color: var(--accent-purple);
 }

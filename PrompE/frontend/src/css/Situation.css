@@ -1,5 +1,6 @@
 /* Cognition.css의 공통 스타일을 사용한다고 가정합니다. */
-@import './Cognition.css'; /* 이 줄은 나중에 공통 스타일 파일을 만들면 삭제하는 것이 좋습니다. */
+@import './Cognition.css';
+/* 이 줄은 나중에 공통 스타일 파일을 만들면 삭제하는 것이 좋습니다. */
 
 .situation-page {
   background: var(--background);
@@ -48,11 +49,13 @@
   background: var(--input-background);
   color: var(--foreground);
 }
+
 .situation-textarea:focus {
   outline: none;
   border-color: var(--accent-blue);
   box-shadow: 0 0 0 3px rgba(74, 144, 226, 0.1);
 }
+
 .situation-textarea:disabled {
   background: var(--background);
   cursor: not-allowed;
@@ -69,18 +72,22 @@
   line-height: 1.7;
   color: var(--text);
 }
+
 .dark .tip-box {
   background: #1c2b3e;
   border-color: #3e5a7e;
 }
+
 .tip-box strong {
   color: var(--text);
   font-weight: 700;
 }
+
 .tip-box p {
   color: var(--text) !important;
   margin: 0;
 }
+
 .dark .tip-box p {
   color: var(--text-muted);
 }
@@ -98,36 +105,43 @@
   border-radius: 10px;
   border: 2px dashed var(--accent-blue);
 }
+
 .prompt-summary-box h4 {
   font-size: 14px;
   color: var(--text-muted);
   margin: 0 0 8px 0;
 }
+
 .prompt-summary-box p {
   font-size: 16px;
   color: var(--foreground);
   margin: 0;
   line-height: 1.6;
 }
+
 .prompt-summary-box strong {
   color: var(--accent-blue);
 }
 
 /* Situation 결과 섹션 색상 오버라이드 */
 .situation-page .success-badge {
-  background: linear-gradient(135deg, #e7f3ff 0%, #dbe9f7 100%);
+  background: #e7f3ff;
   border-left-color: var(--accent-blue);
 }
+
 .dark .situation-page .success-badge {
-  background: linear-gradient(135deg, #1c2b3e 0%, #172433 100%);
+  background: #1c2b3e;
 }
+
 .situation-page .success-badge h3,
 .situation-page .learning-box h4 {
   color: var(--text);
 }
+
 .situation-page .result-image-large {
   box-shadow: 0 10px 40px rgba(74, 144, 226, 0.3);
 }
+
 .situation-page .result-section-full {
   border-top-color: var(--accent-blue);
 }

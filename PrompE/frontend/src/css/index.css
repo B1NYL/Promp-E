@@ -13,14 +13,18 @@ body {
   color: var(--foreground);
   transition: background-color 0.3s ease;
   overflow-x: hidden;
+  font-weight: 700;
 }
 
 /* Palette - Duolingo Inspired (Vibrant & Playful) */
 :root {
-  /* Primary Actions (Green) */
-  --primary: #58CC02;
-  --primary-shadow: #58a700;
-  --primary-light: #89e219;
+  /* Primary Actions (Purple) */
+  --primary: #8B5CF6;
+  /* Violet-500 */
+  --primary-shadow: #7C3AED;
+  /* Violet-600 */
+  --primary-light: #A78BFA;
+  /* Violet-400 */
   --primary-text: #fff;
 
   /* Secondary Actions (Blue) */
@@ -40,6 +44,7 @@ body {
   --background: #FFFFFF;
   --foreground: #3c3c3c;
   --text-muted: #777;
+
 
   --border: #e5e5e5;
   --card-bg: #fff;

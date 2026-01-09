@@ -32,6 +32,7 @@
   transition: all 0.3s ease;
   margin: 0;
 }
+
 .back-button:hover {
   transform: translateX(-5px);
   box-shadow: 0 4px 12px rgba(0, 200, 179, 0.2);
@@ -49,6 +50,7 @@
   font-weight: 700;
   font-size: 14px;
 }
+
 .badge-icon {
   font-size: 18px;
 }
@@ -59,17 +61,20 @@
   margin: 0 auto;
   padding: 40px 20px;
 }
+
 .lesson-title-section {
   text-align: center;
   margin-bottom: 50px;
   animation: fadeInDown 0.6s ease-out;
 }
+
 .lesson-main-title {
   font-size: 42px;
   font-weight: 800;
   color: var(--foreground);
   margin-bottom: 15px;
 }
+
 .lesson-subtitle {
   font-size: 18px;
   color: var(--text-muted);
@@ -80,6 +85,7 @@
 .lesson-article {
   animation: fadeInUp 0.6s ease-out 0.2s backwards;
 }
+
 .content-section {
   background: var(--card-background);
   padding: 40px;
@@ -87,6 +93,7 @@
   margin-bottom: 30px;
   box-shadow: 0 2px 15px rgba(0, 0, 0, 0.05);
 }
+
 .section-title {
   font-size: 28px;
   font-weight: 800;
@@ -96,6 +103,7 @@
   align-items: center;
   gap: 10px;
 }
+
 .section-text {
   font-size: 17px;
   line-height: 1.8;
@@ -111,21 +119,25 @@
   margin-bottom: 20px;
   border-left: 4px solid var(--primary);
 }
+
 .service-card:last-child {
   margin-bottom: 0;
 }
+
 .service-header {
   display: flex;
   align-items: center;
   justify-content: space-between;
   margin-bottom: 15px;
 }
+
 .service-name {
   font-size: 22px;
   font-weight: 700;
   color: var(--foreground);
   margin: 0;
 }
+
 .service-tag {
   background: var(--primary);
   color: var(--primary-foreground);
@@ -134,25 +146,30 @@
   font-size: 12px;
   font-weight: 600;
 }
+
 .service-description {
   font-size: 16px;
   line-height: 1.7;
   color: var(--text-muted);
   margin-bottom: 15px;
 }
+
 .service-example {
   background: var(--card-background);
   padding: 15px;
   border-radius: 10px;
 }
+
 .service-example strong {
   color: var(--primary);
   font-size: 14px;
 }
+
 .service-example ul {
   margin: 10px 0 0 0;
   padding-left: 20px;
 }
+
 .service-example li {
   color: var(--text-muted);
   line-height: 1.8;
@@ -165,11 +182,13 @@
   flex-direction: column;
   gap: 20px;
 }
+
 .tip-item {
   display: flex;
   gap: 20px;
   align-items: flex-start;
 }
+
 .tip-number {
   background: var(--primary);
   color: var(--primary-foreground);
@@ -183,12 +202,14 @@
   font-size: 18px;
   flex-shrink: 0;
 }
+
 .tip-content h4 {
   font-size: 18px;
   font-weight: 700;
   color: var(--foreground);
   margin: 0 0 8px 0;
 }
+
 .tip-content p {
   font-size: 16px;
   line-height: 1.7;
@@ -198,13 +219,15 @@
 
 /* 하이라이트 섹션 */
 .highlight-section {
-  background: linear-gradient(135deg, var(--primary) 0%, #00a393 100%);
+  background: var(--primary);
   text-align: center;
 }
+
 .highlight-section .section-title,
 .highlight-section .section-text {
   color: var(--primary-foreground);
 }
+
 .next-button {
   background: var(--primary-foreground);
   color: var(--primary);
@@ -217,6 +240,7 @@
   margin-top: 20px;
   transition: all 0.3s ease;
 }
+
 .next-button:hover {
   transform: translateY(-2px);
   box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
@@ -224,25 +248,69 @@
 
 /* 애니메이션 */
 @keyframes fadeInDown {
-  from { opacity: 0; transform: translateY(-20px); }
-  to { opacity: 1; transform: translateY(0); }
+  from {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
+
 @keyframes fadeInUp {
-  from { opacity: 0; transform: translateY(20px); }
-  to { opacity: 1; transform: translateY(0); }
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 /* 반응형 */
 @media (max-width: 768px) {
-  .lesson-header { padding: 15px 20px; }
-  .lesson-content { padding: 30px 15px; }
-  .lesson-main-title { font-size: 32px; }
-  .lesson-subtitle { font-size: 16px; }
-  .content-section { padding: 25px 20px; }
-  .section-title { font-size: 24px; }
-  .section-text { font-size: 16px; }
-  .service-header { flex-direction: column; align-items: flex-start; gap: 10px; }
-  .tip-item { flex-direction: column; gap: 10px; }
+  .lesson-header {
+    padding: 15px 20px;
+  }
+
+  .lesson-content {
+    padding: 30px 15px;
+  }
+
+  .lesson-main-title {
+    font-size: 32px;
+  }
+
+  .lesson-subtitle {
+    font-size: 16px;
+  }
+
+  .content-section {
+    padding: 25px 20px;
+  }
+
+  .section-title {
+    font-size: 24px;
+  }
+
+  .section-text {
+    font-size: 16px;
+  }
+
+  .service-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
+  }
+
+  .tip-item {
+    flex-direction: column;
+    gap: 10px;
+  }
 }
 
 /* ServiceUse.css 파일 끝에 추가 */
@@ -316,6 +384,7 @@
     transform: translateY(20px);
     opacity: 0;
   }
+
   to {
     transform: translateY(0);
     opacity: 1;
@@ -323,7 +392,8 @@
 }
 
 .modal-logo-img {
-  width: 100px; /* 원하는 크기로 조절 */
+  width: 100px;
+  /* 원하는 크기로 조절 */
   height: 100px;
   margin-bottom: 20px;
 }

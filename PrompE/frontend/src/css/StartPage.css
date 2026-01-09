@@ -2,7 +2,6 @@
   min-height: 100vh;
   width: 100%;
   background-color: var(--background);
-  background-image: radial-gradient(#e5e5e5 1px, transparent 1px);
   background-size: 20px 20px;
   /* Dot pattern */
   display: flex;
