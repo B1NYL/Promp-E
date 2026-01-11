@@ -11,6 +11,7 @@ function Stage1Main() {
   const lessons = [
     { id: 's1-service-use', title: 'AI 서비스 활용법', icon: '💡', path: '/stage1/service-use' },
     { id: 's1-chat', title: 'AI와 대화하기', icon: '💬', path: '/stage1/chat' },
+    { id: 's1-emoji-translator', title: '이모지 번역기', icon: '🧩', path: '/stage1/emoji-translator' },
   ];
 
   const handleLessonClick = (path) => {
@@ -25,7 +26,7 @@ function Stage1Main() {
     <div className="stage-page">
       <header className="stage-header">
         <h1 className="stage-page-title">
-          <span className="stage-badge">STAGE 1</span>
+          <span className="stage-badge">스테이지 1</span>
           AI와 친해지기
         </h1>
         <button className="back-button" onClick={() => navigate('/base')}>
@@ -35,8 +36,8 @@ function Stage1Main() {
 
       <div className="lessons-container">
         {lessons.map((lesson) => (
-          <div 
-            key={lesson.id} 
+          <div
+            key={lesson.id}
             // isCompleted 함수로 확인하여 'completed' 클래스 동적 추가
             className={`lesson-card ${isCompleted(lesson.id) ? 'completed' : ''}`}
             onClick={() => handleLessonClick(lesson.path)}

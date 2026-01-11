@@ -1,598 +1,338 @@
-.cognition-page {
-  min-height: 100vh;
-  background: var(--background);
+/* Cognition.css - Refined GoodNotes Layout */
+
+.cognition-page.goodnotes-layout {
+  height: 100vh;
+  width: 100vw;
+  background: var(--background, #0f0f13);
+  /* Match app background */
   display: flex;
   flex-direction: column;
+  overflow: hidden;
+  font-family: 'Inter', sans-serif;
 }
 
-/* 헤더 */
-.lesson-header {
-  background: var(--card-background);
-  padding: 20px 40px;
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+/* --- Top Header & Toolbar --- */
+.gn-header {
+  height: 70px;
+  /* Slightly taller for better touch */
+  background: rgba(18, 18, 24, 0.85);
+  /* Darker, consistent with sidebar */
+  backdrop-filter: blur(16px);
+  border-bottom: 1px solid rgba(88, 196, 220, 0.2);
+  /* Neon cyan border hint */
   display: flex;
+  align-items: center;
   justify-content: space-between;
-  align-items: center;
+  padding: 0 1.5rem;
+  z-index: 50;
+  box-shadow: 0 5px 20px rgba(0, 0, 0, 0.3);
 }
 
-.lesson-info {
+.gn-left,
+.gn-right {
   display: flex;
   align-items: center;
-  gap: 20px;
+  gap: 1rem;
+  width: auto;
+  min-width: 150px;
 }
 
-.lesson-badge {
+.gn-back-btn {
+  background: transparent;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  color: #a0a0b0;
+  cursor: pointer;
+  padding: 8px;
+  border-radius: 10px;
+  transition: all 0.2s;
   display: flex;
   align-items: center;
-  gap: 8px;
-  background: var(--primary);
-  padding: 8px 16px;
-  border-radius: 20px;
-  color: var(--primary-foreground);
+  justify-content: center;
+}
+
+.gn-back-btn:hover {
+  background: rgba(255, 255, 255, 0.1);
+  color: white;
+  border-color: var(--primary, #6c5ce7);
+  box-shadow: 0 0 10px rgba(108, 92, 231, 0.3);
+}
+
+.gn-title {
+  font-size: 1.1rem;
   font-weight: 700;
-  font-size: 14px;
+  background: linear-gradient(135deg, #fff 0%, #a0a0b0 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
 }
 
-.badge-icon {
-  font-size: 18px;
-}
-
-.page-title {
-  font-size: 28px;
-  font-weight: 800;
-  color: var(--foreground);
-  margin: 0;
-}
-
-/* 메인 레이아웃 */
-.lesson-main {
+/* --- Main Toolbar --- */
+.gn-toolbar {
   flex: 1;
-  display: grid;
-  grid-template-columns: 1fr 380px;
-  gap: 30px;
-  padding: 30px;
-  max-width: 1600px;
-  margin: 0 auto;
-  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  /* Center the tools */
+  gap: 2rem;
   height: 100%;
 }
 
-/* 캔버스 섹션 */
-.canvas-section {
-  display: flex;
-  flex-direction: column;
+.gn-separator {
+  width: 1px;
+  height: 30px;
+  background: linear-gradient(to bottom, transparent, rgba(255, 255, 255, 0.2), transparent);
 }
 
-.canvas-wrapper {
-  border: 3px dashed var(--primary);
-  border-radius: 20px;
-  overflow: hidden;
-  background: white;
-  /* 캔버스 배경은 항상 흰색으로 고정 */
-  flex: 1;
+/* Explicit Horizontal Groups with Stability Fixes */
+.gn-tool-group {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 12px;
+}
+
+/* Fixed Min-Width for Props to prevent jumping */
+.gn-props-group {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 12px;
+  min-width: 360px;
+  /* Key fix: Reserves space for max content (Pen) */
+  justify-content: flex-start;
+  /* Aligns content left */
+}
+
+.gn-actions-group {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 12px;
+}
+
+/* Tool Buttons */
+.gn-tool-btn {
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  color: #8a8a9b;
+  width: 42px;
+  height: 42px;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
   display: flex;
   align-items: center;
   justify-content: center;
 }
 
-.drawing-canvas {
-  display: block;
-  width: 100%;
-  height: auto;
-  cursor: crosshair;
-  touch-action: none;
+.gn-tool-btn:hover {
+  background: rgba(255, 255, 255, 0.08);
+  color: #fff;
+  transform: translateY(-2px);
 }
 
-/* 컨트롤 패널 */
-.control-panel {
+.gn-tool-btn.active {
+  background: rgba(88, 196, 220, 0.15);
+  color: #00FFFF;
+  /* Cyan Neon */
+  border-color: rgba(88, 196, 220, 0.5);
+  box-shadow: 0 0 12px rgba(0, 255, 255, 0.3);
+}
+
+.gn-tool-btn.danger:hover {
+  color: #ff6b6b;
+  background: rgba(255, 107, 107, 0.1);
+  border-color: rgba(255, 107, 107, 0.4);
+  box-shadow: 0 0 10px rgba(255, 107, 107, 0.2);
+}
+
+/* Properties Group */
+.gn-colors {
   display: flex;
-  flex-direction: column;
-  gap: 20px;
-  overflow-y: auto;
-  max-height: calc(100vh - 150px);
-  padding-right: 10px;
-}
-
-.panel-section {
-  background: var(--card-background);
-  padding: 20px;
-  border-radius: 15px;
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
-}
-
-.section-title {
-  font-size: 16px;
-  font-weight: 700;
-  color: var(--foreground);
-  margin: 0 0 15px 0;
-}
-
-/* 패널 버튼 */
-.panel-btn {
-  width: 100%;
-  padding: 12px;
-  border: none;
-  border-radius: 10px;
-  font-size: 14px;
-  font-weight: 600;
-  cursor: pointer;
-  transition: all 0.3s ease;
-  margin-bottom: 8px;
-}
-
-.panel-btn:last-child {
-  margin-bottom: 0;
-}
-
-.upload-btn {
-  background: var(--primary);
-  color: var(--primary-foreground);
-}
-
-.upload-btn:hover {
-  background: #00a393;
-  transform: translateY(-2px);
-}
-
-.clear-btn {
-  background: red;
-  color: white;
-}
-
-.clear-btn:hover {
-  background: #ce4444;
-  transform: translateY(-2px);
-}
-
-/* 색상 선택 */
-.color-grid {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
+  align-items: center;
   gap: 10px;
-  margin-bottom: 15px;
+  background: rgba(0, 0, 0, 0.2);
+  padding: 6px 12px;
+  border-radius: 30px;
+  border: 1px solid rgba(255, 255, 255, 0.05);
 }
 
-.color-dot {
-  width: 100%;
-  aspect-ratio: 1;
-  border-radius: 8px;
-  border: 3px solid transparent;
+.gn-color-btn {
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  border: 2px solid rgba(255, 255, 255, 0.2);
   cursor: pointer;
-  transition: all 0.3s ease;
+  transition: transform 0.2s ease;
 }
 
-.color-dot:hover {
+.gn-color-btn:hover {
+  transform: scale(1.15);
+}
+
+.gn-color-btn.active {
+  transform: scale(1.25);
+  border-color: white;
+  box-shadow: 0 0 8px currentColor;
+}
+
+.gn-color-picker-label {
+  position: relative;
+  width: 28px;
+  height: 28px;
+  cursor: pointer;
+  border-radius: 50%;
+  overflow: hidden;
+  border: 2px solid rgba(255, 255, 255, 0.3);
+  transition: transform 0.2s;
+}
+
+.gn-color-picker-label:hover {
   transform: scale(1.1);
 }
 
-.color-dot.active {
-  border-color: var(--primary);
-  box-shadow: 0 0 0 3px rgba(0, 200, 179, 0.3);
-}
-
-.custom-color {
-  margin-bottom: 15px;
-}
-
-.color-label {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  cursor: pointer;
-  padding: 10px;
-  background: var(--background);
-  border-radius: 8px;
-  transition: all 0.3s ease;
-}
-
-.color-label:hover {
-  background: var(--border);
-}
-
-.color-picker-input {
-  display: none;
-}
-
-.color-box {
-  width: 30px;
-  height: 30px;
-  border-radius: 6px;
-  border: 2px solid white;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
-}
-
-.color-label span {
-  font-size: 14px;
-  font-weight: 600;
-  color: var(--foreground);
-}
-
-.brush-size {
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-}
-
-.brush-size label {
-  font-size: 14px;
-  font-weight: 600;
-  color: var(--text-muted);
-}
-
-.size-slider {
+.gn-color-picker-label input {
+  position: absolute;
+  top: 0;
+  left: 0;
+  opacity: 0;
   width: 100%;
-  height: 6px;
+  height: 100%;
   cursor: pointer;
-  accent-color: var(--primary);
 }
 
-/* 텍스트 입력 */
-.object-input {
+.gn-rainbow-wheel {
   width: 100%;
-  padding: 14px 16px;
-  border: 2px solid var(--border);
-  border-radius: 10px;
-  font-size: 16px;
-  margin-bottom: 12px;
-  transition: all 0.3s ease;
-  background: var(--input-background);
-  color: var(--foreground);
-}
-
-.object-input:focus {
-  outline: none;
-  border-color: var(--primary);
-  box-shadow: 0 0 0 3px rgba(0, 200, 179, 0.1);
-}
-
-.object-input:disabled {
-  background: var(--background);
-  cursor: not-allowed;
-}
-
-.submit-button {
-  width: 100%;
-  padding: 14px;
-  background: var(--primary);
-  color: var(--primary-foreground);
-  border: none;
-  border-radius: 10px;
-  font-size: 16px;
-  font-weight: 700;
-  cursor: pointer;
-  transition: all 0.3s ease;
-}
-
-.submit-button:hover:not(:disabled) {
-  transform: translateY(-2px);
-  box-shadow: 0 6px 20px rgba(0, 200, 179, 0.4);
-}
-
-.submit-button:disabled {
-  opacity: 0.5;
-  cursor: not-allowed;
-}
-
-/* 학습 가이드 */
-.guide-section {
-  background: var(--primary);
-  color: var(--primary-foreground);
-}
-
-.guide-section .section-title {
-  color: var(--primary-foreground);
-}
-
-.guide-list {
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
-}
-
-.guide-point {
-  display: flex;
-  gap: 12px;
-  align-items: flex-start;
-}
-
-.point-num {
-  background: white;
-  color: var(--primary);
-  width: 28px;
-  height: 28px;
+  height: 100%;
   border-radius: 50%;
+  background: conic-gradient(red, orange, yellow, lime, cyan, blue, magenta, red);
+}
+
+.gn-sizes {
   display: flex;
   align-items: center;
-  justify-content: center;
-  font-weight: 800;
-  font-size: 14px;
-  flex-shrink: 0;
+  gap: 8px;
+  background: rgba(0, 0, 0, 0.2);
+  padding: 6px 12px;
+  border-radius: 30px;
+  border: 1px solid rgba(255, 255, 255, 0.05);
 }
 
-.guide-point p {
-  margin: 0;
-  font-size: 15px;
-  line-height: 1.6;
-}
-
-.guide-point strong {
-  font-weight: 800;
-}
-
-/* 전체 하단 결과 섹션 */
-.result-section-full {
-  background: var(--card-background);
-  border-top: 3px solid var(--primary);
-  padding: 40px 30px;
-  animation: slideUp 0.5s ease-out;
-}
-
-.result-container {
-  max-width: 1200px;
-  margin: 0 auto;
-}
-
-.result-title {
-  font-size: 28px;
-  font-weight: 800;
-  color: var(--foreground);
-  margin-bottom: 30px;
-  text-align: center;
-}
-
-.result-content {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 40px;
-  align-items: center;
-}
-
-.result-image-wrapper {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
-.result-image-large {
-  width: 100%;
-  max-width: 500px;
-  height: auto;
-  border-radius: 20px;
-  box-shadow: 0 10px 40px rgba(0, 200, 179, 0.3);
-}
-
-.result-info {
-  display: flex;
-  flex-direction: column;
-  gap: 25px;
-}
-
-.success-badge {
-  display: flex;
-  align-items: center;
-  gap: 15px;
-  padding: 20px;
-  border-radius: 15px;
-  border-left: 5px solid var(--primary);
-  background: #f0fffe;
-}
-
-.dark .success-badge {
-  background: #1f3f3b;
-}
-
-.badge-emoji {
-  font-size: 48px;
-  animation: bounce 1s ease-in-out infinite;
-}
-
-.success-badge h3 {
-  font-size: 24px;
-  color: var(--primary);
-  margin: 0;
-}
-
-.result-text {
-  font-size: 18px;
-  color: var(--foreground);
-  line-height: 1.6;
-  margin: 0;
-}
-
-.result-text strong {
-  color: var(--primary);
-  font-weight: 800;
-}
-
-.learning-box {
-  background: var(--background);
-  padding: 20px;
-  border-radius: 12px;
-}
-
-.learning-box h4 {
-  font-size: 16px;
-  color: var(--primary);
-  margin: 0 0 12px 0;
-}
-
-.learning-box p {
-  font-size: 16px;
-  color: var(--foreground);
-  margin: 0 0 8px 0;
-  font-weight: 600;
-}
-
-.learning-desc {
-  font-size: 14px !important;
-  color: var(--text-muted) !important;
-  font-weight: 400 !important;
-}
-
-.result-actions {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 15px;
-}
-
-.result-btn {
-  padding: 16px;
-  border: none;
-  border-radius: 12px;
-  font-size: 16px;
-  font-weight: 700;
-  cursor: pointer;
-  transition: all 0.3s ease;
-}
-
-.result-btn.retry {
-  background: var(--card-background);
-  color: var(--primary);
-  border: 2px solid var(--primary);
-}
-
-.result-btn.retry:hover {
-  background: #f0fffe;
-  transform: translateY(-2px);
-}
-
-.dark .result-btn.retry:hover {
-  background: var(--input-background);
-}
-
-.result-btn.next {
-  background: var(--primary);
-  color: var(--primary-foreground);
-}
-
-.result-btn.next:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 8px 24px rgba(0, 200, 179, 0.4);
-}
-
-/* 애니메이션 */
-@keyframes slideUp {
-  from {
-    opacity: 0;
-    transform: translateY(30px);
-  }
-
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-@keyframes bounce {
-
-  0%,
-  100% {
-    transform: translateY(0);
-  }
-
-  50% {
-    transform: translateY(-8px);
-  }
-}
-
-/* 반응형 */
-@media (max-width: 1200px) {
-  .lesson-main {
-    grid-template-columns: 1fr 350px;
-  }
-}
-
-@media (max-width: 968px) {
-  .lesson-main {
-    grid-template-columns: 1fr;
-  }
-
-  .control-panel {
-    max-height: none;
-  }
-
-  .result-content {
-    grid-template-columns: 1fr;
-  }
-
-  .result-image-wrapper {
-    order: 1;
-  }
-
-  .result-info {
-    order: 2;
-  }
-}
-
-@media (max-width: 768px) {
-  .lesson-header {
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 15px;
-  }
-
-  .lesson-info {
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 10px;
-  }
-
-  .lesson-main {
-    padding: 20px;
-  }
-
-  .page-title {
-    font-size: 24px;
-  }
-
-  .color-grid {
-    grid-template-columns: repeat(3, 1fr);
-  }
-
-  .result-section-full {
-    padding: 30px 20px;
-  }
-
-  .result-title {
-    font-size: 24px;
-  }
-
-  .result-actions {
-    grid-template-columns: 1fr;
-  }
-}
-
-/* 스크롤바 */
-.control-panel::-webkit-scrollbar {
-  width: 8px;
-}
-
-.control-panel::-webkit-scrollbar-track {
+.gn-size-btn {
   background: transparent;
+  border: none;
+  cursor: pointer;
+  width: 30px;
+  /* Uniform width */
+  height: 30px;
+  border-radius: 4px;
+  color: #aaa;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0.7;
+  transition: opacity 0.2s;
 }
 
-.control-panel::-webkit-scrollbar-thumb {
-  background: #c0c0c0;
-  border-radius: 10px;
+.gn-size-btn:hover {
+  opacity: 1;
+  background: rgba(255, 255, 255, 0.05);
 }
 
-.control-panel::-webkit-scrollbar-thumb:hover {
-  background: var(--primary);
+.gn-size-btn.active {
+  opacity: 1;
+  background: rgba(255, 255, 255, 0.1);
+  color: white;
 }
 
-.dark .control-panel::-webkit-scrollbar-thumb {
-  background: #4a4a4a;
+/* Finish Button - Unify with App Theme (Gradient + Glow) */
+.gn-finish-btn {
+  background: linear-gradient(135deg, var(--primary, #6c5ce7), #a29bfe);
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 12px;
+  font-weight: 700;
+  font-size: 0.95rem;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: 0 4px 15px rgba(110, 68, 255, 0.3);
 }
 
-.dark .control-panel::-webkit-scrollbar-thumb:hover {
-  background: var(--primary);
+.gn-finish-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 25px rgba(110, 68, 255, 0.5);
 }
 
-.control-panel {
-  scrollbar-width: thin;
-  scrollbar-color: #c0c0c0 transparent;
+/* --- Canvas Area --- */
+.gn-canvas-area {
+  flex: 1;
+  background: #12121c;
+  position: relative;
+  overflow: hidden;
 }
 
-.dark .control-panel {
-  scrollbar-color: #4a4a4a transparent;
+.canvas-wrapper {
+  width: 100%;
+  height: 100%;
+  position: relative;
+}
+
+/* Holo Grid - Matches 'Cognition' futuristic feel */
+.canvas-wrapper::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-image:
+    linear-gradient(rgba(88, 196, 220, 0.08) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(88, 196, 220, 0.08) 1px, transparent 1px);
+  background-size: 40px 40px;
+  pointer-events: none;
+  z-index: 0;
+}
+
+.drawing-canvas {
+  touch-action: none;
+  cursor: crosshair;
+  background: transparent;
+  position: relative;
+  z-index: 10;
+  display: block;
+}
+
+/* Responsive */
+@media (max-width: 900px) {
+  .gn-header {
+    height: auto;
+    flex-wrap: wrap;
+    padding: 1rem;
+    gap: 1rem;
+    justify-content: center;
+  }
+
+  .gn-left,
+  .gn-right {
+    width: auto;
+  }
+
+  .gn-toolbar {
+    order: 3;
+    width: 100%;
+    margin-top: 5px;
+    gap: 1rem;
+    overflow-x: auto;
+    justify-content: flex-start;
+    /* Align left if scrolling */
+    padding-bottom: 5px;
+  }
+
+  .gn-tool-group,
+  .gn-props-group {
+    flex-shrink: 0;
+  }
 }

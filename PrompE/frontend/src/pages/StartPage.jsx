@@ -19,7 +19,7 @@ function StartPage() {
 
         <div className="hero-text">
           <h1 className="main-title">
-            The free, fun, and effective way to learn Prompting!
+            프롬프팅을 배우는<br />가장 재미있고 효과적인 방법!
           </h1>
 
           <div className="start-buttons">
@@ -27,13 +27,13 @@ function StartPage() {
               className="btn-3d btn-primary btn-start"
               onClick={() => navigate('/base')}
             >
-              GET STARTED
+              시작하기
             </button>
             <button
               className="btn-3d btn-outline btn-start"
               onClick={() => console.log('Login')}
             >
-              I ALREADY HAVE AN ACCOUNT
+              이미 계정이 있어요
             </button>
           </div>
         </div>

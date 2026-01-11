@@ -15,11 +15,13 @@ import Base from './pages/Base'
 import Stage1Main from './pages/Stage1/Stage1Main'
 import ServiceUse from './pages/Stage1/ServiceUse'
 import Chat from './pages/Stage1/Chat'
+import EmojiTranslator from './pages/Stage1/EmojiTranslator'
 import PromptComposition from './pages/Stage3/PromptComposition'
 
 // Stage 2 페이지들
 import Thinking from './pages/Stage2/Thinking';
-import Stage2Main from './pages/Stage2/Stage2Main' 
+import PromptPuzzle from './pages/Stage2/PromptPuzzle';
+import Stage2Main from './pages/Stage2/Stage2Main'
 // Stage 3 페이지
 import Stage3Main from './pages/Stage3/Stage3Main'
 import Cognition from './pages/Stage3/Cognition'
@@ -31,7 +33,7 @@ import BlockDrawing from './pages/Stage3/BlockDrawing'
 import BlockAssembly from './pages/Stage3/BlockAssembly'
 import BlockResult from './pages/Stage3/BlockResult'
 import { UserProvider } from './services/UserContext';
-import { GalleryProvider } from './services/GalleryContext'; 
+import { GalleryProvider } from './services/GalleryContext';
 
 import './css/App.css'
 
@@ -54,9 +56,11 @@ function App() {
                     {/* Stage 1 상세 페이지 (독립 헤더) */}
                     <Route path="/stage1/service-use" element={<ServiceUse />} />
                     <Route path="/stage1/chat" element={<Chat />} />
+                    <Route path="/stage1/emoji-translator" element={<EmojiTranslator />} />
 
                     {/* Stage 2 상세 페이지 */}
                     <Route path="/stage2/thinking" element={<Thinking />} />
+                    <Route path="/stage2/puzzle" element={<PromptPuzzle />} />
 
                     {/* Stage 3 상세 페이지 (독립 헤더) */}
                     <Route path="/stage3/cognition" element={<Cognition />} />
@@ -77,7 +81,7 @@ function App() {
                       <Route path="/stage2" element={<Stage2Main />} />
                       <Route path="/stage3" element={<Stage3Main />} />
                     </Route>
-                    
+
                   </Routes>
                 </BrowserRouter>
               </GalleryProvider>

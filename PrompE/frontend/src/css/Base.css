@@ -12,64 +12,90 @@
 .dashboard-layout {
   display: flex;
   width: 100%;
-  max-width: 1200px;
+  max-width: 1600px;
   position: relative;
 }
 
-/* 1. Left Navigation (Sticky) */
+/* 1. Left Navigation (Sticky) - Tech Style */
 .sidebar-nav-left {
   width: 260px;
-  border-right: 2px solid var(--border);
-  padding: 20px;
+  border-right: 1px solid var(--border);
+  padding: 30px 20px;
   display: flex;
   flex-direction: column;
   position: sticky;
   top: 0;
   height: 100vh;
-  background: var(--background);
+  background: linear-gradient(to bottom, var(--background), rgba(255, 255, 255, 0));
+  /* Fade out */
   z-index: 10;
+  backdrop-filter: blur(10px);
 }
 
 .nav-logo {
-  font-family: 'Nunito', sans-serif;
-  font-size: 2rem;
+  font-family: 'Inter', sans-serif;
+  font-size: 1.8rem;
   color: var(--primary);
-  margin-bottom: 2rem;
-  padding-left: 10px;
+  margin-bottom: 3rem;
+  padding-left: 15px;
+  font-weight: 900;
+  letter-spacing: -1px;
+  text-shadow: 0 0 15px var(--primary-shadow);
+  /* Neon Logo */
 }
 
 .left-nav-item {
   display: flex;
   align-items: center;
   gap: 15px;
-  padding: 12px 18px;
-  margin-bottom: 8px;
-  border-radius: 16px;
-  border: 2px solid transparent;
+  padding: 14px 20px;
+  margin-bottom: 10px;
+  border-radius: 12px;
+  /* Slightly squarer */
+  border: 1px solid transparent;
+  /* default border */
   color: var(--text-muted);
-  font-weight: 700;
+  font-weight: 600;
   font-size: 0.95rem;
   text-transform: uppercase;
-  letter-spacing: 0.8px;
+  letter-spacing: 0.5px;
   cursor: pointer;
-  transition: all 0.1s;
+  transition: all 0.2s ease;
+  position: relative;
 }
 
 .left-nav-item:hover {
-  background-color: rgba(0, 0, 0, 0.05);
+  background-color: rgba(139, 92, 246, 0.05);
+  color: var(--primary);
+  transform: translateX(5px);
 }
 
 .left-nav-item.active {
-  color: var(--secondary);
-  background-color: rgba(28, 176, 246, 0.1);
-  border-color: rgba(28, 176, 246, 0.4);
+  color: var(--primary);
+  background: linear-gradient(90deg, rgba(139, 92, 246, 0.1), transparent);
+  border: 1px solid var(--primary-shadow);
+  box-shadow: 0 0 15px rgba(139, 92, 246, 0.15);
+}
+
+/* Side marker for active state */
+.left-nav-item.active::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 4px;
+  height: 60%;
+  background: var(--primary);
+  border-radius: 0 4px 4px 0;
+  box-shadow: 0 0 10px var(--primary);
 }
 
 .nav-icon {
   font-size: 1.5rem;
 }
 
-/* 2. Main Feed (Roadmap) */
+/* Main Feed (Roadmap) */
 .main-feed {
   flex: 1;
   padding: 40px;
@@ -82,8 +108,8 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 40px;
-  /* Spacing between nodes */
+  gap: 60px;
+  /* More spacing for timeline */
   padding-bottom: 100px;
   position: relative;
   width: 100%;
@@ -92,7 +118,7 @@
 
 /* Specific Stage Unit Header */
 .unit-header {
-  background: var(--primary);
+  background: linear-gradient(135deg, var(--primary), var(--primary-light));
   color: white;
   width: 100%;
   padding: 24px;
@@ -101,12 +127,15 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  box-shadow: 0 6px 0 var(--primary-shadow);
+  box-shadow: 0 4px 15px var(--primary-shadow);
+  /* Glow */
+  border: 1px solid rgba(255, 255, 255, 0.1);
 }
 
 .unit-info h2 {
   margin: 0;
   font-size: 1.5rem;
+  font-weight: 700;
 }
 
 .unit-info p {
@@ -114,81 +143,104 @@
   font-size: 1rem;
 }
 
-/* Stage Node (Circle Icon) */
+/* Stage Node (Planet/Portal Style) */
 .stage-node-wrapper {
   position: relative;
   z-index: 2;
-  transition: transform 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  transition: transform 0.3s ease;
 }
 
 .stage-node-btn {
-  width: 90px;
-  height: 90px;
+  width: 100px;
+  height: 100px;
   border-radius: 50%;
   background-color: var(--card-bg);
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 40px;
-  border: none;
+  font-size: 45px;
+  border: 4px solid var(--card-bg);
+  /* Inner border ring */
   cursor: pointer;
   position: relative;
-  box-shadow: 0 8px 0 var(--border);
-  /* Gray shadow by default */
-  /* If active/completed, color changes */
+  box-shadow: 0 0 0 2px var(--border);
+  /* Outer thin ring */
+  transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
 }
 
-/* Colors for stages */
+/* Colors for stages - Gradients & Glows */
 .stage-color-1 .stage-node-btn {
-  background-color: var(--primary);
-  box-shadow: 0 8px 0 var(--primary-shadow);
+  background: linear-gradient(135deg, var(--primary), var(--primary-light));
+  color: white;
+  box-shadow: 0 0 20px var(--primary-shadow);
+  border-color: rgba(255, 255, 255, 0.2);
 }
 
 .stage-color-2 .stage-node-btn {
-  background-color: var(--secondary);
-  box-shadow: 0 8px 0 var(--secondary-shadow);
+  background: linear-gradient(135deg, var(--secondary), #38bdf8);
+  color: white;
+  box-shadow: 0 0 20px var(--secondary-shadow);
+  border-color: rgba(255, 255, 255, 0.2);
 }
 
 .stage-color-3 .stage-node-btn {
-  background-color: var(--accent);
-  box-shadow: 0 8px 0 var(--accent-shadow);
+  background: linear-gradient(135deg, var(--accent), #fde047);
+  color: white;
+  box-shadow: 0 0 20px var(--accent-shadow);
+  border-color: rgba(255, 255, 255, 0.2);
 }
 
 .stage-color-locked .stage-node-btn {
-  background-color: #e5e5e5;
-  box-shadow: 0 8px 0 #cfcfcf;
+  background-color: var(--card-bg);
+  color: var(--text-muted);
+  box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.05);
+  border-color: var(--border);
   filter: grayscale(1);
+  opacity: 0.7;
 }
 
-/* Bouncing active state */
-.stage-node-wrapper:hover {
-  transform: scale(1.05);
+/* Hover Effects */
+.stage-node-wrapper:hover .stage-node-btn {
+  transform: scale(1.1);
+  box-shadow: 0 0 30px var(--primary-shadow);
+  /* Stronger glow */
+}
+
+/* Specific glow colors on hover */
+.stage-color-2 .stage-node-wrapper:hover .stage-node-btn {
+  box-shadow: 0 0 30px var(--secondary-shadow);
+}
+
+.stage-color-3 .stage-node-wrapper:hover .stage-node-btn {
+  box-shadow: 0 0 30px var(--accent-shadow);
 }
 
 .stage-node-wrapper:active .stage-node-btn {
-  transform: translateY(8px);
-  box-shadow: 0 0 0 transparent;
+  transform: scale(0.95);
 }
 
 .stage-star-crown {
   position: absolute;
-  top: -15px;
-  right: -10px;
+  top: -20px;
+  left: 50%;
+  transform: translateX(-50%);
   font-size: 24px;
-  filter: drop-shadow(0 4px 0 rgba(0, 0, 0, 0.1));
+  filter: drop-shadow(0 0 10px rgba(255, 215, 0, 0.6));
 }
 
-/* SVG Path behind nodes */
+/* Straight SVG Path behind nodes */
 .roadmap-svg {
   position: absolute;
   top: 0;
   left: 50%;
   transform: translateX(-50%);
-  width: 200px;
-  /* Adjust based on zigzag width */
+  width: 6px;
+  /* Narrow line */
   height: 100%;
+  background: var(--border);
+  /* Simple straight line via DIV or kept as SVG */
   z-index: 0;
-  pointer-events: none;
+  border-radius: 3px;
 }
 
 /* 3. Right Sidebar (Stats/Quests) */
@@ -278,4 +330,221 @@
   .main-feed {
     padding: 20px 20px 100px 20px;
   }
+}
+/* --- Quest Redesign Components --- */
+
+/* Tabs */
+.quest-tabs {
+  display: flex;
+  gap: 15px;
+  margin-bottom: 25px;
+  background: var(--card-bg);
+  padding: 5px;
+  border-radius: 12px;
+  border: 1px solid var(--border);
+}
+
+.quest-tab-btn {
+  padding: 10px 24px;
+  border: none;
+  background: transparent;
+  color: var(--text-muted);
+  font-family: 'Inter', sans-serif;
+  font-weight: 700;
+  cursor: pointer;
+  border-radius: 8px;
+  transition: all 0.2s;
+}
+
+.quest-tab-btn.active {
+  background: linear-gradient(135deg, var(--primary), var(--primary-light));
+  color: white;
+  box-shadow: 0 2px 10px var(--primary-shadow);
+}
+
+/* Progress Bar */
+.quest-progress-bar-bg {
+  width: 100%;
+  height: 6px;
+  background: #eee;
+  border-radius: 3px;
+  margin-top: 8px;
+  overflow: hidden;
+}
+
+.quest-progress-bar-fill {
+  height: 100%;
+  background: var(--accent);
+  border-radius: 3px;
+  transition: width 0.3s ease;
+}
+
+/* Claim Button (Neon) */
+.btn-claim {
+  padding: 8px 16px;
+  background: #22c55e;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-weight: 800;
+  cursor: pointer;
+  box-shadow: 0 0 10px rgba(34, 197, 94, 0.5);
+  animation: pulse 2s infinite;
+  transition: transform 0.1s;
+}
+
+.btn-claim:active {
+  transform: scale(0.95);
+}
+
+@keyframes pulse {
+  0% { box-shadow: 0 0 0 0 rgba(34, 197, 94, 0.4); }
+  70% { box-shadow: 0 0 0 10px rgba(34, 197, 94, 0); }
+  100% { box-shadow: 0 0 0 0 rgba(34, 197, 94, 0); }
+}
+
+/* Locked status */
+.quest-locked {
+  font-size: 0.8rem;
+  font-weight: 700;
+  color: var(--text-muted);
+  background: rgba(0,0,0,0.05);
+  padding: 6px 12px;
+  border-radius: 6px;
+}
+
+/* Claimable Glow on Card */
+.quest-card.claimable-glow {
+  border-color: #22c55e;
+  box-shadow: 0 0 15px rgba(34, 197, 94, 0.2);
+}
+
+/* --- Tech Studio Quests (Missing) --- */
+.quest-list {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  width: 100%;
+  max-width: 700px;
+}
+
+.quest-card {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  padding: 24px;
+  border-radius: 16px;
+  background: rgba(255, 255, 255, 0.7);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.4);
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.02);
+  transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+  position: relative;
+  overflow: hidden;
+}
+
+.dark .quest-card {
+  background: rgba(30, 41, 59, 0.6);
+  border-color: rgba(255, 255, 255, 0.1);
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+}
+
+.quest-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 0 20px rgba(139, 92, 246, 0.15);
+  border-color: var(--primary);
+}
+
+.quest-card.completed {
+  background: linear-gradient(135deg, rgba(34, 197, 94, 0.1), transparent);
+  border-color: #22c55e;
+}
+
+.quest-icon {
+  font-size: 2rem;
+  width: 60px;
+  height: 60px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 12px;
+  background: rgba(255, 255, 255, 0.5);
+  border: 1px solid var(--border);
+}
+
+.dark .quest-icon {
+  background: rgba(0, 0, 0, 0.2);
+}
+
+.quest-info h3 {
+  margin: 0;
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: var(--foreground);
+}
+
+.quest-info p {
+  margin: 5px 0 0 0;
+  font-size: 0.9rem;
+  color: var(--primary);
+  font-family: 'Inter', monospace;
+  letter-spacing: 0.5px;
+}
+
+.quest-check {
+  margin-left: auto;
+  padding: 6px 12px;
+  font-size: 0.8rem;
+  font-weight: 800;
+  color: #22c55e;
+  border: 1px solid #22c55e;
+  border-radius: 6px;
+  background: rgba(34, 197, 94, 0.1);
+}
+
+/* --- Tech Studio Settings (Missing) --- */
+.settings-content {
+  width: 100%;
+  max-width: 600px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.settings-card {
+  width: 100%;
+  border-radius: 20px;
+  padding: 30px;
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
+  background: rgba(255, 255, 255, 0.7);
+  backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.4);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+}
+
+.dark .settings-card {
+  background: rgba(30, 41, 59, 0.6);
+  border-color: rgba(255, 255, 255, 0.1);
+}
+
+.setting-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-bottom: 20px;
+  border-bottom: 1px solid var(--border);
+}
+
+.setting-item:last-child {
+  padding-bottom: 0;
+  border-bottom: none;
+}
+
+.setting-item label {
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: var(--foreground);
 }

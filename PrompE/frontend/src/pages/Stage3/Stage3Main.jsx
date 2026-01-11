@@ -10,7 +10,7 @@ function Stage3Main() {
   const lessons = [
     { id: 's3-block-coding', title: '프롬프트 블록코딩', icon: '🧩', path: '/stage3/block-drawing' },
     { id: 's3-promptutoring', title: '프롬프튜터링', icon: '🎓️', path: '/stage3/cognition' },
-    { id: 's3-composition', title: '프롬PT', icon: '🤖', path: '/stage3/PromptComposition'},
+    { id: 's3-composition', title: '프롬PT', icon: '🤖', path: '/stage3/PromptComposition' },
   ];
 
   const handleLessonClick = (path) => {
@@ -25,7 +25,7 @@ function Stage3Main() {
     <div className="stage-page">
       <header className="stage-header">
         <h1 className="stage-page-title">
-          <span className="stage-badge stage3-badge">STAGE 3</span>
+          <span className="stage-badge stage3-badge">스테이지 3</span>
           AI랑 같이하기
         </h1>
         <button className="back-button" onClick={() => navigate('/base')}>

@@ -34,7 +34,7 @@ function StageCard({ stage, title, description, icon, color, locked = false }) {
   // 컴포넌트의 JSX 구조를 반환합니다.
   return (
     // 최상위 div. 카드 전체를 감쌉니다.
-    <div 
+    <div
       // 'stage-card' 기본 클래스와, 'locked' prop이 true일 경우 'locked' 클래스를 추가합니다.
       className={`stage-card ${locked ? 'locked' : ''}`}
       // 'color' prop으로 받은 색상을 테두리 색상으로 동적으로 적용합니다.
@@ -44,18 +44,18 @@ function StageCard({ stage, title, description, icon, color, locked = false }) {
     >
       {/* 스테이지 번호를 표시하는 부분 */}
       <div className="stage-number" style={{ backgroundColor: color }}>
-        STAGE {stage}
+        스테이지 {stage}
       </div>
-      
+
       {/* 이모지 아이콘을 표시하는 부분 */}
       <div className="stage-icon">{icon}</div>
-      
+
       {/* 스테이지 제목을 표시하는 부분 */}
       <h3 className="stage-title">{title}</h3>
-      
+
       {/* 스테이지 설명을 표시하는 부분 */}
       <p className="stage-description">{description}</p>
-      
+
       {/* 
         조건부 렌더링: 'locked' prop 값에 따라 다른 UI를 보여줍니다.
         - true: 자물쇠 아이콘을 보여줍니다.

@@ -1,227 +1,228 @@
+@import url('https://fonts.googleapis.com/css2?family=Nunito:wght@700;800&display=swap');
+
 .stage-page {
   min-height: 100vh;
   background: var(--background);
-  padding: 20px;
+  padding: 40px;
+  max-width: 800px;
+  margin: 0 auto;
+  font-family: 'Nunito', sans-serif;
   transition: background-color 0.3s ease;
 }
 
 .stage-header {
-  max-width: 1200px;
-  margin: 0 auto 40px;
   display: flex;
-  /* Flexbox 적용 */
   justify-content: space-between;
-  /* 양쪽 끝으로 정렬 */
   align-items: center;
-  /* 세로 중앙 정렬 */
+  margin-bottom: 40px;
+  padding-bottom: 20px;
+  border-bottom: 2px solid var(--border);
 }
 
 .back-button {
-  background: var(--card-background);
-  border: none;
-  padding: 12px 24px;
-  border-radius: 10px;
-  font-size: 16px;
-  font-weight: 600;
-  color: var(--primary);
+  padding: 10px 20px;
+  border-radius: 12px;
+  border: 2px solid var(--border);
+  background: transparent;
+  color: var(--text-muted);
+  font-weight: 700;
   cursor: pointer;
-  transition: all 0.3s ease;
-  /* margin 속성들은 삭제하여 flexbox 정렬에 맡김 */
+  transition: all 0.2s;
+  box-shadow: 0 4px 0 var(--border);
 }
 
 .back-button:hover {
+  background: #f7f7f7;
   transform: translateX(-5px);
-  /* Stage Common CSS */
-  @import url('https://fonts.googleapis.com/css2?family=Nunito:wght@700;800&display=swap');
+}
 
-  .stage-page {
-    padding: 40px;
-    max-width: 800px;
-    margin: 0 auto;
-    font-family: 'Nunito', sans-serif;
-  }
+/* Header */
+.stage-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 40px;
+  padding-bottom: 20px;
+  border-bottom: 2px solid var(--border);
+}
 
-  /* Header */
-  .stage-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 40px;
-    padding-bottom: 20px;
-    border-bottom: 2px solid var(--border);
-  }
+.stage-page-title {
+  font-size: 2rem;
+  color: var(--foreground);
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
 
+.stage-badge {
+  font-size: 1rem;
+  color: var(--secondary);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.back-button {
+  padding: 10px 20px;
+  border-radius: 12px;
+  border: 2px solid var(--border);
+  background: transparent;
+  color: var(--text-muted);
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.2s;
+  box-shadow: 0 4px 0 var(--border);
+}
+
+.back-button:active {
+  transform: translateY(4px);
+  box-shadow: none;
+}
+
+.back-button:hover {
+  background: #f7f7f7;
+}
+
+/* Lessons Grid */
+.lessons-container {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 20px;
+}
+
+/* Lesson Card (Gamified) */
+.lesson-card {
+  background: var(--card-bg);
+  border: 2px solid var(--border);
+  border-radius: 16px;
+  padding: 24px;
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  cursor: pointer;
+  transition: all 0.1s;
+  box-shadow: 0 4px 0 var(--border);
+}
+
+.lesson-card:active {
+  transform: translateY(4px);
+  box-shadow: none;
+}
+
+.lesson-card:hover {
+  background-color: #fafafa;
+}
+
+.dark .lesson-card:hover {
+  background-color: #202F36;
+  /* Darker card bg or slightly lighter */
+  border-color: #58CC02;
+  /* Highlight border slightly? */
+}
+
+.lesson-icon {
+  font-size: 2.5rem;
+  width: 60px;
+  height: 60px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #f0f0f0;
+  border-radius: 50%;
+}
+
+.lesson-title {
+  flex: 1;
+  font-size: 1.2rem;
+  color: var(--foreground);
+  margin: 0;
+}
+
+.lesson-button {
+  padding: 12px 24px;
+  background: var(--primary);
+  color: white;
+  border: none;
+  border-radius: 12px;
+  font-weight: 800;
+  cursor: pointer;
+  box-shadow: 0 4px 0 var(--primary-shadow);
+  transition: all 0.1s;
+}
+
+.lesson-card:hover .lesson-button {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 0 var(--primary-shadow);
+}
+
+.lesson-card:active .lesson-button {
+  transform: translateY(4px);
+  box-shadow: none;
+}
+
+/* Completed State */
+.lesson-card.completed {
+  border-color: var(--primary);
+  background-color: rgba(88, 204, 2, 0.1);
+}
+
+.lesson-card.completed .lesson-icon {
+  background: var(--primary);
+  color: white;
+}
+
+.lesson-card.completed .lesson-button {
+  background: transparent;
+  color: var(--primary);
+  border: 2px solid var(--primary);
+  box-shadow: none;
+}
+
+/* 반응형 */
+@media (max-width: 768px) {
   .stage-page-title {
-    font-size: 2rem;
-    color: var(--foreground);
-    display: flex;
+    font-size: 24px;
     flex-direction: column;
-    gap: 5px;
+    align-items: flex-start;
+    gap: 10px;
   }
 
-  .stage-badge {
-    font-size: 1rem;
-    color: var(--secondary);
-    text-transform: uppercase;
-    letter-spacing: 1px;
-  }
-
-  .back-button {
-    padding: 10px 20px;
-    border-radius: 12px;
-    border: 2px solid var(--border);
-    background: transparent;
-    color: var(--text-muted);
-    font-weight: 700;
-    cursor: pointer;
-    transition: all 0.2s;
-    box-shadow: 0 4px 0 var(--border);
-  }
-
-  .back-button:active {
-    transform: translateY(4px);
-    box-shadow: none;
-  }
-
-  .back-button:hover {
-    background: #f7f7f7;
-  }
-
-  /* Lessons Grid */
   .lessons-container {
-    display: grid;
     grid-template-columns: 1fr;
-    gap: 20px;
   }
+}
 
-  /* Lesson Card (Gamified) */
-  .lesson-card {
-    background: var(--card-bg);
-    border: 2px solid var(--border);
-    border-radius: 16px;
-    padding: 24px;
-    display: flex;
-    align-items: center;
-    gap: 20px;
-    cursor: pointer;
-    transition: all 0.1s;
-    box-shadow: 0 4px 0 var(--border);
-  }
+.lesson-card {
+  border: 3px solid var(--primary);
+}
 
-  .lesson-card:active {
-    transform: translateY(4px);
-    box-shadow: none;
-  }
+/* 완료된 카드의 스타일 */
+.lesson-card.completed {
+  border-color: #84CC16;
+  /* 연두색 테두리 */
+  background: #f7fee7;
+  /* 아주 연한 연두색 배경 */
+}
 
-  .lesson-card:hover {
-    background-color: #fafafa;
-  }
+/* 완료된 카드의 제목 색상 */
+.lesson-card.completed .lesson-title {
+  color: #3f6212;
+}
 
-  .lesson-icon {
-    font-size: 2.5rem;
-    width: 60px;
-    height: 60px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background: #f0f0f0;
-    border-radius: 50%;
-  }
+/* 완료된 카드의 '복습하기' 버튼 스타일 */
+.lesson-card.completed .lesson-button {
+  background: #84CC16;
+}
 
-  .lesson-title {
-    flex: 1;
-    font-size: 1.2rem;
-    color: var(--foreground);
-    margin: 0;
-  }
+.lesson-card.completed .lesson-button:hover {
+  background: #65a30d;
+}
 
-  .lesson-button {
-    padding: 12px 24px;
-    background: var(--primary);
-    color: white;
-    border: none;
-    border-radius: 12px;
-    font-weight: 800;
-    cursor: pointer;
-    box-shadow: 0 4px 0 var(--primary-shadow);
-    transition: all 0.1s;
-  }
+/* 다크 모드에서 완료된 카드 스타일 */
+.dark .lesson-card.completed {
+  background: #365314;
+  border-color: #84CC16;
+}
 
-  .lesson-card:hover .lesson-button {
-    transform: translateY(-2px);
-    box-shadow: 0 6px 0 var(--primary-shadow);
-  }
-
-  .lesson-card:active .lesson-button {
-    transform: translateY(4px);
-    box-shadow: none;
-  }
-
-  /* Completed State */
-  .lesson-card.completed {
-    border-color: var(--primary);
-    background-color: rgba(88, 204, 2, 0.1);
-  }
-
-  .lesson-card.completed .lesson-icon {
-    background: var(--primary);
-    color: white;
-  }
-
-  .lesson-card.completed .lesson-button {
-    background: transparent;
-    color: var(--primary);
-    border: 2px solid var(--primary);
-    box-shadow: none;
-  }
-
-  /* 반응형 */
-  @media (max-width: 768px) {
-    .stage-page-title {
-      font-size: 24px;
-      flex-direction: column;
-      align-items: flex-start;
-      gap: 10px;
-    }
-
-    .lessons-container {
-      grid-template-columns: 1fr;
-    }
-  }
-
-  .lesson-card {
-    border: 3px solid var(--primary);
-  }
-
-  /* 완료된 카드의 스타일 */
-  .lesson-card.completed {
-    border-color: #84CC16;
-    /* 연두색 테두리 */
-    background: #f7fee7;
-    /* 아주 연한 연두색 배경 */
-  }
-
-  /* 완료된 카드의 제목 색상 */
-  .lesson-card.completed .lesson-title {
-    color: #3f6212;
-  }
-
-  /* 완료된 카드의 '복습하기' 버튼 스타일 */
-  .lesson-card.completed .lesson-button {
-    background: #84CC16;
-  }
-
-  .lesson-card.completed .lesson-button:hover {
-    background: #65a30d;
-  }
-
-  /* 다크 모드에서 완료된 카드 스타일 */
-  .dark .lesson-card.completed {
-    background: #365314;
-    border-color: #84CC16;
-  }
-
-  .dark .lesson-card.completed .lesson-title {
-    color: #d9f99d;
-  }
+.dark .lesson-card.completed .lesson-title {
+  color: #d9f99d;
 }

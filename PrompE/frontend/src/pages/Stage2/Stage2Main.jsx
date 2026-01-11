@@ -9,6 +9,7 @@ function Stage2Main() {
 
   const lessons = [
     { id: 's2-thinking', title: '상상해보기', icon: '💡', path: '/stage2/thinking' },
+    { id: 's2-puzzle', title: '프롬프트 탐정', icon: '🕵️‍♀️', path: '/stage2/puzzle' },
   ];
 
   const handleLessonClick = (path) => {
@@ -23,7 +24,7 @@ function Stage2Main() {
     <div className="stage-page">
       <header className="stage-header">
         <h1 className="stage-page-title">
-          <span className="stage-badge stage2-badge">STAGE 2</span>
+          <span className="stage-badge stage2-badge">스테이지 2</span>
           생각 구체화하기
         </h1>
         <button className="back-button" onClick={() => navigate('/base')}>

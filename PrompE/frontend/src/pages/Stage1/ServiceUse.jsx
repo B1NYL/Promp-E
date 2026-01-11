@@ -46,7 +46,7 @@ function ServiceUse() {
             <h2 className="modal-title">학습 안내: AI 서비스 활용법</h2>
             <p className="modal-description">
               이 페이지에서는 우리 주변의 다양한 AI 서비스 종류와 특징을 알아볼 거예요.
-              <br/>
+              <br />
               내용을 천천히 읽어보고 AI와 친숙해져 보세요!
             </p>
             <button className="modal-close-btn" onClick={closeModal}>
@@ -59,7 +59,7 @@ function ServiceUse() {
       <div className="service-use-page">
         <header className="lesson-header">
           <button className="back-button" onClick={() => navigate('/stage1')}>← 돌아가기</button>
-          <div className="lesson-badge"><span className="badge-icon">💡</span><span className="badge-text">LESSON 1</span></div>
+          <div className="lesson-badge"><span className="badge-icon">💡</span><span className="badge-text">레슨 1</span></div>
           <div className="header-placeholder"></div>
         </header>
 
@@ -76,21 +76,21 @@ function ServiceUse() {
             <section className="content-section">
               <h2 className="section-title">🤖 AI 서비스란?</h2>
               <p className="section-text">
-                AI(인공지능) 서비스는 우리의 일상생활을 더 편리하게 만들어주는 똑똑한 도구입니다. 
+                AI(인공지능) 서비스는 우리의 일상생활을 더 편리하게 만들어주는 똑똑한 도구입니다.
                 질문에 답하고, 글을 써주고, 그림을 그려주는 등 다양한 일을 도와줄 수 있어요.
               </p>
             </section>
 
             <section className="content-section">
               <h2 className="section-title">✨ 대표적인 AI 서비스</h2>
-              
+
               <div className="service-card">
                 <div className="service-header">
                   <h3 className="service-name">ChatGPT</h3>
                   <span className="service-tag">대화형 AI</span>
                 </div>
                 <p className="service-description">
-                  질문을 하면 사람처럼 대답해주는 AI입니다. 
+                  질문을 하면 사람처럼 대답해주는 AI입니다.
                   공부 도우미, 글쓰기 도우미, 아이디어 브레인스토밍 등 다양하게 활용할 수 있어요.
                 </p>
                 <div className="service-example">
@@ -109,7 +109,7 @@ function ServiceUse() {
                   <span className="service-tag">이미지 생성 AI</span>
                 </div>
                 <p className="service-description">
-                  텍스트로 설명하면 그에 맞는 이미지를 그려주는 AI입니다. 
+                  텍스트로 설명하면 그에 맞는 이미지를 그려주는 AI입니다.
                   상상하는 장면을 말로 설명만 하면 그림으로 만들어줘요.
                 </p>
                 <div className="service-example">
@@ -143,7 +143,7 @@ function ServiceUse() {
 
             <section className="content-section">
               <h2 className="section-title">💡 AI 서비스 잘 활용하는 방법</h2>
-              
+
               <div className="tip-box">
                 <div className="tip-item"><span className="tip-number">1</span><div className="tip-content"><h4>명확하게 질문하기</h4><p>애매한 질문보다는 구체적이고 명확한 질문을 하면 더 좋은 답변을 받을 수 있어요.</p></div></div>
                 <div className="tip-item"><span className="tip-number">2</span><div className="tip-content"><h4>단계적으로 접근하기</h4><p>복잡한 문제는 한 번에 물어보기보다 단계를 나눠서 질문하면 더 좋아요.</p></div></div>

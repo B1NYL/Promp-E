@@ -1,38 +1,108 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import '../../css/Cognition.css'; // 스타일은 Cognition과 공유
+import '../../css/Cognition.css';
 import { useCompletion } from '../../services/CompletionContext';
 import { useUser } from '../../services/UserContext';
 import { useActivity } from '../../services/ActivityContext';
-import { Upload, Trash2, Pencil } from 'lucide-react'; // 아이콘 추가
+import {
+  Upload, Trash2, PenTool, Eraser, CheckCircle,
+  ChevronLeft, Image as ImageIcon, Pencil
+} from 'lucide-react';
 
 function Thinking() {
   const navigate = useNavigate();
   const canvasRef = useRef(null);
   const fileInputRef = useRef(null);
-  
+
   const { completeLesson, isCompleted } = useCompletion();
   const { gainExp } = useUser();
   const { addActivity } = useActivity();
-  
-  const [isDrawing, setIsDrawing] = useState(false);
-  const [currentColor, setCurrentColor] = useState('#2b2b2b');
-  const [brushSize, setBrushSize] = useState(5);
 
-  const defaultColors = [
-    '#2b2b2b', '#FF6B6B', '#4ECDC4', '#FFE66D', 
-    '#95E1D3', '#F38181', '#AA96DA', '#FCBAD3',
-    '#FF8C42', '#6C5CE7', '#00B894', '#FDCB6E'
+  const [isDrawing, setIsDrawing] = useState(false);
+
+  // Tools: 'pen', 'pencil', 'eraser'
+  const [activeTool, setActiveTool] = useState('pen');
+
+  // Tool Properties
+  const [penColor, setPenColor] = useState('#00FFFF');
+  const [penSize, setPenSize] = useState(4);
+  const [eraserSize, setEraserSize] = useState(20);
+  const [pencilPattern, setPencilPattern] = useState(null);
+
+  const presetColors = ['#FFFFFF', '#00FFFF', '#FFFF00', '#FF00FF'];
+  const presetSizes = [2, 4, 8, 12];
+  const presetEraserSizes = [
+    { size: 10, label: '매우 작게' },
+    { size: 20, label: '작게' },
+    { size: 40, label: '중간' },
+    { size: 60, label: '크게' }
   ];
 
+  // Initialize Canvas
   useEffect(() => {
     const canvas = canvasRef.current;
     if (canvas) {
       const ctx = canvas.getContext('2d');
-      ctx.lineCap = 'round'; ctx.lineJoin = 'round'; ctx.fillStyle = 'white';
-      ctx.fillRect(0, 0, canvas.width, canvas.height);
+      ctx.lineCap = 'round';
+      ctx.lineJoin = 'round';
+      handleResize();
+      window.addEventListener('resize', handleResize);
     }
+    return () => window.removeEventListener('resize', handleResize);
   }, []);
+
+  // Generate Pencil Noise Pattern
+  useEffect(() => {
+    if (activeTool === 'pencil') {
+      const size = 64;
+      const patternCanvas = document.createElement('canvas');
+      patternCanvas.width = size;
+      patternCanvas.height = size;
+      const pCtx = patternCanvas.getContext('2d');
+
+      pCtx.fillStyle = penColor;
+      pCtx.fillRect(0, 0, size, size);
+
+      const imageData = pCtx.getImageData(0, 0, size, size);
+      const data = imageData.data;
+
+      for (let i = 0; i < data.length; i += 4) {
+        const noise = Math.random();
+        if (noise < 0.6) {
+          data[i + 3] = 0;
+        } else {
+          data[i + 3] = Math.floor(noise * 150 + 50);
+        }
+      }
+      pCtx.putImageData(imageData, 0, 0);
+
+      const canvas = canvasRef.current;
+      if (canvas) {
+        const ctx = canvas.getContext('2d');
+        const pattern = ctx.createPattern(patternCanvas, 'repeat');
+        setPencilPattern(pattern);
+      }
+    }
+  }, [penColor, activeTool]);
+
+  const handleResize = () => {
+    const canvas = canvasRef.current;
+    const parent = canvas.parentElement;
+    if (canvas && parent) {
+      const ctx = canvas.getContext('2d');
+      const tempCanvas = document.createElement('canvas');
+      tempCanvas.width = canvas.width;
+      tempCanvas.height = canvas.height;
+      tempCanvas.getContext('2d').drawImage(canvas, 0, 0);
+
+      canvas.width = parent.clientWidth;
+      canvas.height = parent.clientHeight;
+
+      ctx.drawImage(tempCanvas, 0, 0);
+      ctx.lineCap = 'round';
+      ctx.lineJoin = 'round';
+    }
+  };
 
   const getCoords = (e) => {
     const canvas = canvasRef.current;
@@ -41,9 +111,7 @@ function Thinking() {
     const isTouchEvent = e.touches && e.touches.length > 0;
     const clientX = isTouchEvent ? e.touches[0].clientX : e.clientX;
     const clientY = isTouchEvent ? e.touches[0].clientY : e.clientY;
-    const scaleX = canvas.width / rect.width;
-    const scaleY = canvas.height / rect.height;
-    return { x: (clientX - rect.left) * scaleX, y: (clientY - rect.top) * scaleY };
+    return { x: clientX - rect.left, y: clientY - rect.top };
   };
 
   const startDrawing = (e) => {
@@ -51,17 +119,42 @@ function Thinking() {
     const { x, y } = getCoords(e);
     ctx.beginPath(); ctx.moveTo(x, y); setIsDrawing(true);
   };
+
   const draw = (e) => {
     if (!isDrawing) return; e.preventDefault();
     const canvas = canvasRef.current; const ctx = canvas.getContext('2d');
     const { x, y } = getCoords(e);
-    ctx.strokeStyle = currentColor; ctx.lineWidth = brushSize; ctx.lineTo(x, y); ctx.stroke();
+
+    ctx.globalAlpha = 1.0;
+
+    if (activeTool === 'eraser') {
+      ctx.globalCompositeOperation = 'destination-out';
+      ctx.lineWidth = eraserSize; // Use separate eraser size
+      ctx.strokeStyle = '#000';
+    } else if (activeTool === 'pencil') {
+      ctx.globalCompositeOperation = 'source-over';
+      ctx.strokeStyle = pencilPattern || penColor;
+      ctx.lineWidth = penSize;
+    } else {
+      ctx.globalCompositeOperation = 'source-over';
+      ctx.strokeStyle = penColor;
+      ctx.lineWidth = penSize;
+    }
+
+    ctx.lineTo(x, y); ctx.stroke();
   };
-  const stopDrawing = () => setIsDrawing(false);
+
+  const stopDrawing = () => {
+    setIsDrawing(false);
+    const canvas = canvasRef.current;
+    const ctx = canvas.getContext('2d');
+    ctx.beginPath();
+    ctx.globalCompositeOperation = 'source-over';
+  };
 
   const clearCanvas = () => {
     const canvas = canvasRef.current; const ctx = canvas.getContext('2d');
-    ctx.fillStyle = 'white'; ctx.fillRect(0, 0, canvas.width, canvas.height);
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
   };
 
   const handleImageUpload = (e) => {
@@ -71,9 +164,9 @@ function Thinking() {
       const img = new Image();
       img.onload = () => {
         const canvas = canvasRef.current; const ctx = canvas.getContext('2d');
-        ctx.fillStyle = 'white'; ctx.fillRect(0, 0, canvas.width, canvas.height);
-        const scale = Math.min(canvas.width / img.width, canvas.height / img.height);
+        const scale = Math.min(canvas.width / img.width, canvas.height / img.height) * 0.8;
         const x = (canvas.width - img.width * scale) / 2; const y = (canvas.height - img.height * scale) / 2;
+        ctx.globalCompositeOperation = 'source-over';
         ctx.drawImage(img, x, y, img.width * scale, img.height * scale);
       };
       img.src = event.target.result;
@@ -84,50 +177,119 @@ function Thinking() {
   const handleFinishThinking = () => {
     const lessonId = 's2-thinking';
     const wasAlreadyCompleted = isCompleted(lessonId);
-
     gainExp(30, wasAlreadyCompleted);
-    
     if (!wasAlreadyCompleted) {
-      addActivity({
-        icon: '🤔',
-        title: '[자유 활동] 생각 정리 완료',
-        time: '방금 전'
-      });
+      addActivity({ icon: '🤔', title: '[활동] 상상하기 완료', time: '방금 전' });
       completeLesson(lessonId);
     }
-
     navigate('/stage2');
   };
 
   return (
-    <div className="cognition-page">
-      <header className="lesson-header">
-        <button className="back-button" onClick={() => navigate('/stage2')}>
-          ← 돌아가기
-        </button>
-        <h1 className="page-title">자유롭게 생각하기</h1>
-        <div className="header-placeholder"></div>
-      </header>
-
-      <main className="lesson-main">
-        {/* 왼쪽: 캔버스 */}
-        <div className="canvas-section">
-          <div className="canvas-wrapper">
-            <canvas
-              ref={canvasRef}
-              width={800}
-              height={600}
-              className="drawing-canvas"
-              onMouseDown={startDrawing} onMouseMove={draw} onMouseUp={stopDrawing} onMouseLeave={stopDrawing}
-              onTouchStart={startDrawing} onTouchMove={draw} onTouchEnd={stopDrawing}
-            />
-          </div>
+    <div className="cognition-page goodnotes-layout">
+      {/* Top Header & Toolbar Wrapper */}
+      <header className="gn-header">
+        <div className="gn-left">
+          <button className="gn-back-btn" onClick={() => navigate('/stage2')}>
+            <ChevronLeft size={24} />
+          </button>
+          <h1 className="gn-title">상상 캔버스</h1>
         </div>
 
-        {/* 오른쪽: 컨트롤 패널 */}
-        <div className="control-panel">
-          <div className="panel-section">
-            <h3 className="section-title">📂 파일 관리</h3>
+        <div className="gn-toolbar">
+          {/* Tool Group */}
+          <div className="gn-tool-group">
+            <button
+              className={`gn-tool-btn ${activeTool === 'pen' ? 'active' : ''}`}
+              onClick={() => setActiveTool('pen')}
+              title="볼펜"
+            >
+              <PenTool size={20} />
+            </button>
+            <button
+              className={`gn-tool-btn ${activeTool === 'pencil' ? 'active' : ''}`}
+              onClick={() => setActiveTool('pencil')}
+              title="연필"
+            >
+              <Pencil size={20} />
+            </button>
+            <button
+              className={`gn-tool-btn ${activeTool === 'eraser' ? 'active' : ''}`}
+              onClick={() => setActiveTool('eraser')}
+              title="지우개"
+            >
+              <Eraser size={20} />
+            </button>
+          </div>
+
+          <div className="gn-separator"></div>
+
+          {/* Properties Group - Context Aware */}
+          <div className="gn-props-group">
+            {activeTool === 'eraser' ? (
+              /* Eraser Specific Controls */
+              <div className="gn-sizes" title="지우개 크기">
+                {presetEraserSizes.map((preset) => (
+                  <button
+                    key={preset.size}
+                    className={`gn-size-btn ${eraserSize === preset.size ? 'active' : ''}`}
+                    onClick={() => setEraserSize(preset.size)}
+                    title={preset.label}
+                  >
+                    {/* Visual representation of eraser size */}
+                    <div
+                      style={{
+                        width: Math.min(30, preset.size / 2 + 6),
+                        height: Math.min(30, preset.size / 2 + 6),
+                        backgroundColor: 'currentColor',
+                        borderRadius: '50%',
+                        border: '2px solid rgba(255,255,255,0.2)'
+                      }}
+                    />
+                  </button>
+                ))}
+              </div>
+            ) : (
+              /* Pen/Pencil Controls */
+              <>
+                <div className="gn-colors" title="색상">
+                  {presetColors.map(color => (
+                    <button
+                      key={color}
+                      className={`gn-color-btn ${penColor === color ? 'active' : ''}`}
+                      style={{ backgroundColor: color }}
+                      onClick={() => setPenColor(color)}
+                    />
+                  ))}
+                  <label className="gn-color-picker-label">
+                    <input
+                      type="color"
+                      value={penColor}
+                      onChange={(e) => setPenColor(e.target.value)}
+                    />
+                    <div className="gn-rainbow-wheel"></div>
+                  </label>
+                </div>
+
+                <div className="gn-sizes" title="두께">
+                  {presetSizes.map(size => (
+                    <button
+                      key={size}
+                      className={`gn-size-btn ${penSize === size ? 'active' : ''}`}
+                      onClick={() => setPenSize(size)}
+                    >
+                      <div style={{ width: size === 2 ? 6 : size + 4, height: size === 2 ? 6 : size + 4, backgroundColor: 'currentColor', borderRadius: '50%' }} />
+                    </button>
+                  ))}
+                </div>
+              </>
+            )}
+          </div>
+
+          <div className="gn-separator"></div>
+
+          {/* Actions Group */}
+          <div className="gn-actions-group">
             <input
               type="file"
               ref={fileInputRef}
@@ -135,59 +297,32 @@ function Thinking() {
               accept="image/*"
               style={{ display: 'none' }}
             />
-            <button className="panel-btn upload-btn" onClick={() => fileInputRef.current?.click()}>
-              <Upload size={14}/> 사진 업로드
+            <button className="gn-tool-btn" onClick={() => fileInputRef.current?.click()} title="이미지 추가">
+              <ImageIcon size={20} />
             </button>
-            <button className="panel-btn clear-btn" onClick={clearCanvas}>
-              <Trash2 size={14}/> 모두 지우기
+            <button className="gn-tool-btn danger" onClick={clearCanvas} title="캔버스 지우기">
+              <Trash2 size={20} />
             </button>
           </div>
+        </div>
 
-          <div className="panel-section">
-            <h3 className="section-title">🎨 색상 선택</h3>
-            <div className="color-grid">
-              {defaultColors.map(color => (
-                <button
-                  key={color}
-                  className={`color-dot ${currentColor === color ? 'active' : ''}`}
-                  style={{ backgroundColor: color }}
-                  onClick={() => setCurrentColor(color)}
-                />
-              ))}
-            </div>
-            <div className="custom-color">
-              <label className="color-label">
-                <input
-                  type="color"
-                  value={currentColor}
-                  onChange={(e) => setCurrentColor(e.target.value)}
-                  className="color-picker-input"
-                />
-                <span className="color-box" style={{ backgroundColor: currentColor }}></span>
-                <span>직접 선택</span>
-              </label>
-            </div>
-            <div className="brush-size">
-              <label>굵기: {brushSize}px</label>
-              <input
-                type="range"
-                min="2"
-                max="20"
-                value={brushSize}
-                onChange={(e) => setBrushSize(Number(e.target.value))}
-                className="size-slider"
-              />
-            </div>
-          </div>
-          
-          <div className="panel-section submit-panel">
-            <button
-              className="submit-button"
-              onClick={handleFinishThinking}
-            >
-              생각 끝내기
-            </button>
-          </div>
+        <div className="gn-right">
+          <button className="gn-finish-btn" onClick={handleFinishThinking}>
+            <CheckCircle size={20} />
+            <span>완료</span>
+          </button>
+        </div>
+      </header>
+
+      {/* Main Canvas Area */}
+      <main className="gn-canvas-area">
+        <div className="canvas-wrapper">
+          <canvas
+            ref={canvasRef}
+            className="drawing-canvas"
+            onMouseDown={startDrawing} onMouseMove={draw} onMouseUp={stopDrawing} onMouseLeave={stopDrawing}
+            onTouchStart={startDrawing} onTouchMove={draw} onTouchEnd={stopDrawing}
+          />
         </div>
       </main>
     </div>
