@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useActivity } from '../services/ActivityContext';
-import { useTheme } from '../services/ThemeContext';
 import { useGallery } from '../services/GalleryContext';
 import { useCompletion } from '../services/CompletionContext';
 import { useUser } from '../services/UserContext';
@@ -28,7 +27,6 @@ function Base() {
   // Removed old sidebar toggle logic as we moved to a sticky layout
 
   const { activities } = useActivity();
-  const { theme, setTheme } = useTheme();
   const { myCreations } = useGallery();
   const { isCompleted } = useCompletion();
   const navigate = useNavigate();
@@ -42,6 +40,20 @@ function Base() {
 
   // --- Manual Claim Logic & State ---
   const [questTab, setQuestTab] = useState('daily');
+  const [dailyLoginClaimable, setDailyLoginClaimable] = useState(false);
+
+  const getStartOfWeek = (date) => {
+    const d = new Date(date);
+    const day = d.getDay();
+    const diff = d.getDate() - day + (day === 0 ? -6 : 1);
+    d.setHours(0, 0, 0, 0);
+    return new Date(d.setDate(diff)).toDateString();
+  };
+
+  const todayKey = new Date().toDateString();
+  const weekKey = getStartOfWeek(new Date());
+  const creationsTodayCount = myCreations.filter(c => new Date(c.createdAt).toDateString() === todayKey).length;
+  const creationsWeekCount = myCreations.filter(c => getStartOfWeek(c.createdAt) === weekKey).length;
 
   const handleClaim = (id, reward) => {
     completeMission(id);
@@ -57,7 +69,7 @@ function Base() {
 
     switch (id) {
       case 'daily_login':
-        isClaimable = checkAndSetDailyLogin();
+        isClaimable = dailyLoginClaimable;
         progressText = '1 / 1';
         progressPercent = 100;
         break;
@@ -66,10 +78,45 @@ function Base() {
         progressText = `${Math.min(todayCompletedCount, 1)} / 1`;
         progressPercent = (Math.min(todayCompletedCount, 1) / 1) * 100;
         break;
+      case 'complete_two_lessons':
+        isClaimable = todayCompletedCount >= 2;
+        progressText = `${Math.min(todayCompletedCount, 2)} / 2`;
+        progressPercent = (Math.min(todayCompletedCount, 2) / 2) * 100;
+        break;
+      case 'create_one_art':
+        isClaimable = creationsTodayCount >= 1;
+        progressText = `${Math.min(creationsTodayCount, 1)} / 1`;
+        progressPercent = (Math.min(creationsTodayCount, 1) / 1) * 100;
+        break;
+      case 'create_two_art':
+        isClaimable = creationsTodayCount >= 2;
+        progressText = `${Math.min(creationsTodayCount, 2)} / 2`;
+        progressPercent = (Math.min(creationsTodayCount, 2) / 2) * 100;
+        break;
       case 'complete_five_lessons':
         isClaimable = weekCompletedCount >= 5;
         progressText = `${Math.min(weekCompletedCount, 5)} / 5`;
         progressPercent = (Math.min(weekCompletedCount, 5) / 5) * 100;
+        break;
+      case 'complete_ten_lessons':
+        isClaimable = weekCompletedCount >= 10;
+        progressText = `${Math.min(weekCompletedCount, 10)} / 10`;
+        progressPercent = (Math.min(weekCompletedCount, 10) / 10) * 100;
+        break;
+      case 'complete_fifteen_lessons':
+        isClaimable = weekCompletedCount >= 15;
+        progressText = `${Math.min(weekCompletedCount, 15)} / 15`;
+        progressPercent = (Math.min(weekCompletedCount, 15) / 15) * 100;
+        break;
+      case 'create_three_art_week':
+        isClaimable = creationsWeekCount >= 3;
+        progressText = `${Math.min(creationsWeekCount, 3)} / 3`;
+        progressPercent = (Math.min(creationsWeekCount, 3) / 3) * 100;
+        break;
+      case 'create_five_art_week':
+        isClaimable = creationsWeekCount >= 5;
+        progressText = `${Math.min(creationsWeekCount, 5)} / 5`;
+        progressPercent = (Math.min(creationsWeekCount, 5) / 5) * 100;
         break;
       case 'achieve_level_5':
         isClaimable = level >= 5;
@@ -91,6 +138,9 @@ function Base() {
 
   // --- Mission Check Logic ---
   useEffect(() => {
+    if (checkAndSetDailyLogin()) {
+      setDailyLoginClaimable(true);
+    }
     const checkMission = (id, condition, reward) => {
       if (condition && !isMissionCompleted(id)) {
         console.log(`Mission "${id}" Completed!`);
@@ -98,9 +148,7 @@ function Base() {
         gainExp(reward, false);
       }
     };
-    checkMission('daily_login', checkAndSetDailyLogin(), 10);
-    checkMission('complete_one_lesson', todayCompletedCount >= 1, 20);
-    checkMission('complete_five_lessons', weekCompletedCount >= 5, 100);
+    checkMission('achieve_level_5', level >= 5, 200);
     checkMission('achieve_level_5', level >= 5, 200);
   }, [todayCompletedCount, weekCompletedCount, level, checkAndSetDailyLogin, completeMission, gainExp, isMissionCompleted]);
 
@@ -127,7 +175,10 @@ function Base() {
     if (sharingStates[creation.id]) return;
     setSharingStates(prev => ({ ...prev, [creation.id]: 'sharing' }));
     try {
-      await api.sharePost(creation.prompt, creation.imageUrl);
+      const shareImageUrl = creation.imageUrl.startsWith('http')
+        ? creation.imageUrl
+        : `${BACKEND_URL}${creation.imageUrl}`;
+      await api.sharePost(creation.prompt, shareImageUrl);
       setSharingStates(prev => ({ ...prev, [creation.id]: 'shared' }));
       const shareMissionId = 'share_first_creation';
       if (!isMissionCompleted(shareMissionId)) {
@@ -257,14 +308,7 @@ function Base() {
                         <img src={selectedMerchImg} className="mockup-design" alt="design" />
                       </div>
                       <p>티셔츠</p>
-                      <button className="btn-3d btn-primary tiny">₩15,000</button>
-                    </div>
-                    <div className="merch-item">
-                      <div className="mug-mockup">
-                        <img src={selectedMerchImg} className="mockup-design" alt="design" />
-                      </div>
-                      <p>머그컵</p>
-                      <button className="btn-3d btn-primary tiny">₩8,000</button>
+                      <div className="merch-price">₩15,000</div>
                     </div>
                   </div>
 
@@ -276,7 +320,32 @@ function Base() {
             )}
           </div>
         );
-      case 'social': return <div className="coming-soon-content"><h2>소셜 갤러리</h2><p>다른 프롬프터들과 소통해보세요!</p></div>;
+      case 'social':
+        return (
+          <div className="gallery-content">
+            <h2 className="welcome-title">소셜 갤러리</h2>
+            {isLoadingSocial ? (
+              <div className="empty-gallery">불러오는 중...</div>
+            ) : (
+              <div className="creations-grid">
+                {socialCreations.length > 0 ? socialCreations.map(post => (
+                  <div key={post.id} className="creation-card">
+                    <img
+                      src={post.image_url.startsWith('http') ? post.image_url : `${BACKEND_URL}${post.image_url}`}
+                      className="creation-image"
+                      alt="shared art"
+                    />
+                    <div className="creation-overlay">
+                      <p className="creation-prompt">{post.prompt}</p>
+                    </div>
+                  </div>
+                )) : (
+                  <div className="empty-gallery">아직 공유된 작품이 없습니다.</div>
+                )}
+              </div>
+            )}
+          </div>
+        );
 
       case 'mission':
 
@@ -301,12 +370,13 @@ function Base() {
             </div>
 
             <div className="quest-list">
-              {Object.entries(missions)
-                .filter(([key]) => {
-                  if (questTab === 'daily') return key.includes('daily') || key.includes('one_lesson');
-                  return !key.includes('daily') && !key.includes('one_lesson');
+              {missions
+                .filter((mission) => {
+                  if (questTab === 'daily') return mission.type === 'daily';
+                  return mission.type === 'weekly';
                 })
-                .map(([key, mission]) => {
+                .map((mission) => {
+                  const key = mission.id;
                   const status = isMissionCompleted(key) ? 'completed' : getMissionStatus(key);
 
                   const isClaimable = status === 'claimable';
@@ -354,20 +424,7 @@ function Base() {
           <div className="settings-content">
             <h2 className="welcome-title">Settings</h2>
             <div className="settings-card">
-              <div className="setting-item">
-                <label>Theme Mode</label>
-                <button
-                  className="btn-3d btn-secondary"
-                  onClick={() => setTheme(theme === 'light' ? 'dark' : 'light')}
-                >
-                  Switch to {theme === 'light' ? 'Dark' : 'Light'} Mode
-                </button>
-              </div>
-
-              <div className="setting-item">
-                <label>Sound Effects</label>
-                <button className="btn-3d btn-outline">ON</button>
-              </div>
+              {/* Theme and sound settings removed */}
 
               <div className="setting-item">
                 <label style={{ color: 'var(--danger)' }}>Reset Progress</label>
@@ -394,6 +451,7 @@ function Base() {
   const [showLockedModal, setShowLockedModal] = useState(false);
   const [showMerchModal, setShowMerchModal] = useState(false);
   const [selectedMerchImg, setSelectedMerchImg] = useState(null);
+  useEffect(() => {}, []);
 
   // ... (existing renderContent function) ...
 

@@ -209,10 +209,10 @@
 }
 
 .tabs button.active {
-  background: rgba(100, 100, 255, 0.1);
-  border-color: #6c5ce7;
-  color: #6c5ce7;
-  box-shadow: 0 0 15px rgba(108, 92, 231, 0.2);
+  background: rgba(34, 197, 94, 0.1);
+  border-color: var(--primary);
+  color: var(--primary);
+  box-shadow: 0 0 15px rgba(34, 197, 94, 0.2);
 }
 
 .block-card {
@@ -276,7 +276,7 @@
 }
 
 .custom-block-area button {
-  background: #6c5ce7;
+  background: var(--primary);
 }
 
 /* Result Page */
@@ -305,7 +305,7 @@
 /* Modals */
 .modal-content {
   background: #1a1a2e;
-  border: 1px solid rgba(108, 92, 231, 0.3);
+  border: 1px solid var(--primary);
   box-shadow: 0 0 50px rgba(0, 0, 0, 0.5);
   color: #fff;
 }

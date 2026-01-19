@@ -84,6 +84,66 @@ export const api = {
       throw error;
     }
   },
+
+  /**
+   * 그림 기반 형용사 추천 API
+   * @param {string} objectName
+   * @param {string} imageData
+   */
+  async suggestAdjectives(objectName, imageData) {
+    try {
+      const response = await fetch(`${API_FULL_URL}/suggest-adjectives/`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ object_name: objectName, image_data: imageData }),
+      });
+      if (!response.ok) throw new Error(`Server error: ${response.statusText}`);
+      return response.json();
+    } catch (error) {
+      console.error("API Error (suggestAdjectives):", error);
+      throw error;
+    }
+  },
+
+  /**
+   * 그림 기반 무드/스타일 추천 API
+   * @param {string} prompt
+   * @param {string} imageData
+   */
+  async suggestMoodStyle(prompt, imageData) {
+    try {
+      const response = await fetch(`${API_FULL_URL}/suggest-mood-style/`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ prompt: prompt, image_data: imageData }),
+      });
+      if (!response.ok) throw new Error(`Server error: ${response.statusText}`);
+      return response.json();
+    } catch (error) {
+      console.error("API Error (suggestMoodStyle):", error);
+      throw error;
+    }
+  },
+
+  /**
+   * 굿즈 목업을 AI로 생성하는 API
+   * @param {string} designUrl
+   * @param {string} product
+   */
+  async generateMerchMockup(designUrl, product = 'tshirt') {
+    try {
+      const response = await fetch(`${API_FULL_URL}/generate-merch-mockup/`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ design_url: designUrl, product }),
+      });
+      if (!response.ok) throw new Error(`Server error: ${response.statusText}`);
+      return response.json();
+    } catch (error) {
+      console.error("API Error (generateMerchMockup):", error);
+      throw error;
+    }
+  },
   
   /**
    * 프롬프트와 사용자 그림으로 이미지를 생성하는 API
@@ -123,6 +183,64 @@ export const api = {
       return response.json();
     } catch (error) {
       console.error("API Error (generateHints):", error);
+      throw error;
+    }
+  },
+
+  /**
+   * 이모지 번역기 퀴즈를 생성하는 API
+   * @param {string | null} topic - 주제(옵션)
+   */
+  async getEmojiQuiz(topic = null) {
+    try {
+      const response = await fetch(`${API_FULL_URL}/emoji-quiz/`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ topic }),
+      });
+      if (!response.ok) throw new Error(`Server error: ${response.statusText}`);
+      return response.json();
+    } catch (error) {
+      console.error("API Error (getEmojiQuiz):", error);
+      throw error;
+    }
+  },
+
+  /**
+   * 프롬프트 탐정 레벨 데이터를 생성하는 API
+   */
+  async getPromptPuzzleLevels(levelCount = 4) {
+    try {
+      const response = await fetch(`${API_FULL_URL}/prompt-puzzle/`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ level_count: levelCount }),
+      });
+      if (!response.ok) throw new Error(`Server error: ${response.statusText}`);
+      return response.json();
+    } catch (error) {
+      console.error("API Error (getPromptPuzzleLevels):", error);
+      throw error;
+    }
+  },
+
+  /**
+   * 프롬프트 탐정 이미지 생성 (블록 기반)
+   * @param {string} subject
+   * @param {string} action
+   * @param {string} location
+   */
+  async generatePromptPuzzleImage(promptKr, subject, action, location) {
+    try {
+      const response = await fetch(`${API_FULL_URL}/prompt-puzzle-image/`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ prompt_kr: promptKr, subject, action, location }),
+      });
+      if (!response.ok) throw new Error(`Server error: ${response.statusText}`);
+      return response.json();
+    } catch (error) {
+      console.error("API Error (generatePromptPuzzleImage):", error);
       throw error;
     }
   },

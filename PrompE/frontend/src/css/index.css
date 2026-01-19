@@ -18,13 +18,13 @@ body {
 
 /* Palette - Duolingo Inspired (Vibrant & Playful) */
 :root {
-  /* Primary Actions (Purple) */
-  --primary: #8B5CF6;
-  /* Violet-500 */
-  --primary-shadow: #7C3AED;
-  /* Violet-600 */
-  --primary-light: #A78BFA;
-  /* Violet-400 */
+  /* Primary Actions (Green) */
+  --primary: #22C55E;
+  /* Green-500 */
+  --primary-shadow: #15803d;
+  /* Green-700 */
+  --primary-light: #4ade80;
+  /* Green-400 */
   --primary-text: #fff;
 
   /* Secondary Actions (Blue) */

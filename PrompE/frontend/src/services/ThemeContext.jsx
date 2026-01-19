@@ -7,27 +7,16 @@ export const useTheme = () => {
 };
 
 export const ThemeProvider = ({ children }) => {
-  const [theme, setTheme] = useState(() => localStorage.getItem('theme') || 'system');
-
   useEffect(() => {
-    const root = window.document.documentElement; // <html> 태그
-    
-    // 현재 시스템이 다크 모드인지 확인
-    const systemIsDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-    
-    // 최종적으로 다크 모드를 적용할지 결정
-    const applyDark = theme === 'dark' || (theme === 'system' && systemIsDark);
-
-    // 기존 클래스를 지우고 새로운 클래스를 추가
-    root.classList.remove(applyDark ? 'light' : 'dark');
-    root.classList.add(applyDark ? 'dark' : 'light');
-    
-    localStorage.setItem('theme', theme);
-  }, [theme]); // theme 상태가 바뀔 때마다 이 로직이 실행됨
+    const root = window.document.documentElement;
+    root.classList.remove('light');
+    root.classList.add('dark');
+    localStorage.setItem('theme', 'dark');
+  }, []);
 
   const value = {
-    theme,
-    setTheme,
+    theme: 'dark',
+    setTheme: () => {},
   };
 
   return (

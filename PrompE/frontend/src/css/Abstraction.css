@@ -7,7 +7,7 @@
 
 /* Abstraction 전용 배지 색상 */
 .abstraction-badge {
-  background: var(--accent-purple) !important;
+  background: var(--primary) !important;
 }
 
 /* 이전 묘사 요약 */
@@ -38,7 +38,7 @@
 
 .emotion-textarea:focus {
   outline: none;
-  border-color: var(--accent-purple);
+  border-color: var(--primary);
   box-shadow: 0 0 0 3px rgba(168, 85, 247, 0.1);
 }
 
@@ -85,7 +85,7 @@
   background: var(--background);
   padding: 15px;
   border-radius: 10px;
-  border: 2px dashed var(--accent-purple);
+  border: 2px dashed var(--primary);
 }
 
 .prompt-summary-box h4 {
@@ -102,13 +102,13 @@
 }
 
 .prompt-summary-box strong {
-  color: var(--accent-purple);
+  color: var(--primary);
 }
 
 /* Abstraction 결과 섹션 색상 오버라이드 */
 .abstraction-page .success-badge {
   background: #f3e8ff;
-  border-left-color: var(--accent-purple);
+  border-left-color: var(--primary);
 }
 
 .dark .abstraction-page .success-badge {
@@ -116,11 +116,11 @@
 }
 
 .abstraction-page .success-badge h3 {
-  color: var(--accent-purple);
+  color: var(--primary);
 }
 
 .abstraction-page .learning-box h4 {
-  color: var(--accent-purple);
+  color: var(--primary);
 }
 
 .abstraction-page .result-image-large {
@@ -128,5 +128,5 @@
 }
 
 .abstraction-page .result-section-full {
-  border-top-color: var(--accent-purple);
+  border-top-color: var(--primary);
 }

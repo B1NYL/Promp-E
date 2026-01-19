@@ -12,16 +12,10 @@ function StartPage() {
       </div>
 
       <div className="start-content">
-        <div className="hero-visual">
-          {/* Ensure logo.png is good or use a character placeholder */}
-          <img src="/logo.png" alt="Mascot" className="hero-img" />
-        </div>
-
         <div className="hero-text">
           <h1 className="main-title">
-            프롬프팅을 배우는<br />가장 재미있고 효과적인 방법!
+            아이들을 위한 프롬프팅 교육,<br />프롬피
           </h1>
-
           <div className="start-buttons">
             <button
               className="btn-3d btn-primary btn-start"
@@ -29,12 +23,12 @@ function StartPage() {
             >
               시작하기
             </button>
-            <button
-              className="btn-3d btn-outline btn-start"
-              onClick={() => console.log('Login')}
-            >
-              이미 계정이 있어요
-            </button>
+          </div>
+        </div>
+
+        <div className="hero-visual">
+          <div className="visual-frame">
+            <img src="/logo.png" alt="Mascot" className="hero-img" />
           </div>
         </div>
       </div>
