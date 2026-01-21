@@ -195,11 +195,11 @@ function Base() {
 
   // --- Navigation Items ---
   const menuItems = [
-    { id: 'learn', name: 'LEARN', icon: '🏠' },
-    { id: 'gallery', name: 'GALLERY', icon: '🎨' },
-    { id: 'social', name: 'SOCIAL', icon: '🌍' },
-    { id: 'mission', name: 'QUESTS', icon: '📜' },
-    { id: 'settings', name: 'SETTINGS', icon: '⚙️' },
+    { id: 'learn', name: '학습', icon: '🏠' },
+    { id: 'gallery', name: '갤러리', icon: '🎨' },
+    { id: 'social', name: '소셜', icon: '🌍' },
+    { id: 'mission', name: '퀘스트', icon: '📜' },
+    { id: 'settings', name: '설정', icon: '⚙️' },
   ];
 
   const stages = [
@@ -451,7 +451,7 @@ function Base() {
   const [showLockedModal, setShowLockedModal] = useState(false);
   const [showMerchModal, setShowMerchModal] = useState(false);
   const [selectedMerchImg, setSelectedMerchImg] = useState(null);
-  useEffect(() => {}, []);
+  useEffect(() => { }, []);
 
   // ... (existing renderContent function) ...
 
@@ -499,9 +499,9 @@ function Base() {
         {/* Right Stats Sidebar */}
         <aside className="sidebar-right">
           <div className="stat-panel">
-            <h3>My Progress</h3>
+            <h3>진행도</h3>
             <div className="xp-row">
-              <span>🔥</span> <span>{level} Day Streak</span>
+              <span>🔥</span> <span>{level}일 연속</span>
             </div>
             <div className="xp-row">
               <span>💎</span> <span>{exp} XP</span>
@@ -509,8 +509,8 @@ function Base() {
           </div>
 
           <div className="stat-panel">
-            <h3>Daily Quests</h3>
-            <div style={{ fontSize: '0.9rem', color: '#777' }}>Complete 1 Lesson</div>
+            <h3>일일 퀘스트</h3>
+            <div style={{ fontSize: '0.9rem', color: '#777' }}>1개 레슨 완료</div>
             <div className="xp-row" style={{ height: '6px', background: '#eee', borderRadius: '4px', width: '100%', marginTop: '5px' }}>
               <div style={{ width: '60%', background: 'var(--accent)', height: '100%', borderRadius: '4px' }}></div>
             </div>
