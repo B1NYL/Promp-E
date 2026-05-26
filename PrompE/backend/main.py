@@ -337,7 +337,7 @@ async def generate_image_from_prompt(request: ImageGenerationRequest):
         if request.user_image != "none":
             try:
                 image_response = client.images.generate(
-                    model="gpt-image-1",
+                    model="gpt-image-2",
                     prompt=request.prompt,
                     image=request.user_image,
                     size="1024x1024",
